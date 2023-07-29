@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EmployeeOnboarding.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230728111835_admindata")]
-    partial class admindata
+    [Migration("20230729060657__usertables")]
+    partial class _usertables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
