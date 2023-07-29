@@ -5,7 +5,9 @@ using EmployeeOnboarding.Data.Services;
 using EmployeeOnboarding.Models;
 
 namespace OnboardingUser.Controllers
-{
+{   /// <summary>
+/// 
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
