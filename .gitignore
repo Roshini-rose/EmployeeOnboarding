@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /EmployeeOnboarding/Migrations/20230729060657__usertables.cs
 /EmployeeOnboarding/Migrations/ApplicationDbContextModelSnapshot.cs
 /EmployeeOnboarding/appsettings.json
+/EmployeeOnboarding/Migrations/20230731051952_admindata.cs
