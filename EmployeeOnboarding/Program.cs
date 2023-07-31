@@ -3,6 +3,7 @@ using EmployeeOnboarding.Data;
 using EmployeeOnboarding.Services;
 using EmployeeOnboarding.Repository;
 using Microsoft.EntityFrameworkCore;
+using EmployeeOnboarding.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 builder.Services.AddTransient<onboardstatusService>();
 builder.Services.AddTransient<logindetailsService>();
+builder.Services.AddTransient<EducationService>();
 
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 

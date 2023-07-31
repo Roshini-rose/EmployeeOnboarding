@@ -4,7 +4,7 @@ using NuGet.Protocol.Plugins;
 using EmployeeOnboarding.Data.Services;
 using EmployeeOnboarding.Models;
 
-namespace OnboardingUser.Controllers
+namespace EmployeeOnboarding.Controllers
 {   /// <summary>
 /// 
 /// </summary>
@@ -18,18 +18,17 @@ namespace OnboardingUser.Controllers
             _educationService = educationService;
         }
 
-        [HttpPost("add-UG-education")]
-        public IActionResult AddEducationUG([FromBody] EducationVM education)
+        [HttpPost("add-UG-education/{empId}")]
+        public IActionResult AddEducationUG(string empId, [FromBody] EducationVM education)
         {
-            _educationService.AddEducationUG(education);
-
+            _educationService.AddEducationUG(empId, education);
             return Ok();
         }
 
-        [HttpPost("add-PG-education")]
-        public IActionResult AddEducationPG([FromForm] EducationVM education)
+        [HttpPost("add-PG-education/{empId}")]
+        public IActionResult AddEducationPG(string empId, [FromForm] EducationVM education)
         {
-            _educationService.AddEducationPG(education);   
+            _educationService.AddEducationPG(empId, education);
             return Ok();
         }
 
