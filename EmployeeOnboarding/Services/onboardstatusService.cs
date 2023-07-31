@@ -30,7 +30,6 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-        //change
         public void ChangeCancelStatus(onboardstatusVM onboard)
         {
             var _onboard = new ApprovalStatus()
