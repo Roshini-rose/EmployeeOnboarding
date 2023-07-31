@@ -3,11 +3,12 @@ using EmployeeOnboarding.Data;
 using EmployeeOnboarding.Services;
 using EmployeeOnboarding.Repository;
 using Microsoft.EntityFrameworkCore;
+using EmployeeOnboarding.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+//
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 builder.Services.AddTransient<onboardstatusService>();
 builder.Services.AddTransient<logindetailsService>();
+builder.Services.AddTransient<EducationService>();
 
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 
