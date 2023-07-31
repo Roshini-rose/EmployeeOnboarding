@@ -21,17 +21,17 @@ namespace EmployeeOnboarding.Controllers
             _onboardstatusService=onboardstatusService;
         }
 
-        [HttpPost("approve")]
-        public IActionResult ChangeApprovalStatus([FromBody] onboardstatusVM onboardstatus)
+        [HttpPost("approve/{id}")]
+        public IActionResult ChangeApprovalStatus(string id)
         {
-            _onboardstatusService.ChangeApprovalStatus(onboardstatus);
+            _onboardstatusService.ChangeApprovalStatus(id);
             return Ok("Approved");
         }
 
-        [HttpPost("reject")]
-        public IActionResult ChangeCancelStatus([FromBody] onboardstatusVM onboardstatus)
+        [HttpPost("reject/{id}")]
+        public IActionResult ChangeCancelStatus(string id)
         {
-            _onboardstatusService.ChangeCancelStatus(onboardstatus);
+            _onboardstatusService.ChangeCancelStatus(id);
             return Ok("Rejected");
         }
 

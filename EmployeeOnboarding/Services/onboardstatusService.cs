@@ -12,35 +12,33 @@ namespace EmployeeOnboarding.Services
         {
             _context= context;
         }
-        public void ChangeApprovalStatus(onboardstatusVM onboard)
+        public void ChangeApprovalStatus(string Empid)
         {
             var _onboard = new ApprovalStatus()
             {
-                Empid = onboard.Empid,
-                Empname = onboard.Empname,
+                Empid = Empid,
                 Approved = true,
                 Cancelled = false,
                 Date_Created= DateTime.UtcNow,
                 Date_Modified= DateTime.UtcNow,
-                Created_by=onboard.Empname,
-                Modified_by=onboard.Empname,
+                Created_by="Admin",
+                Modified_by="Admin",
                 Status="Active",
             };
             _context.Approvals.Add(_onboard);
             _context.SaveChanges();
         }
-        public void ChangeCancelStatus(onboardstatusVM onboard)
+        public void ChangeCancelStatus(string Empid)
         {
             var _onboard = new ApprovalStatus()
             {
-                Empid = onboard.Empid,
-                Empname = onboard.Empname,
+                Empid = Empid,
                 Approved = false,
                 Cancelled = true,
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_by = onboard.Empname,
-                Modified_by = onboard.Empname,
+                Created_by = "Admin",
+                Modified_by = "Admin",
                 Status = "Active",
             };
             _context.Approvals.Add(_onboard);
