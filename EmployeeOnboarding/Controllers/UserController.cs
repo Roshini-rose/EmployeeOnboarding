@@ -19,29 +19,29 @@ namespace EmployeeOnboarding.Controllers
         }
 
         [HttpPost("add-UG-education/{empId}")]
-        public IActionResult AddEducationUG(string empId, [FromBody] EducationVM education)
+        public async Task<IActionResult> AddEducationUG(string empId, [FromForm] EducationVM education)
         {
             _educationService.AddEducationUG(empId, education);
             return Ok();
         }
 
         [HttpPost("add-PG-education/{empId}")]
-        public IActionResult AddEducationPG(string empId, [FromForm] EducationVM education)
+        public async Task<IActionResult> AddEducationPG(string empId, [FromForm] EducationVM education)
         {
             _educationService.AddEducationPG(empId, education);
             return Ok();
         }
-
+        
 
         [HttpGet("get-UG-education/{id}")]
-        public IActionResult GetEducationUG(int id)
+        public IActionResult GetEducationUG(string id)
         {
             var education = _educationService.GetEducationUG(id);
             return Ok(education);
         }
 
         [HttpGet("get-PG-education/{id}")]
-        public IActionResult GetEducationPG(int id)
+        public IActionResult GetEducationPG(string id)
         {
             var education = _educationService.GetEducationPG(id);
             return Ok(education);

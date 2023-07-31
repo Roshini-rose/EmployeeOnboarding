@@ -11,8 +11,29 @@ namespace EmployeeOnboarding.Data.Services
             _context = context;   
         }
 
+
+
+        private string SaveCertificateFile(IFormFile certificateFile, string empId, string fileName)
+        {
+            var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", empId);
+            if (!Directory.Exists(empFolderPath))
+            {
+                Directory.CreateDirectory(empFolderPath);
+            }
+
+            var filePath = Path.Combine(empFolderPath, fileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                certificateFile.CopyTo(fileStream);
+            }
+
+            return filePath; // Return the file path
+        }
+
         public void AddEducationUG(string empId, EducationVM education)
         {
+            var certificateFileName = "UG_certificate.pdf"; // Change this to the desired name for UG certificate
             var _education = new EmployeeEducationDetails()
             {
                 Empid = empId,
@@ -21,12 +42,35 @@ namespace EmployeeOnboarding.Data.Services
                 Degree = education.Degree,
                 specialization = education.specialization,
                 Passoutyear = education.Passoutyear,
-                Certificate = education.Certificate,
+                Certificate = SaveCertificateFile(education.Certificate, empId, certificateFileName),
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_by = "User",
-                Modified_by = "User",
-                Status = "Created"
+                Created_by = empId,
+                Modified_by = empId,
+                Status = "A"
+            };
+
+            _context.EmployeeEducationDetails.Add(_education);
+            _context.SaveChanges();
+        }
+
+        public void AddEducationPG(string empId, EducationVM education)
+        {
+            var certificateFileName = "PG_certificate.pdf"; // Change this to the desired name for PG certificate
+            var _education = new EmployeeEducationDetails()
+            {
+                Empid = empId,
+                programme = "PG",
+                CollegeName = education.CollegeName,
+                Degree = education.Degree,
+                specialization = education.specialization,
+                Passoutyear = education.Passoutyear,
+                Certificate = SaveCertificateFile(education.Certificate, empId, certificateFileName),
+                Date_Created = DateTime.UtcNow,
+                Date_Modified = DateTime.UtcNow,
+                Created_by = empId,
+                Modified_by = empId,
+                Status = "A"
             };
 
             _context.EmployeeEducationDetails.Add(_education);
@@ -34,105 +78,35 @@ namespace EmployeeOnboarding.Data.Services
         }
 
 
-        public void AddEducationPG(string empId,EducationVM education)
-             {
-                 var _education = new EmployeeEducationDetails()
-                 {
-                     Empid = empId,
-                     programme = "PG",
-                     CollegeName = education.CollegeName,
-                     Degree = education.Degree,
-                     specialization = education.specialization,
-                     Passoutyear = education.Passoutyear,
-                     Certificate = education.Certificate,
-                     Date_Created = DateTime.UtcNow,
-                     Date_Modified = DateTime.UtcNow,
-                     Created_by = "User",
-                     Modified_by = "User",
-                     Status = "Created"
-                 };
-                 _context.EmployeeEducationDetails.Add(_education);
-                 _context.SaveChanges();
-             }
-
-
-        
-
-        /*  public void AddEducationPG(EducationVM education)
-          {
-              if (education.Certificate == null || education.Certificate.Length == 0)
-              {
-                  throw new ArgumentException("Certificate file is missing.");
-              }
-
-              // Validate file size
-              const int maxSizeKB = 100;
-              const int minSizeKB = 50;
-              if (education.Certificate.Length > maxSizeKB * 1024 || education.Certificate.Length < minSizeKB * 1024)
-              {
-                  throw new ArgumentException($"Certificate file size should be between {minSizeKB} KB and {maxSizeKB} KB.");
-              }
-
-              // Validate file type (MIME type)
-              if (education.Certificate.ContentType != "application/pdf")
-              {
-                  throw new ArgumentException("Only PDF files are allowed.");
-              }
-
-              var _education = new EmployeeEducationDetails()
-              {
-                  programme = "PG",
-                  CollegeName = education.CollegeName,
-                  Degree = education.Degree,
-                  specialization = education.specialization,
-                  Passoutyear = education.Passoutyear,
-                  Certificate = SaveCertificateFile(education.Certificate) // Save the certificate file and get its file path
-              };
-
-              _context.EmployeeEducationDetails.Add(_education);
-              _context.SaveChanges();
-          }
-
-          private string SaveCertificateFile(IFormFile certificateFile)
-          {
-              var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", "PG_education.pdf");
-
-              using (var fileStream = new FileStream(filePath, FileMode.Create))
-              {
-                  certificateFile.CopyTo(fileStream);
-              }
-
-              return filePath; // Return the file path
-          }
-        */
-
-        public EducationVM GetEducationUG(int educationId)
+        public EducationVM GetEducationUG(string educationId)
         {
-            var _education = _context.EmployeeEducationDetails.Where(n => n.Id == educationId && n.programme == "UG").Select(education => new EducationVM()
+            var _education = _context.EmployeeEducationDetails.Where(n => n.Empid == educationId && n.programme == "UG").Select(education => new EducationVM()
             {
                 programme = "UG",
                 CollegeName = education.CollegeName,
                 Degree = education.Degree,
                 specialization = education.specialization,
-                Passoutyear = education.Passoutyear
+                Passoutyear = education.Passoutyear,
             }).FirstOrDefault();
 
             return _education;
         }
 
-        public EducationVM GetEducationPG(int educationId)
+        public EducationVM GetEducationPG(string educationId)
         {
-            var _education = _context.EmployeeEducationDetails.Where(n => n.Id == educationId && n.programme == "PG").Select(education => new EducationVM()
+            var _education = _context.EmployeeEducationDetails.Where(n => n.Empid == educationId && n.programme == "PG").Select(education => new EducationVM()
             {
                 programme = "PG",
                 CollegeName = education.CollegeName,
                 Degree = education.Degree,
                 specialization = education.specialization,
-                Passoutyear = education.Passoutyear
+                Passoutyear = education.Passoutyear,
             }).FirstOrDefault();
 
             return _education;
         }
+
+
 
     }
 }

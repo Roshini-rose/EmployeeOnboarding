@@ -8,6 +8,6 @@ namespace EmployeeOnboarding.Models
         public string Degree { get; set; }
         public string specialization { get; set; }
         public int Passoutyear { get; set; }
-        public string Certificate { get; set; }
+        public IFormFile Certificate { get; set; }
     }
 }
