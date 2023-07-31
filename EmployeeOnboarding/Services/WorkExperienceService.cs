@@ -4,10 +4,10 @@ using EmployeeOnboarding.ViewModels;
 
 namespace EmployeeOnboarding.Services
 {
-    public class ExperienceService
+    public class WorkExperienceService
     {
         private ApplicationDbContext _context;
-        public ExperienceService(ApplicationDbContext context)
+        public WorkExperienceService(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -31,7 +31,7 @@ namespace EmployeeOnboarding.Services
             return filePath; // Return the file path
         }
 
-        public void AddExperience(string empId, ExperienceVM experience)
+        public void AddExperience(string empId, WorkExperienceVM experience)
         {
             var certificateFileName = "Experience.pdf"; // Change this to the desired name for UG certificate
             var _experience = new EmployeeExperienceDetails()
@@ -55,9 +55,9 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-        public ExperienceVM GetExperience(string experienceId)
+        public WorkExperienceVM GetExperience(string experienceId)
         {
-            var _education = _context.EmployeeExperienceDetails.Where(n => n.Empid == experienceId).Select(experience => new ExperienceVM()
+            var _education = _context.EmployeeExperienceDetails.Where(n => n.Empid == experienceId).Select(experience => new WorkExperienceVM()
             {
                 Company_name = experience.Company_name,
                 Designation = experience.Designation,

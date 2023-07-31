@@ -15,8 +15,8 @@ namespace EmployeeOnboarding.Controllers
     public class UserController : ControllerBase
     {
         public EducationService _educationService;
-        public ExperienceService _experienceService;
-        public UserController(EducationService educationService, ExperienceService experienceService)
+        public WorkExperienceService _experienceService;
+        public UserController(EducationService educationService, WorkExperienceService experienceService)
         {
             _educationService = educationService;
             _experienceService = experienceService;
@@ -37,7 +37,7 @@ namespace EmployeeOnboarding.Controllers
         }
 
         [HttpPost("add-experience/{empId}")]
-        public async Task<IActionResult> AddExperience(string empId, [FromForm] ExperienceVM experience)
+        public async Task<IActionResult> AddExperience(string empId, [FromForm] WorkExperienceVM experience)
         {
             _experienceService.AddExperience(empId, experience);
             return Ok();
