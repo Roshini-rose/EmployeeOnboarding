@@ -34,6 +34,6 @@ namespace EmployeeOnboarding.Controllers
             _onboardstatusService.ChangeCancelStatus(id);
             return Ok("Rejected");
         }
-
+        ///
     }
 }
