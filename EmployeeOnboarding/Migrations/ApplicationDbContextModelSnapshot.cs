@@ -3,7 +3,6 @@ using System;
 using EmployeeOnboarding.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,15 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EmployeeOnboarding.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:EmployeeOnboarding/Migrations/20230731064930_admindata.Designer.cs
-    [Migration("20230731064930_admindata")]
-========
-    [Migration("20230731051952_admindata")]
->>>>>>>> 298ccce25a8389e968911d41858f0eedfddc3ce4:EmployeeOnboarding/Migrations/20230731051952_admindata.Designer.cs
-    partial class admindata
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,6 +47,10 @@ namespace EmployeeOnboarding.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Empid")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Empname")
                         .IsRequired()
                         .HasColumnType("text");
 
