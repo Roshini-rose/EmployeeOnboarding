@@ -12,11 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EmployeeOnboarding.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:EmployeeOnboarding/Migrations/20230731064930_admindata.Designer.cs
-    [Migration("20230731064930_admindata")]
-========
     [Migration("20230731051952_admindata")]
->>>>>>>> 298ccce25a8389e968911d41858f0eedfddc3ce4:EmployeeOnboarding/Migrations/20230731051952_admindata.Designer.cs
     partial class admindata
     {
         /// <inheritdoc />
