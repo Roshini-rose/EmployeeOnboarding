@@ -28,8 +28,8 @@ namespace EmployeeOnboarding.Services
             _context.Approvals.Add(_onboard);
             _context.SaveChanges();
         }
+
         public void ChangeCancelStatus(string Empid)
-        public void ChangeCancelStatus(onboardstatusVM onboard)
         {
             var _onboard = new ApprovalStatus()
             {
