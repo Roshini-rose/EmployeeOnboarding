@@ -88,7 +88,7 @@ namespace EmployeeOnboarding.Data.Services
                 Contact_no = contact.Contact_no,
                 Emgy_Contactperson = contact.Emgy_Contactperson,
                 Emgy_Contactrelation = contact.Emgy_Contactrelation,
-                Emgy_Contactno = contact.Emgy_Contactno,
+                Emgy_Contactno = contact.Emgy_Contactno,   
             }).FirstOrDefault();
 
             return _contact;
