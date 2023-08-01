@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EmployeeOnboarding.Migrations
 {
     /// <inheritdoc />
-    public partial class _usertables : Migration
+    public partial class Onboarding : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,6 @@ namespace EmployeeOnboarding.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Empid = table.Column<string>(type: "text", nullable: false),
-                    Empname = table.Column<string>(type: "text", nullable: false),
                     Approved = table.Column<bool>(type: "boolean", nullable: true),
                     Cancelled = table.Column<bool>(type: "boolean", nullable: true),
                     Date_Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

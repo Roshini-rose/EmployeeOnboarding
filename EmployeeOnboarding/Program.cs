@@ -7,6 +7,14 @@ using EmployeeOnboarding.Data.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
+//Cors Policy
+builder.Services.AddCors(options =>
+                options.AddPolicy(
+                    "CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+                    ));
 
 // Add services to the container.
 //
@@ -38,6 +46,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
