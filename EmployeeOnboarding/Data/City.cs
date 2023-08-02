@@ -8,5 +8,7 @@ namespace EmployeeOnboarding.Data
         [ForeignKey("State_Id")]
         public int State_Id { get; set; }
         public string City_Name { get; set; }
+        public DateTime Date_Created { get; set; }
+        public DateTime Date_Updated { get; set; }
     }
 }

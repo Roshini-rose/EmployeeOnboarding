@@ -4,6 +4,6 @@
     {
         Married=1,
         UnMarried=2,
-        Single=3
+        Others=3
     }
 }
