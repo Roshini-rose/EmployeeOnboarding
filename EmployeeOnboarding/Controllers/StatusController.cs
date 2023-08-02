@@ -5,6 +5,8 @@ using EmployeeOnboarding.Contracts;
 using EmployeeOnboarding.Repository;
 using EmployeeOnboarding.Services;
 using EmployeeOnboarding.ViewModels;
+using EmployeeOnboarding.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeOnboarding.Controllers
 {
@@ -15,10 +17,12 @@ namespace EmployeeOnboarding.Controllers
     {
        
         public onboardstatusService _onboardstatusService;
+        public ApplicationDbContext _context;
 
-        public StatusController(onboardstatusService onboardstatusService)
+        public StatusController(onboardstatusService onboardstatusService, ApplicationDbContext context)
         {
             _onboardstatusService=onboardstatusService;
+            _context = context;
         }
 
         [HttpPost("approve/{id}")]
@@ -34,6 +38,20 @@ namespace EmployeeOnboarding.Controllers
             _onboardstatusService.ChangeCancelStatus(id);
             return Ok("Rejected");
         }
-        ///
+
+        [HttpGet("status-dashboard")]
+        public async Task<statusdashVM> GetAdminStatusList()
+        {
+            var upstatus = await _context.Approvals.ToListAsync();
+            var model = new statusdashVM
+            {
+                TotalRequests = upstatus.Count,
+                ApprovedRequests = upstatus.Count(q => q.Approved == true),
+                // PendingRequests = leaveRequests.Count(q => q.Cancelled == null),
+                RejectedRequests = upstatus.Count(q => q.Cancelled == true),
+            };
+
+            return model;
+        }
     }
 }
