@@ -2,7 +2,7 @@
 
 namespace EmployeeOnboarding.Data
 {
-    public class ApporvalStatus:BaseEntity
+    public class ApprovalStatus:BaseEntity
     {
         [ForeignKey("EmpGen_Id")]
         public int EmpGen_Id { get; set; }
