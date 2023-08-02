@@ -7,14 +7,14 @@ namespace EmployeeOnboarding.Migrations
     {
         public override void Down()
         {
-            Delete.ForeignKey().FromTable("EmployeeExperienceDetails").ForeignColumn("EmpGen_Id").ToTable("EmployeeGeneralDetails").PrimaryColumn("Id");
+            Delete.ForeignKey().FromTable("EmployeeEDetails").ForeignColumn("EmpGen_Id").ToTable("EmployeeGeneralDetails").PrimaryColumn("Id");
             Delete.Table("EmployeeEducationDetails");
         }
 
         public override void Up()
         {
             Create.Table("EmployeeEducationDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
-               .WithColumn("EmpGen_Id").AsString(100).NotNullable().ForeignKey("EmployeeGeneralDetails","Id")
+               .WithColumn("EmpGen_Id").AsString(100).NotNullable()
                .WithColumn("programme").AsDate().NotNullable()
                .WithColumn("CollegeName").AsDate().NotNullable()
                .WithColumn("Degree").AsDate().NotNullable()
