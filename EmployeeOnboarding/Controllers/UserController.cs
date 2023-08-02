@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
 using EmployeeOnboarding.Data.Services;
 using EmployeeOnboarding.Models;
+using EmployeeOnboarding.ViewModels;
+using EmployeeOnboarding.Services;
 
 namespace EmployeeOnboarding.Controllers
 {   /// <summary>
@@ -13,9 +15,11 @@ namespace EmployeeOnboarding.Controllers
     public class UserController : ControllerBase
     {
         public EducationService _educationService;
-        public UserController(EducationService educationService)
+        public WorkExperienceService _experienceService;
+        public UserController(EducationService educationService, WorkExperienceService experienceService)
         {
             _educationService = educationService;
+            _experienceService = experienceService;
         }
 
         [HttpPost("add-UG-education/{empId}")]
@@ -31,7 +35,14 @@ namespace EmployeeOnboarding.Controllers
             _educationService.AddEducationPG(empId, education);
             return Ok();
         }
-        
+
+        [HttpPost("add-experience/{empId}")]
+        public async Task<IActionResult> AddExperience(string empId, [FromForm] WorkExperienceVM experience)
+        {
+            _experienceService.AddExperience(empId, experience);
+            return Ok();
+        }
+
 
         [HttpGet("get-UG-education/{id}")]
         public IActionResult GetEducationUG(string id)
@@ -45,6 +56,13 @@ namespace EmployeeOnboarding.Controllers
         {
             var education = _educationService.GetEducationPG(id);
             return Ok(education);
+        }
+
+        [HttpGet("get-experience/{id}")]
+        public IActionResult GetExperience(string id)
+        {
+            var experience = _experienceService.GetExperience(id);
+            return Ok(experience);
         }
     }
 }
