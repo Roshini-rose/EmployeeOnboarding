@@ -14,7 +14,7 @@ namespace EmployeeOnboarding.Services
         }
         public void ChangeApprovalStatus(string Empid)
         {
-            var _onboard = new ApprovalStatus()
+            var _onboard = new ApporvalStatus()
             {
                 Empid = Empid,
                 Approved = true,
@@ -31,7 +31,7 @@ namespace EmployeeOnboarding.Services
 
         public void ChangeCancelStatus(string Empid)
         {
-            var _onboard = new ApprovalStatus()
+            var _onboard = new ApporvalStatus()
             {
                 Empid = Empid,
                 Approved = false,
