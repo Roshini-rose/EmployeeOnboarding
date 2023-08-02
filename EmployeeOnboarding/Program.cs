@@ -4,7 +4,9 @@ using EmployeeOnboarding.Services;
 using EmployeeOnboarding.Repository;
 using Microsoft.EntityFrameworkCore;
 using EmployeeOnboarding.Data.Services;
-
+using FluentMigrator.Runner;
+using System.Reflection;
+using EmployeeOnboarding.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 //Cors Policy
@@ -34,6 +36,10 @@ builder.Services.AddTransient<WorkExperienceService>();
 builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
+builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
+    .AddFluentMigratorCore()
+    .ConfigureRunner(c => c.AddPostgres().WithGlobalConnectionString("DefaultConnection")
+    .ScanIn(typeof(AddCountry_20230802100100).Assembly).For.Migrations().For.EmbeddedResources());
 
 var app = builder.Build();
 
@@ -48,6 +54,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
+
+using (var scope = app.Services.CreateScope())
+{
+    {
+        var db = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+        db.MigrateUp();
+    }
+}
 
 app.UseAuthorization();
 
