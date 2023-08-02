@@ -4,6 +4,7 @@ namespace EmployeeOnboarding.Migrations
 {
     public class AddCity_20230821100102 : Migration
     {
+
         public override void Down()
         {
             Delete.ForeignKey().FromTable("City").ForeignColumn("State_Id").ToTable("State").PrimaryColumn("Id");
