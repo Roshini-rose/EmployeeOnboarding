@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeOnboarding.Data
 {
-    public class EmployeeGeneralDetails:BaseEntity
+    public class EmployeeGeneralDetails
     {
+        public int Id { get; set; }
         [ForeignKey("Login_Id")]
         public int Login_ID { get; set; }    
         public string? Empid { get; set; }
@@ -16,7 +17,12 @@ namespace EmployeeOnboarding.Data
         public int Gender { get; set; }
         public int? MaritalStatus { get; set; }
         public DateOnly? DateOfMarriage { get; set; }
-        public string BloodGrp { get; set; }   
+        public string BloodGrp { get; set; }
+        public DateTime Date_Created { get; set; }
+        public DateTime? Date_Modified { get; set; }
+        public string Created_by { get; set; }
+        public string? Modified_by { get; set; }
+        public string Status { get; set; }
 
     }
 }
