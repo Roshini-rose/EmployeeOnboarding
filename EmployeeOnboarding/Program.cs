@@ -39,7 +39,7 @@ builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
     .AddFluentMigratorCore()
     .ConfigureRunner(c => c.AddPostgres().WithGlobalConnectionString("DefaultConnection")
-    .ScanIn(typeof(AddLogin_202308021639).Assembly).For.Migrations().For.EmbeddedResources());
+    .ScanIn(typeof(AddLogin_202308021630).Assembly).For.Migrations().For.EmbeddedResources());
 
 var app = builder.Build();
 

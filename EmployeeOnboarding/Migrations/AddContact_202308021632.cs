@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace EmployeeOnboarding.Migrations
 {
 
-    [Migration(202308021642)]
-    public class AddContact_202308021642 : Migration
+    [Migration(202308021632)]
+    public class AddContact_202308021632 : Migration
     {
 
         public override void Down()

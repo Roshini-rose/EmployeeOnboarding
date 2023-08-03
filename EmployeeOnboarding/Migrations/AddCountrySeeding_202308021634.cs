@@ -2,7 +2,7 @@
 
 namespace EmployeeOnboarding.Migrations
 {
-    [Migration(202308021001001)]
+    [Migration(202308021634)]
     public class AddCountrySeeding_202308021001001 : Migration
     {
         public override void Down()

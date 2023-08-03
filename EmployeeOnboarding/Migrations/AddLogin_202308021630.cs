@@ -2,8 +2,8 @@
 
 namespace EmployeeOnboarding.Migrations
 {
-    //[Migration(202308021639)]
-    public class AddLogin_202308021639: Migration
+    [Migration(202308021630)]
+    public class AddLogin_202308021630: Migration
     {
         public override void Down()
         {
