@@ -3,7 +3,8 @@ using FluentMigrator;
 
 namespace EmployeeOnboarding.Migrations
 {
-    public class AddStateSeeding_202308021001011 : Migration
+    [Migration(202308021636)]
+    public class AddStateSeeding_202308021636 : Migration
     {
         public override void Down()
         {

@@ -2,8 +2,8 @@
 
 namespace EmployeeOnboarding.Migrations
 {
-    [Migration(202308021001021)]
-    public class AddCitySeeding_202308021001021 : Migration
+    [Migration(202308021638)]
+    public class AddCitySeeding_202308021638 : Migration
     {
         public override void Down()
         {
