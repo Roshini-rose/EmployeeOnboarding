@@ -10,22 +10,22 @@ namespace EmployeeOnboarding.Controllers
     public class UserDetailsController : ControllerBase
     {
 
-            public GeneralServices _generalservices;
-            public UserDetailsController(GeneralServices generalservices)
-            {
-                _generalservices = generalservices;
-            }
+        public GeneralServices _generalservices;
+        public UserDetailsController(GeneralServices generalservices)
+        {
+            _generalservices = generalservices;
+        }
 
 
 
-            //General details
-            //post method
-            [HttpPost("add-general-details")]
-            public IActionResult AddGeneral(string empId, [FromBody] GeneralVM general)
-            {
-                _generalservices.AddGeneral(empId, general);
-                return Ok();
-            }
+        //General details
+        //post method
+        [HttpPost("add-general-details")]
+        public IActionResult AddGeneral(string empId, [FromBody] GeneralVM general)
+        {
+            _generalservices.AddGeneral(empId, general);
+            return Ok();
+        }
 
 
         //get method

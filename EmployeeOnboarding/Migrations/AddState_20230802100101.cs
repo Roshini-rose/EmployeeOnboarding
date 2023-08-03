@@ -2,7 +2,7 @@
 
 namespace EmployeeOnboarding.Migrations
 {
-    [Migration(20230802100101)]
+    //[Migration(20230802100101)]
     public class AddState_20230802100101 : Migration
     {
         public override void Down()

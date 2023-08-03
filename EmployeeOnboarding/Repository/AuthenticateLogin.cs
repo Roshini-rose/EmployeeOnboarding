@@ -3,7 +3,7 @@ using EmployeeOnboarding.Data;
 
 namespace EmployeeOnboarding.Repository
 {
-    public class AuthenticateLogin:ILogin
+    public class AuthenticateLogin : ILogin
     {
         private readonly ApplicationDbContext _context;
 
@@ -13,7 +13,7 @@ namespace EmployeeOnboarding.Repository
         }
         public async Task<Login> AuthenticateEmp(string email, string password)
         {
-            var succeeded =  _context.Logins.FirstOrDefault(authUser => authUser.Emailid == email && authUser.Password == password);
+            var succeeded = _context.Logins.FirstOrDefault(authUser => authUser.Emailid == email && authUser.Password == password);
             return succeeded;
         }
 

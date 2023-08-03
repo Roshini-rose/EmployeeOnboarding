@@ -8,9 +8,9 @@ namespace EmployeeOnboarding.Services
     public class onboardstatusService
     {
         private ApplicationDbContext _context;
-        public onboardstatusService(ApplicationDbContext context) 
+        public onboardstatusService(ApplicationDbContext context)
         {
-            _context= context;
+            _context = context;
         }
         public void ChangeApprovalStatus(string Empid)
         {
@@ -19,11 +19,11 @@ namespace EmployeeOnboarding.Services
                 Empid = Empid,
                 Approved = true,
                 Cancelled = false,
-                Date_Created= DateTime.UtcNow,
-                Date_Modified= DateTime.UtcNow,
-                Created_by="Admin",
-                Modified_by="Admin",
-                Status="Active",
+                Date_Created = DateTime.UtcNow,
+                Date_Modified = DateTime.UtcNow,
+                Created_by = "Admin",
+                Modified_by = "Admin",
+                Status = "Active",
             };
             _context.Approvals.Add(_onboard);
             _context.SaveChanges();
@@ -45,7 +45,7 @@ namespace EmployeeOnboarding.Services
             _context.Approvals.Add(_onboard);
             _context.SaveChanges();
         }
-       
+
 
 
     }
