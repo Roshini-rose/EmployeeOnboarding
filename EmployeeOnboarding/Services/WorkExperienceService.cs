@@ -4,8 +4,10 @@ using EmployeeOnboarding.ViewModels;
 
 namespace EmployeeOnboarding.Services
 {
+    
     public class WorkExperienceService
     {
+
         private ApplicationDbContext _context;
         public WorkExperienceService(ApplicationDbContext context)
         {
@@ -37,7 +39,7 @@ namespace EmployeeOnboarding.Services
 
             if (existingExperience != null)
             {
-                Update existing record
+                //Update existing record
                 existingExperience.Company_name = experience.Company_name;
                 existingExperience.Designation = experience.Designation;
                 existingExperience.Totalmonths = experience.Totalmonths;
@@ -51,7 +53,7 @@ namespace EmployeeOnboarding.Services
             }
             else
             {
-                Add new record
+                //Add new record
                 var certificateFileName = "Experience.pdf";
                 var _experience = new EmployeeExperienceDetails()
                 {
@@ -91,5 +93,6 @@ namespace EmployeeOnboarding.Services
 
             return _education;
         }
+    
     }
 }

@@ -7,6 +7,7 @@ namespace EmployeeOnboarding.Services
 {
     public class logindetailsService
     {
+        /*
         private ApplicationDbContext _context;
         public logindetailsService(ApplicationDbContext context)
         {
@@ -39,5 +40,7 @@ namespace EmployeeOnboarding.Services
             else
                 return (_succeeded);
         }
+        */
     }
+    
 }

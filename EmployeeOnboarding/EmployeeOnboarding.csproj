@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="Certificates\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

@@ -12,9 +12,10 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace EmployeeOnboarding.Repository
-{ /*
-    public class AdminRepository : IAdminRepository
+{ 
+    public class AdminRepository  : IAdminRepository
     {
+        
         public readonly ApplicationDbContext _context;
         public AdminRepository(ApplicationDbContext context)
         {
@@ -27,14 +28,14 @@ namespace EmployeeOnboarding.Repository
             {
                 if (employeeId != null)
                 {
-                    var login = _context.Logins.FirstOrDefault(l => l.Empid == employeeId[i]);
+                    var login = _context.Login.FirstOrDefault(l => l.Empid == employeeId[i]);
                     var general = _context.EmployeeGeneralDetails.FirstOrDefault(g => g.Empid == employeeId[i]);
                     var contact = _context.EmployeeContactDetails.FirstOrDefault(c => c.Empid == employeeId[i]);
                     var address = _context.EmployeeAddressDetails.FirstOrDefault(a => a.Empid == employeeId[i]);
                     var addtional = _context.EmployeeAdditionalInfo.FirstOrDefault(ad => ad.Empid == employeeId[i]);
                     var education = _context.EmployeeEducationDetails.FirstOrDefault(ed => ed.Empid == employeeId[i]);
                     var experience = _context.EmployeeExperienceDetails.FirstOrDefault(ex => ex.Empid == employeeId[i]);
-                    var approval = _context.Approvals.FirstOrDefault(app => app.Empid == employeeId[i]);
+                    var approval = _context.Status.FirstOrDefault(app => app.Empid == employeeId[i]);
                     if (login != null && general != null && contact != null && address != null && addtional != null && education != null & education != null && experience != null && approval != null)
                     {
                         login.Status = "D";
@@ -76,9 +77,9 @@ namespace EmployeeOnboarding.Repository
                        select ee.Passoutyear).Max();
             var employeedetails = (from e in _context.EmployeeGeneralDetails
                                    where e.Status == "A"
-                                   join a in _context.Approvals on e.Empid equals a.Empid
+                                   join a in _context.Status on e.Empid equals a.Empid
                                    where a.Status == "A" && a.Approved == null && a.Cancelled == null
-                                   join l in _context.Logins on e.Empid equals l.Empid
+                                   join l in _context.Login on e.Empid equals l.Empid
                                    where l.Status == "A"
                                    join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
                                    where ec.Status == "A"
@@ -194,6 +195,8 @@ namespace EmployeeOnboarding.Repository
             }
             return null;
         }
+        
+
     }
-    */
+
 }

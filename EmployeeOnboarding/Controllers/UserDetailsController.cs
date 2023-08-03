@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeOnboarding.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class UserDetailsController : ControllerBase
@@ -86,4 +87,5 @@ namespace EmployeeOnboarding.Controllers
 
 
     }
+    
 }

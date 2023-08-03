@@ -6,7 +6,7 @@ namespace EmployeeOnboarding.Data.Services
     public class GeneralServices
     {
 
-
+        /*
         private ApplicationDbContext _context;
         public GeneralServices(ApplicationDbContext context)
         {
@@ -174,5 +174,6 @@ namespace EmployeeOnboarding.Data.Services
             return _additional;
 
         }
+        */
     }
 }

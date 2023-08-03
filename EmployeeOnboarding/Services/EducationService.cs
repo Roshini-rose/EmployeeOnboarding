@@ -5,6 +5,7 @@ namespace EmployeeOnboarding.Data.Services
 {
     public class EducationService
     {
+        /*
         private ApplicationDbContext _context;
         public EducationService(ApplicationDbContext context)
         {
@@ -76,6 +77,7 @@ namespace EmployeeOnboarding.Data.Services
           }
           */
 
+        /*
         public void AddEducationUG(string empId, EducationVM education)
         {
             var existingEducation = _context.EmployeeEducationDetails.FirstOrDefault(e => e.Empid == empId && e.programme == "UG");
@@ -136,7 +138,7 @@ namespace EmployeeOnboarding.Data.Services
             }
             else
             {
-                Add new record
+               // Add new record
                 var certificateFileName = "PG_certificate.pdf";
                 var _education = new EmployeeEducationDetails()
                 {
@@ -191,6 +193,6 @@ namespace EmployeeOnboarding.Data.Services
         }
 
 
-
+        */
     }
 }
