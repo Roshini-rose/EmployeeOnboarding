@@ -4,7 +4,7 @@ using FluentMigrator;
 namespace EmployeeOnboarding.Migrations
 {
     [Migration(202308021631)]
-    public class AddGeneral_202308021640 : Migration
+    public class AddGeneral_202308021631 : Migration
     {
 
         public override void Down()
