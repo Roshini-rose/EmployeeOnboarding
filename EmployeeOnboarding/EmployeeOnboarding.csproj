@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Certificates\" />
+    <Folder Include="wwwroot\Uploads\Certificates\" />
   </ItemGroup>
 
 </Project>

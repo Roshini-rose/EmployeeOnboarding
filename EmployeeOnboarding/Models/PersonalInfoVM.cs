@@ -7,10 +7,10 @@ namespace EmployeeOnboarding.Models
         public string Empid { get; set; }
         public string EmpName { get; set; }
         public string FatherName { get; set; }
-        public DateTime DOB { get; set; }
+        public DateOnly DOB { get; set; }
         public string mailId { get; set; }
         public string MaritialStatus { get; set; }
-        public DateTime? DOM { get; set; }
+        public DateOnly? DOM { get; set; }
         public string Gender { get; set; }
         public double Contactno { get; set; }
         public string? ECP { get; set; }

@@ -16,12 +16,12 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
                .WithColumn("Name").AsString(100).NotNullable()
                .WithColumn("EmailId").AsString(100).NotNullable()
-               .WithColumn("Password").AsString(50)
-               .WithColumn("Date_Created").AsDate().NotNullable()
-               .WithColumn("Date_Modified").AsDate()
+               .WithColumn("Password").AsString(50).Nullable()
+               .WithColumn("Date_Created").AsDateTime().NotNullable()
+               .WithColumn("Date_Modified").AsDateTime().NotNullable()
                .WithColumn("Created_By").AsString(100).NotNullable()
-               .WithColumn("Modified_By").AsString(100)
-               .WithColumn("Status").AsBoolean().NotNullable();
+               .WithColumn("Modified_By").AsString(100).NotNullable()
+               .WithColumn("Status").AsString(30).NotNullable();
 
         }
     }

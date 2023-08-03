@@ -14,21 +14,19 @@ namespace EmployeeOnboarding.Migrations
 
         public override void Up()
         {
-            Create.Table("EmployeeEducationDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
-
-               .WithColumn("EmpGen_Id").AsInt32().NotNullable()
-               .WithColumn("Company_name").AsString(100)
-               .WithColumn("Designation").AsString(100)
-               .WithColumn("Reason").AsString(100)
-               .WithColumn("StartDate").AsDate()
-               .WithColumn("EndDate").AsDate()
-               .WithColumn("Exp_Certificate").AsString(100)
-
-               .WithColumn("Date_Created").AsDate().NotNullable()
-               .WithColumn("Date_Modified").AsDate()
+            Create.Table("EmployeeExperienceDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+               .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails", "Id")
+               .WithColumn("Company_name").AsString(100).Nullable()
+               .WithColumn("Designation").AsString(100).Nullable()
+               .WithColumn("Reason").AsString(100).Nullable()
+               .WithColumn("StartDate").AsDate().Nullable()
+               .WithColumn("EndDate").AsDate().Nullable()
+               .WithColumn("Exp_Certificate").AsString(100).Nullable()
+               .WithColumn("Date_Created").AsDateTime().NotNullable()
+               .WithColumn("Date_Modified").AsDateTime().NotNullable()
                .WithColumn("Created_By").AsString(100).NotNullable()
-               .WithColumn("Modified_By").AsString(100)
-               .WithColumn("Status").AsBoolean().NotNullable();
+               .WithColumn("Modified_By").AsString(100).NotNullable()
+               .WithColumn("Status").AsString(30).NotNullable();
 
         }
     }
