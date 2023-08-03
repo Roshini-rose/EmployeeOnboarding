@@ -15,13 +15,13 @@ namespace EmployeeOnboarding.Controllers
 
     public class StatusController : ControllerBase
     {
-       
+
         public onboardstatusService _onboardstatusService;
         public ApplicationDbContext _context;
 
         public StatusController(onboardstatusService onboardstatusService, ApplicationDbContext context)
         {
-            _onboardstatusService=onboardstatusService;
+            _onboardstatusService = onboardstatusService;
             _context = context;
         }
 

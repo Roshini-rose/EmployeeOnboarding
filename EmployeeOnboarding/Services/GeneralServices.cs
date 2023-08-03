@@ -88,13 +88,13 @@ namespace EmployeeOnboarding.Data.Services
                 Contact_no = contact.Contact_no,
                 Emgy_Contactperson = contact.Emgy_Contactperson,
                 Emgy_Contactrelation = contact.Emgy_Contactrelation,
-                Emgy_Contactno = contact.Emgy_Contactno,   
+                Emgy_Contactno = contact.Emgy_Contactno,
             }).FirstOrDefault();
 
             return _contact;
         }
 
-        public void AddAddress(string empId,AddressVM address)
+        public void AddAddress(string empId, AddressVM address)
         {
             var _address = new EmployeeAddressDetails()
             {
@@ -135,7 +135,7 @@ namespace EmployeeOnboarding.Data.Services
 
         //Additional 
         //post
-        public void AddAdditional(string empId,AdditionalVM additional)
+        public void AddAdditional(string empId, AdditionalVM additional)
         {
             var _additional = new EmployeeAdditionalInfo()
             {

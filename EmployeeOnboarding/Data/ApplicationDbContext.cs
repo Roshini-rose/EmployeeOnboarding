@@ -16,7 +16,7 @@ namespace EmployeeOnboarding.Data
         public DbSet<EmployeeAdditionalInfo> EmployeeAdditionalInfo { get; set; }
         public DbSet<EmployeeEducationDetails> EmployeeEducationDetails { get; set; }
         public DbSet<EmployeeExperienceDetails> EmployeeExperienceDetails { get; set; }
-        public DbSet<ApporvalStatus> Status { get; set; }
+        public DbSet<ApprovalStatus> Status { get; set; }
         public DbSet<Country> Country { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<City> City { get; set; }

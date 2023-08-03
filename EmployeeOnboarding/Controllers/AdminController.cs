@@ -14,14 +14,14 @@ namespace EmployeeOnboarding.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IAdminRepository _adminRepository;
-        public AdminController(ApplicationDbContext context,IAdminRepository adminRepository)
+        public AdminController(ApplicationDbContext context, IAdminRepository adminRepository)
         {
             _context = context;
             _adminRepository = adminRepository;
         }
 
         [HttpGet("api/AdminDashboard")]
-        public async Task <List<DashboardVM>> getEmployee() 
+        public async Task<List<DashboardVM>> getEmployee()
         {
             return await _adminRepository.GetEmployeeDetails();
         }
@@ -33,7 +33,7 @@ namespace EmployeeOnboarding.Controllers
         }
 
         [HttpPost("api/GetEmployeeDetails")]
-        public async Task <List<PersonalInfoVM>> GetPersonalInfo(string employee)
+        public async Task<List<PersonalInfoVM>> GetPersonalInfo(string employee)
         {
             return await _adminRepository.GetPersonalInfo(employee);
         }

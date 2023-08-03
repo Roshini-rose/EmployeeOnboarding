@@ -16,11 +16,11 @@ namespace EmployeeOnboarding.Services
         {
             var _logindet = new Login()
             {
-                Empid=logindet.empId,
-                Name=logindet.Name,
-                Emailid=logindet.Emailid,
-                Password=logindet.Password, 
-                Designation=logindet.Designation,
+                Empid = logindet.empId,
+                Name = logindet.Name,
+                Emailid = logindet.Emailid,
+                Password = logindet.Password,
+                Designation = logindet.Designation,
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
                 Created_by = "Admin",
@@ -31,13 +31,13 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-        public async Task<Login> LoginEmp(string Emailid,string Password)
+        public async Task<Login> LoginEmp(string Emailid, string Password)
         {
-            var _succeeded =_context.Logins.FirstOrDefault(n => n.Emailid == Emailid && n.Password == Password);
-            if( _succeeded == null )
+            var _succeeded = _context.Logins.FirstOrDefault(n => n.Emailid == Emailid && n.Password == Password);
+            if (_succeeded == null)
                 return null;
             else
-                return (_succeeded); 
+                return (_succeeded);
         }
     }
 }
