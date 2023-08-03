@@ -37,7 +37,7 @@ namespace EmployeeOnboarding.Services
 
             if (existingExperience != null)
             {
-                // Update existing record
+                Update existing record
                 existingExperience.Company_name = experience.Company_name;
                 existingExperience.Designation = experience.Designation;
                 existingExperience.Totalmonths = experience.Totalmonths;
@@ -51,7 +51,7 @@ namespace EmployeeOnboarding.Services
             }
             else
             {
-                // Add new record
+                Add new record
                 var certificateFileName = "Experience.pdf";
                 var _experience = new EmployeeExperienceDetails()
                 {

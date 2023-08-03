@@ -13,7 +13,7 @@ namespace EmployeeOnboarding.Controllers
         public logindetailsService _logindetailsService;
         private readonly ILogin _loginemp;
 
-        public logindetailsController(ILogin loginemp,logindetailsService logindetailsService)
+        public logindetailsController(ILogin loginemp, logindetailsService logindetailsService)
         {
             _logindetailsService = logindetailsService;
             _loginemp = loginemp;
