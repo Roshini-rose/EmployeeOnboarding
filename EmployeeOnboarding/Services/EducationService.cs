@@ -84,7 +84,7 @@ namespace EmployeeOnboarding.Data.Services
 
             if (existingEducation != null)
             {
-                Update existing record
+             //   Update existing record
                 existingEducation.CollegeName = education.CollegeName;
                 existingEducation.Degree = education.Degree;
                 existingEducation.specialization = education.specialization;
@@ -96,7 +96,7 @@ namespace EmployeeOnboarding.Data.Services
             }
             else
             {
-                Add new record
+              //  Add new record
                 var certificateFileName = "UG_certificate.pdf";
                 var _education = new EmployeeEducationDetails()
                 {
@@ -126,7 +126,7 @@ namespace EmployeeOnboarding.Data.Services
 
             if (existingEducation != null)
             {
-                Update existing record
+                //Update existing record
                 existingEducation.CollegeName = education.CollegeName;
                 existingEducation.Degree = education.Degree;
                 existingEducation.specialization = education.specialization;

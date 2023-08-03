@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace EmployeeOnboarding.Repository
-{
+{ /*
     public class AdminRepository : IAdminRepository
     {
         public readonly ApplicationDbContext _context;
@@ -195,4 +195,5 @@ namespace EmployeeOnboarding.Repository
             return null;
         }
     }
+    */
 }

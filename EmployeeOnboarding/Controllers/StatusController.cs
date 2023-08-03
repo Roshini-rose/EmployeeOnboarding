@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeOnboarding.Controllers
 {
+    /*
     [Route("api/[controller]")]
     [ApiController]
 
@@ -42,16 +43,17 @@ namespace EmployeeOnboarding.Controllers
         [HttpGet("status-dashboard")]
         public async Task<statusdashVM> GetAdminStatusList()
         {
-            var upstatus = await _context.Approvals.ToListAsync();
-            var model = new statusdashVM
-            {
-                TotalRequests = upstatus.Count,
-                ApprovedRequests = upstatus.Count(q => q.Approved == true),
-                // PendingRequests = leaveRequests.Count(q => q.Cancelled == null),
-                RejectedRequests = upstatus.Count(q => q.Cancelled == true),
-            };
+            ////var upstatus = await _context.Approvals.ToListAsync();
+            ////var model = new statusdashVM
+            ////{
+            ////    TotalRequests = upstatus.Count,
+            ////    ApprovedRequests = upstatus.Count(q => q.Approved == true),
+            ////    // PendingRequests = leaveRequests.Count(q => q.Cancelled == null),
+            ////    RejectedRequests = upstatus.Count(q => q.Cancelled == true),
+            ////};
 
-            return model;
+            ////return model;
         }
     }
+    */
 }
