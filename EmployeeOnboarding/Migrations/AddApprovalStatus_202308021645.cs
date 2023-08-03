@@ -13,7 +13,7 @@ namespace EmployeeOnboarding.Migrations
 
         public override void Up()
         {
-            Create.Table("ApprovalStatus").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+            Create.Table("ApprovalStatus")
                 .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails", "Id")
                 .WithColumn("Current_Status").AsInt32().NotNullable()
