@@ -58,7 +58,7 @@ app.UseHttpsRedirection();
 using (var scope = app.Services.CreateScope())
 {
     {
-        var db = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+        var db=scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
         db.MigrateUp();
     }
 }
