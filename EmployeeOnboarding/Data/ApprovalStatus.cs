@@ -2,7 +2,7 @@
 
 namespace EmployeeOnboarding.Data
 {
-    public class ApporvalStatus
+    public class ApprovalStatus
     {
         public int Id { get; set; }
         [ForeignKey("EmpGen_Id")]

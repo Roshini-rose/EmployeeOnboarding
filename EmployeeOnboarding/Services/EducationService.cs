@@ -11,8 +11,6 @@ namespace EmployeeOnboarding.Data.Services
             _context = context;
         }
 
-
-
         private string SaveCertificateFile(IFormFile certificateFile, string empId, string fileName)
         {
             var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", empId);

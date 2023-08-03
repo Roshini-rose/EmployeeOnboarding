@@ -17,7 +17,6 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Name").AsString(100).NotNullable()
                .WithColumn("EmailId").AsString(100).NotNullable()
                .WithColumn("Password").AsString(50)
-
                .WithColumn("Date_Created").AsDate().NotNullable()
                .WithColumn("Date_Modified").AsDate()
                .WithColumn("Created_By").AsString(100).NotNullable()
