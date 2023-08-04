@@ -7,7 +7,7 @@ namespace EmployeeOnboarding.Services
     
     public class WorkExperienceService
     {
-
+        /*
         private ApplicationDbContext _context;
         public WorkExperienceService(ApplicationDbContext context)
         {
@@ -93,7 +93,7 @@ namespace EmployeeOnboarding.Services
 
             return _education;
         }
-    
+    */
     }
 }
 */

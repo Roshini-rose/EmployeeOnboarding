@@ -30,6 +30,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultCOnnect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
 //builder.Services.AddTransient<onboardstatusService>();
+builder.Services.AddTransient<logindetailsService>();
+//builder.Services.AddTransient<EducationService>();
+builder.Services.AddTransient<WorkExperienceService>();
+builder.Services.AddTransient<IAdminRepository, AdminRepository>();
+//builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 //builder.Services.AddTransient<logindetailsService>();
 builder.Services.AddTransient<EducationService>();
 //builder.Services.AddTransient<WorkExperienceService>();
