@@ -13,28 +13,26 @@ namespace EmployeeOnboarding.Services
         {
             _context = context;
         }
-        public void LoginDetails(logindetailsVM logindet)
+        public void LoginInvite(logininviteVM logindet)
         {
             var _logindet = new Login()
             {
-                Empid = logindet.empId,
                 Name = logindet.Name,
-                Emailid = logindet.Emailid,
-                Password = logindet.Password,
-                Designation = logindet.Designation,
+                EmailId = logindet.Emailid,
+                //Password = logindet.Password,
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_by = "Admin",
-                Modified_by = "Admin",
-                Status = "Created",
+                Created_By = "Admin",
+                Modified_By = "Admin",
+                Status = "Invited",
             };
-            _context.Logins.Add(_logindet);
+            _context.Login.Add(_logindet);
             _context.SaveChanges();
         }
 
         public async Task<Login> LoginEmp(string Emailid, string Password)
         {
-            var _succeeded = _context.Logins.FirstOrDefault(n => n.Emailid == Emailid && n.Password == Password);
+            var _succeeded = _context.Login.FirstOrDefault(n => n.EmailId == Emailid && n.Password == Password);
             if (_succeeded == null)
                 return null;
             else

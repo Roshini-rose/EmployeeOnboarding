@@ -1,8 +1,7 @@
 ﻿namespace EmployeeOnboarding.ViewModels
 {
-    public class logindetailsVM
+    public class loginconfirmVM
     {
-       // public string Name { get; set; }
         public string Emailid { get; set; }
         public string Password { get; set; }
     }

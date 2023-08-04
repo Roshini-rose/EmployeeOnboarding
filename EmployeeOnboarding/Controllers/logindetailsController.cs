@@ -21,11 +21,11 @@ namespace EmployeeOnboarding.Controllers
             _loginemp = loginemp;
         }
 
-        [HttpPost("add-logindetails")]
-        public IActionResult LoginDetails([FromBody] logindetailsVM logindetails)
+        [HttpPost("add-userLoginInvite")]
+        public IActionResult LoginDetails([FromBody] logininviteVM logindetails)
         {
-            _logindetailsService.LoginDetails(logindetails);
-            return Ok("Created");
+            _logindetailsService.LoginInvite(logindetails);
+            return Ok("Invite Sent");
         }
 
         [HttpPost("employee-login")]
@@ -41,6 +41,20 @@ namespace EmployeeOnboarding.Controllers
             else
             {
                 return Ok("Invaild");
+            }
+        }
+
+        [HttpPost("admin-login")]
+        public IActionResult AdminLogins(string email, string password)
+        {
+
+            if (email=="admin@ideassion.com" && password =="admin123")
+            {
+                return Ok("Admin Logged in");
+            }
+            else
+            {
+                return Ok("Not Admin");
             }
         }
     }

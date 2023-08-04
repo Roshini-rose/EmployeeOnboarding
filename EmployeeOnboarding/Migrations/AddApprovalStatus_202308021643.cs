@@ -8,6 +8,7 @@ namespace EmployeeOnboarding.Migrations
         public override void Down()
         {
             Delete.ForeignKey().FromTable("ApprovalStatus").ForeignColumn("EmpGen_Id").ToTable("EmployeeGeneralDetails").PrimaryColumn("Id");
+            Delete.ForeignKey().FromTable("ApprovalStatus").ForeignColumn("Login_Id").ToTable("Login").PrimaryColumn("Id");
             Delete.Table("ApprovalStatus");
         }
 
@@ -15,6 +16,7 @@ namespace EmployeeOnboarding.Migrations
         {
             Create.Table("ApprovalStatus")
                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+               .WithColumn("Login_Id").AsInt32().NotNullable().ForeignKey("Login","Id")
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails", "Id")
                .WithColumn("Current_Status").AsInt32().NotNullable()
                .WithColumn("Comments").AsString(150).Nullable()
