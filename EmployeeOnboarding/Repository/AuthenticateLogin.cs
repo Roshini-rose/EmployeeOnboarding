@@ -13,13 +13,13 @@ namespace EmployeeOnboarding.Repository
         }
         public async Task<Login> AuthenticateEmp(string email, string password)
         {
-            var succeeded = _context.Logins.FirstOrDefault(authUser => authUser.Emailid == email && authUser.Password == password);
+            var succeeded = _context.Login.FirstOrDefault(authUser => authUser.EmailId == email && authUser.Password == password);
             return succeeded;
         }
 
         public async Task<IEnumerable<Login>> getemp()
         {
-            return _context.Logins.ToList();
+            return _context.Login.ToList();
         }
     }
 }

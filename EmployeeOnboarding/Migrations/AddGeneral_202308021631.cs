@@ -1,5 +1,4 @@
-﻿
-using EmployeeOnboarding.Data.Enum;
+﻿using EmployeeOnboarding.Data.Enum;
 using FluentMigrator;
 namespace EmployeeOnboarding.Migrations
 {

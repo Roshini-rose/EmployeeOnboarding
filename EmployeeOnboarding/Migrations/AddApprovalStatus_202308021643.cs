@@ -15,6 +15,7 @@ namespace EmployeeOnboarding.Migrations
         {
             Create.Table("ApprovalStatus")
                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+               .WithColumn("Login_Id").AsInt32().NotNullable().ForeignKey("Login", "Id")
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails", "Id")
                .WithColumn("Current_Status").AsInt32().NotNullable()
                .WithColumn("Comments").AsString(150)
@@ -22,7 +23,7 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Date_Modified").AsDate()
                .WithColumn("Created_By").AsString(100).NotNullable()
                .WithColumn("Modified_By").AsString(100)
-               .WithColumn("Status").AsBoolean().NotNullable();
+               .WithColumn("Status").AsString(30).NotNullable();
         }
     }
 }

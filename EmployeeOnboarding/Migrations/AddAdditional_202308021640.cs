@@ -26,7 +26,7 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Date_Modified").AsDate()
                .WithColumn("Created_By").AsString(100).NotNullable()
                .WithColumn("Modified_By").AsString(100)
-               .WithColumn("Status").AsBoolean().NotNullable();
+               .WithColumn("Status").AsString(30).NotNullable();
 
         }
     }

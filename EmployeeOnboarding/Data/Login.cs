@@ -10,8 +10,8 @@ namespace EmployeeOnboarding.Data
         public string? Password { get; set; }
         public DateTime Date_Created { get; set; }
         public DateTime? Date_Modified { get; set; }
-        public string Created_by { get; set; }
-        public string? Modified_by { get; set; }
+        public string Created_By { get; set; }
+        public string? Modified_By { get; set; }
         public string Status { get; set; }
 
     }

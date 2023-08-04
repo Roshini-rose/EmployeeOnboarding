@@ -14,7 +14,7 @@ namespace EmployeeOnboarding.Migrations
 
         public override void Up()
         {
-            Create.Table("EmployeeEducationDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+            Create.Table("EmployeeExperienceDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 
                .WithColumn("EmpGen_Id").AsInt32().NotNullable()
                .WithColumn("Company_name").AsString(100)
@@ -28,7 +28,7 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Date_Modified").AsDate()
                .WithColumn("Created_By").AsString(100).NotNullable()
                .WithColumn("Modified_By").AsString(100)
-               .WithColumn("Status").AsBoolean().NotNullable();
+               .WithColumn("Status").AsString(30).NotNullable();
 
         }
     }
