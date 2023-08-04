@@ -243,7 +243,11 @@ public byte[] GetFile(string filepath)
 
         public async Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
         {
-            var address = (from e in _context.EmployeeGeneralDetails where e.Id == id join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id select ea).ToArray();
+            var address=(from e in _context.EmployeeGeneralDetails where e.Id== id join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id select ea).ToArray();
+            var degree=(from e in _context.EmployeeGeneralDetails where e.Id == id join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id select ed).ToArray();
+            var experience = (from e in _context.EmployeeEducationDetails where e.Id == id join ex in _context.EmployeeExperienceDetails on e.Id equals ex.EmpGen_Id select ex).ToArray();
+            var employeedetails = (from e in _context.EmployeeGeneralDetails where e.Id == id select e);
+           /* var address = (from e in _context.EmployeeGeneralDetails where e.Id == id join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id select ea).ToArray();
             var degree = (from e in _context.EmployeeGeneralDetails where e.Id == id join ee in _context.EmployeeEducationDetails on e.Id equals ee.EmpGen_Id select ee).ToArray();
             var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Id == id join eed in _context.EmployeeExperienceDetails on e.Id equals eed.EmpGen_Id select eed).ToArray();
             var employeepersonal = (from e in _context.EmployeeGeneralDetails
@@ -304,7 +308,7 @@ public byte[] GetFile(string filepath)
                                         experienceVMs = Experrience(id)
                                     }).ToList();
 
-            return employeepersonal;
+            return employeepersonal;*/
         }
     }
 
