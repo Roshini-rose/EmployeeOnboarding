@@ -5,6 +5,7 @@ namespace EmployeeOnboarding.Repository
 {
     public class AuthenticateLogin : ILogin
     {
+        
         private readonly ApplicationDbContext _context;
 
         public AuthenticateLogin(ApplicationDbContext context)
@@ -13,7 +14,7 @@ namespace EmployeeOnboarding.Repository
         }
         public async Task<Login> AuthenticateEmp(string email, string password)
         {
-            var succeeded = _context.Login.FirstOrDefault(authUser => authUser.EmailId == email && authUser.Password == password);
+            var succeeded = _context.Login.FirstOrDefault(authUser => authUser.Emailid == email && authUser.Password == password);
             return succeeded;
         }
 
@@ -21,5 +22,6 @@ namespace EmployeeOnboarding.Repository
         {
             return _context.Login.ToList();
         }
+        
     }
 }

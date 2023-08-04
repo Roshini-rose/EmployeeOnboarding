@@ -16,19 +16,18 @@ namespace EmployeeOnboarding.Migrations
         public override void Up()
         {
             Create.Table("EmployeeAddressDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
-               .WithColumn("EmpGen_Id").AsInt32().NotNullable()
+               .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails","Id")
                .WithColumn("Address_Type").AsString().NotNullable()
                .WithColumn("Address").AsString().NotNullable()
                .WithColumn("Country_Id").AsInt32().NotNullable()
                .WithColumn("State_Id").AsInt32().NotNullable()
                .WithColumn("City_Id").AsInt32().NotNullable()
-                .WithColumn("Pincode").AsString().NotNullable()
-
-               .WithColumn("Date_Created").AsDate().NotNullable()
-               .WithColumn("Date_Modified").AsDate().NotNullable()
-               .WithColumn("Created_by").AsString().NotNullable()
-               .WithColumn("Modified_by").AsString().NotNullable()
-               .WithColumn("Status").AsString().NotNullable();
+               .WithColumn("Pincode").AsString().NotNullable()
+               .WithColumn("Date_Created").AsDateTime().Nullable()
+               .WithColumn("Date_Modified").AsDateTime().NotNullable()
+               .WithColumn("Created_by").AsString(100).NotNullable()
+               .WithColumn("Modified_by").AsString(100).Nullable()
+               .WithColumn("Status").AsString(30).NotNullable();
         }
 
     }

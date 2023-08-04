@@ -6,6 +6,7 @@ using EmployeeOnboarding.ViewModels;
 
 namespace EmployeeOnboarding.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class logindetailsController : ControllerBase
@@ -56,4 +57,5 @@ namespace EmployeeOnboarding.Controllers
             }
         }
     }
+    
 }

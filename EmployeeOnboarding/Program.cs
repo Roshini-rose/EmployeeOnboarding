@@ -30,8 +30,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 //builder.Services.AddTransient<onboardstatusService>();
 builder.Services.AddTransient<logindetailsService>();
-
-
+builder.Services.AddTransient<EducationService>();
+builder.Services.AddTransient<WorkExperienceService>();
+builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
     .AddFluentMigratorCore()
