@@ -216,7 +216,7 @@ namespace EmployeeOnboarding.Repository
         {
             var InvitedDetails = (from l in _context.Login
                                   where l.Status == "A"
-                                  join a in _context.Status on l.Id equals a.Login_Id
+                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
                                   where a.Status == "A" && a.Current_Status == 4
                                   select new Dashboard1VM()
                                   {
@@ -233,7 +233,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>> GetPendingEmployeeDetails()
         {
             var PendingDetails = (from l in _context.Login where l.Status == "A"
-                                  join a in _context.Status on l.Id equals a.Login_Id where a.Status == "A" && a.Current_Status == 2
+                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id where a.Status == "A" && a.Current_Status == 2
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,

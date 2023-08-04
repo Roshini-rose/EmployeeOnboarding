@@ -18,7 +18,6 @@ namespace EmployeeOnboarding.Data
         public string Created_By { get; set; }
         public string? Modified_By { get; set; }
         public string Status { get; set; }
-        [ForeignKey("Login_Id")]
-        public int Login_Id { get;  set; }
+        
     }
 }
