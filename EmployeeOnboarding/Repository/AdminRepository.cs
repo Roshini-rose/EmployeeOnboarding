@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using EmployeeOnboarding.Contracts;
 using EmployeeOnboarding.Data;
@@ -23,7 +23,17 @@ namespace EmployeeOnboarding.Repository
             _context = context;
         }
 
-        public async Task DeleteEmployee(string[] employeeId)
+        public Task DeleteEmployee(string[] employeeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<DashboardVM>> GetEmployeeDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        /*public async Task DeleteEmployee(string[] employeeId)
         {
             for (int i = 0; i < employeeId.Count(); i++)
             {
@@ -160,8 +170,8 @@ namespace EmployeeOnboarding.Repository
                                     }).ToList();
 
             return employeepersonal;
-        }
-        public List<ExperienceVM> Experrience(string employeeid)
+        }*/
+        /*public List<ExperienceVM> Experrience(string employeeid)
         {
             List<ExperienceVM> exVM = new List<ExperienceVM>();
             var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join eed in _context.EmployeeExperienceDetails on e.Empid equals eed.Empid select eed);
@@ -181,6 +191,11 @@ namespace EmployeeOnboarding.Repository
             return exVM;
         }
 
+        public Task<List<DashboardVM>> GetEmployeeDetails()
+        {
+            throw new NotImplementedException();
+        }
+
         public byte[] GetFile(string filepath)
         {
             if (System.IO.File.Exists(filepath))
@@ -195,12 +210,30 @@ namespace EmployeeOnboarding.Repository
                 return file;
             }
             return null;
+        }*/
+
+        public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
+        {
+            var InvitedDetails = (from l in _context.Login
+                                  where l.Status == "A"
+                                  join a in _context.Status on l.Id equals a.Login_Id
+                                  where a.Status == "A" && a.Current_Status == 4
+                                  select new Dashboard1VM()
+                                  {
+                                      Login_Id = l.Id,
+                                      //EmpGen_Id = a.EmpGen_Id,
+                                      Name = l.Name,
+                                      DateModified = a.Date_Modified,
+                                      Email_id = l.EmailId,
+                                      Current_Status = a.Current_Status
+                                  }).ToList();
+            return InvitedDetails;
         }
 
         public async Task<List<Dashboard1VM>> GetPendingEmployeeDetails()
         {
             var PendingDetails = (from l in _context.Login where l.Status == "A"
-                                  join a in _context.Status on l.Id equals a.Id where a.Status == "A" && a.Current_Status == 2
+                                  join a in _context.Status on l.Id equals a.Login_Id where a.Status == "A" && a.Current_Status == 2
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -211,7 +244,7 @@ namespace EmployeeOnboarding.Repository
                                       Current_Status = a.Current_Status
                                   }).ToList();
             return PendingDetails;
-            *//*var employeedetails = (from e in _context.EmployeeGeneralDetails
+            /*var employeedetails = (from e in _context.EmployeeGeneralDetails
                                    where e.Status == "A"
                                    join a in _context.Status on e.Empid equals a.Empid
                                    where a.Status == "A" && a.Approved == null && a.Cancelled == null
@@ -230,9 +263,13 @@ namespace EmployeeOnboarding.Repository
                                        Email = l.Emailid,
                                        education = ee.Degree
                                    }).ToList();
-            return employeedetails;*//*
+            return employeedetails;*/
+        }
+
+        public Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 
 }
-*/

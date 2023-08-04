@@ -24,7 +24,6 @@ namespace EmployeeOnboarding.Repository
         {
             return _context.Login.ToList();
         }
-        */
-    }
+         }
 }
 */
