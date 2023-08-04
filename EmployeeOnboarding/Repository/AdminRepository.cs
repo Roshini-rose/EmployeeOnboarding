@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+﻿/*using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using EmployeeOnboarding.Contracts;
 using EmployeeOnboarding.Data;
@@ -211,7 +211,7 @@ namespace EmployeeOnboarding.Repository
                                       Current_Status = a.Current_Status
                                   }).ToList();
             return PendingDetails;
-            /*var employeedetails = (from e in _context.EmployeeGeneralDetails
+            *//*var employeedetails = (from e in _context.EmployeeGeneralDetails
                                    where e.Status == "A"
                                    join a in _context.Status on e.Empid equals a.Empid
                                    where a.Status == "A" && a.Approved == null && a.Cancelled == null
@@ -230,8 +230,9 @@ namespace EmployeeOnboarding.Repository
                                        Email = l.Emailid,
                                        education = ee.Degree
                                    }).ToList();
-            return employeedetails;*/
+            return employeedetails;*//*
         }
     }
 
 }
+*/

@@ -4,6 +4,7 @@ using NuGet.Protocol.Plugins;
 using EmployeeOnboarding.Data.Services;
 using EmployeeOnboarding.Models;
 using EmployeeOnboarding.ViewModels;
+using OnboardingWebsite.Models;
 //using EmployeeOnboarding.Services;
 
 namespace EmployeeOnboarding.Controllers
@@ -47,7 +48,7 @@ namespace EmployeeOnboarding.Controllers
         }
 
 */
-        [HttpGet("get-UG-education/{id}")]
+ /*       [HttpGet("get-UG-education/{id}")]
         public IActionResult GetEducationUG(string id)
         {
             var education = _educationService.GetEducationUG(id);
@@ -59,7 +60,7 @@ namespace EmployeeOnboarding.Controllers
         {
             var education = _educationService.GetEducationPG(id);
             return Ok(education);
-        }
+        }*/
 
 /*        [HttpGet("get-experience/{id}")]
         public IActionResult GetExperience(string id)
