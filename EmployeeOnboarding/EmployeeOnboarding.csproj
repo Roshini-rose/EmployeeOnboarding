@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Certificates\**" />
-    <Content Remove="Certificates\**" />
-    <EmbeddedResource Remove="Certificates\**" />
-    <None Remove="Certificates\**" />
+    <Compile Remove="wwwroot\Uploads\Certificates\**" />
+    <Content Remove="wwwroot\Uploads\Certificates\**" />
+    <EmbeddedResource Remove="wwwroot\Uploads\Certificates\**" />
+    <None Remove="wwwroot\Uploads\Certificates\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Certificates\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
