@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using EmployeeOnboarding.Data;
 using EmployeeOnboarding.ViewModels;
+using EmployeeOnboarding.Data.Enum;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeOnboarding.Services
 {
@@ -13,41 +15,49 @@ namespace EmployeeOnboarding.Services
         {
             _context = context;
         }
-        public void ChangeApprovalStatus(string Empid)
+        public void ChangeApprovalStatus(int Empid,onboardstatusVM onboardstatus)
         {
-            var _onboard = new ApporvalStatus()
+            var _onboard = new ApprovalStatus()
             {
-                Empid = Empid,
-                Approved = true,
-                Cancelled = false,
+                Login_Id = Empid,
+                EmpGen_Id = Empid,
+                Current_Status = (int)Status.Approved,
+                Comments="",
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_by = "Admin",
-                Modified_by = "Admin",
-                Status = "Active",
+                Created_By = "Admin",
+                Modified_By = "Admin",
+                Status = Status.Approved.ToString(),
             };
-            _context.Approvals.Add(_onboard);
+            _context.ApprovalStatus.Add(_onboard);
+            _context.SaveChanges();
+
+            var official = _context.EmployeeGeneralDetails.FirstOrDefault(e => e.Login_ID == Empid);
+
+            official.Empid = onboardstatus.Emp_id;
+            official.Official_EmailId = onboardstatus.Official_EmailId;
+
+            _context.EmployeeGeneralDetails.Update(official);
             _context.SaveChanges();
         }
 
-        public void ChangeCancelStatus(string Empid)
+        public void ChangeCancelStatus(int Empid,commentVM onboardstatus)
         {
-            var _onboard = new ApporvalStatus()
+            var _onboard = new ApprovalStatus()
             {
-                Empid = Empid,
-                Approved = false,
-                Cancelled = true,
+                Login_Id = Empid,
+                EmpGen_Id = Empid,
+                Current_Status = (int)Status.Rejected,
+                Comments = onboardstatus.Comments,
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_by = "Admin",
-                Modified_by = "Admin",
-                Status = "Active",
+                Created_By = "Admin",
+                Modified_By = "Admin",
+                Status = Status.Rejected.ToString(),
             };
-            _context.Approvals.Add(_onboard);
+            _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
         }
-
-
 
     }
     

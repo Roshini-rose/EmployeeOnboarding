@@ -2,8 +2,7 @@
 {
     public class onboardstatusVM
     {
-        //public string Empid { get; set; }
-       // public bool? Approved { get; set; }
-        //public bool? Cancelled { get; set; }
+        public string Emp_id { get; set; }
+        public string Official_EmailId { get; set; }
     }
 }
