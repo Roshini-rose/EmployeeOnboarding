@@ -29,17 +29,12 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultCOnnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
-//builder.Services.AddTransient<onboardstatusService>();
+builder.Services.AddTransient<onboardstatusService>();
 builder.Services.AddTransient<logindetailsService>();
-//builder.Services.AddTransient<EducationService>();
+builder.Services.AddTransient<EducationService>();
 builder.Services.AddTransient<WorkExperienceService>();
 builder.Services.AddTransient<IAdminRepository, AdminRepository>();
-//builder.Services.AddScoped<ILogin, AuthenticateLogin>();
-//builder.Services.AddTransient<logindetailsService>();
-builder.Services.AddTransient<EducationService>();
-//builder.Services.AddTransient<WorkExperienceService>();
-//builder.Services.AddTransient<IAdminRepository, AdminRepository>();
-//builder.Services.AddScoped<ILogin, AuthenticateLogin>();
+builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
     .AddFluentMigratorCore()
     .ConfigureRunner(c => c.AddPostgres().WithGlobalConnectionString("DefaultConnection")
