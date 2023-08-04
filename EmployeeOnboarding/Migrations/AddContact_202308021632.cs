@@ -23,10 +23,10 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Emgy_Contactperson").AsString().Nullable()
                .WithColumn("Emgy_Contactrelation").AsInt32().Nullable()
                .WithColumn("Emgy_Contactno").AsDouble().Nullable()
-               .WithColumn("Date_Created").AsDate().Nullable()
+               .WithColumn("Date_Created").AsDate().NotNullable()
                .WithColumn("Date_Modified").AsDate().NotNullable()
                .WithColumn("Created_by").AsString().NotNullable()
-               .WithColumn("Modified_by").AsString().Nullable()
+               .WithColumn("Modified_by").AsString().NotNullable()
                .WithColumn("Status").AsString().NotNullable();
 
         }

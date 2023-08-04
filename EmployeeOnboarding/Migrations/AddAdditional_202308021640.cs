@@ -23,9 +23,9 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Vacc_Certificate").AsString(100)
 
                .WithColumn("Date_Created").AsDate().NotNullable()
-               .WithColumn("Date_Modified").AsDate()
+               .WithColumn("Date_Modified").AsDate().NotNullable()
                .WithColumn("Created_By").AsString(100).NotNullable()
-               .WithColumn("Modified_By").AsString(100)
+               .WithColumn("Modified_By").AsString(100).NotNullable()
                .WithColumn("Status").AsString(30).NotNullable();
 
         }

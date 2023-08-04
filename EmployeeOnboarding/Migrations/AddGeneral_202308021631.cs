@@ -26,10 +26,10 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("DateOfMarriage").AsDate().Nullable()
                .WithColumn("BloodGrp").AsString().NotNullable()
 
-               .WithColumn("Date_Created").AsDate().Nullable()
+               .WithColumn("Date_Created").AsDate().NotNullable()
                .WithColumn("Date_Modified").AsDate().NotNullable()
                .WithColumn("Created_by").AsString().NotNullable()
-               .WithColumn("Modified_by").AsString().Nullable()
+               .WithColumn("Modified_by").AsString().NotNullable()
                .WithColumn("Status").AsString().NotNullable();
 
         }

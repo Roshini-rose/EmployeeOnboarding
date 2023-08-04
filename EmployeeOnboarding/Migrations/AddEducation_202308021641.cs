@@ -24,9 +24,9 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Passoutyear").AsInt32().NotNullable()
                .WithColumn("Certificate").AsString(100).NotNullable()
                .WithColumn("Date_Created").AsDate().NotNullable()
-               .WithColumn("Date_Modified").AsDate()
-               .WithColumn("Created_By").AsString(100).NotNullable()
-               .WithColumn("Modified_By").AsString(100)
+               .WithColumn("Date_Modified").AsDate().NotNullable()
+               .WithColumn("Created_by").AsString(100).NotNullable()
+               .WithColumn("Modified_by").AsString(100).NotNullable()
                .WithColumn("Status").AsString(30).NotNullable();
 
         }
