@@ -270,6 +270,11 @@ namespace EmployeeOnboarding.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<List<Dashboard1VM>> GetRejectedEmployeeDetails()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
