@@ -6,12 +6,12 @@ using EmployeeOnboarding.ViewModels;
 
 namespace EmployeeOnboarding.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class logindetailsController : ControllerBase
     {
-        
+
         public logindetailsService _logindetailsService;
         private readonly ILogin _loginemp;
 
@@ -48,7 +48,7 @@ namespace EmployeeOnboarding.Controllers
         public IActionResult AdminLogins(string email, string password)
         {
 
-            if (email=="admin@ideassion.com" && password =="admin123")
+            if (email == "admin@ideassion.com" && password == "admin123")
             {
                 return Ok("Admin Logged in");
             }
@@ -58,5 +58,5 @@ namespace EmployeeOnboarding.Controllers
             }
         }
     }
-    
+
 }
