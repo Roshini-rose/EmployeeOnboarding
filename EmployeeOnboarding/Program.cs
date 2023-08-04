@@ -1,7 +1,7 @@
-using EmployeeOnboarding.Contracts;
+//using EmployeeOnboarding.Contracts;
 using EmployeeOnboarding.Data;
-using EmployeeOnboarding.Services;
-using EmployeeOnboarding.Repository;
+/*using EmployeeOnboarding.Services;
+using EmployeeOnboarding.Repository;*/
 using Microsoft.EntityFrameworkCore;
 using EmployeeOnboarding.Data.Services;
 using FluentMigrator.Runner;
@@ -28,14 +28,10 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultCOnnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
-builder.Services.AddTransient<GeneralServices>();
-builder.Services.AddTransient<onboardstatusService>();
-builder.Services.AddTransient<logindetailsService>();
-builder.Services.AddTransient<EducationService>();
-builder.Services.AddTransient<WorkExperienceService>();
-builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 
-builder.Services.AddScoped<ILogin, AuthenticateLogin>();
+builder.Services.AddTransient<EducationService>();
+//builder.Services.AddTransient<WorkExperienceService>();
+
 builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
     .AddFluentMigratorCore()
     .ConfigureRunner(c => c.AddPostgres().WithGlobalConnectionString("DefaultConnection")
