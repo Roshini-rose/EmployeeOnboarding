@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Certificates\**" />
+    <Compile Remove="wwwroot\**" />
     <Content Remove="Certificates\**" />
+    <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="Certificates\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="Certificates\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,10 +34,6 @@
     <PackageReference Include="Npgsql" Version="7.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\Uploads\Certificates\" />
   </ItemGroup>
 
 </Project>
