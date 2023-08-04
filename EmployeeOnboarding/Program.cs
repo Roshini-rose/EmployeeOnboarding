@@ -1,12 +1,13 @@
-using EmployeeOnboarding.Contracts;
+//using EmployeeOnboarding.Contracts;
 using EmployeeOnboarding.Data;
-using EmployeeOnboarding.Services;
-using EmployeeOnboarding.Repository;
+//using EmployeeOnboarding.Services;
+//using EmployeeOnboarding.Repository;
 using Microsoft.EntityFrameworkCore;
 //using EmployeeOnboarding.Data.Services;
 using FluentMigrator.Runner;
 using System.Reflection;
 using EmployeeOnboarding.Migrations;
+using EmployeeOnboarding.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 //Cors Policy
@@ -33,6 +34,11 @@ builder.Services.AddTransient<logindetailsService>();
 //builder.Services.AddTransient<EducationService>();
 builder.Services.AddTransient<WorkExperienceService>();
 builder.Services.AddTransient<IAdminRepository, AdminRepository>();
+//builder.Services.AddScoped<ILogin, AuthenticateLogin>();
+//builder.Services.AddTransient<logindetailsService>();
+builder.Services.AddTransient<EducationService>();
+//builder.Services.AddTransient<WorkExperienceService>();
+//builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 //builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
     .AddFluentMigratorCore()

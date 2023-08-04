@@ -16,7 +16,7 @@ namespace EmployeeOnboarding.Repository
         }
         public async Task<Login> AuthenticateEmp(string email, string password)
         {
-            var succeeded = _context.Login.FirstOrDefault(authUser => authUser.Emailid == email && authUser.Password == password);
+            var succeeded = _context.Login.FirstOrDefault(authUser => authUser.EmailId == email && authUser.Password == password);
             return succeeded;
         }
 
