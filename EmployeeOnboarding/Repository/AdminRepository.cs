@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace EmployeeOnboarding.Repository
 { 
@@ -195,8 +196,42 @@ namespace EmployeeOnboarding.Repository
             }
             return null;
         }
-        
 
+        public async Task<List<Dashboard1VM>> GetPendingEmployeeDetails()
+        {
+            var PendingDetails = (from l in _context.Login where l.Status == "A"
+                                  join a in _context.Status on l.Id equals a.Id where a.Status == "A" && a.Current_Status == 2
+                                  select new Dashboard1VM()
+                                  {
+                                      Login_Id = l.Id,
+                                      EmpGen_Id = a.EmpGen_Id,
+                                      Name = l.Name,
+                                      DateModified = a.Date_Modified,
+                                      Email_id = l.EmailId,
+                                      Current_Status = a.Current_Status
+                                  }).ToList();
+            return PendingDetails;
+            /*var employeedetails = (from e in _context.EmployeeGeneralDetails
+                                   where e.Status == "A"
+                                   join a in _context.Status on e.Empid equals a.Empid
+                                   where a.Status == "A" && a.Approved == null && a.Cancelled == null
+                                   join l in _context.Login on e.Empid equals l.Empid
+                                   where l.Status == "A"
+                                   join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
+                                   where ec.Status == "A"
+                                   join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
+                                   where ee.Passoutyear == deg && ee.Status == "A"
+                                   select new DashboardVM()
+                                   {
+                                       Empid = e.Empid,
+                                       Empname = e.EmployeeName,
+                                       designation = l.Designation,
+                                       Contact = ec.Contact_no,
+                                       Email = l.Emailid,
+                                       education = ee.Degree
+                                   }).ToList();
+            return employeedetails;*/
+        }
     }
 
 }

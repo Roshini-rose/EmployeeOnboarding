@@ -6,7 +6,9 @@ namespace EmployeeOnboarding.Contracts
 {
     public interface IAdminRepository
     {
-      Task <List<DashboardVM>> GetEmployeeDetails();
+      Task <List<Dashboard1VM>> GetPendingEmployeeDetails();
+        Task<List<DashboardVM>> GetEmployeeDetails();
+
       Task DeleteEmployee(string[] employeeId);   
         
         Task <List<PersonalInfoVM>>? GetPersonalInfo(string employeeid);

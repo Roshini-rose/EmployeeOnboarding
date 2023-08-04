@@ -11,6 +11,7 @@ namespace EmployeeOnboarding.Controllers
     [ApiController]
     public class logindetailsController : ControllerBase
     {
+        
         public logindetailsService _logindetailsService;
         private readonly ILogin _loginemp;
 
