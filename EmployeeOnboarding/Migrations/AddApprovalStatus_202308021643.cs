@@ -8,6 +8,7 @@ namespace EmployeeOnboarding.Migrations
         public override void Down()
         {
             Delete.ForeignKey().FromTable("ApprovalStatus").ForeignColumn("EmpGen_Id").ToTable("EmployeeGeneralDetails").PrimaryColumn("Id");
+            Delete.ForeignKey().FromTable("ApprovalStatus").ForeignColumn("Login_Id").ToTable("Login").PrimaryColumn("Id");
             Delete.Table("ApprovalStatus");
         }
 
@@ -15,14 +16,15 @@ namespace EmployeeOnboarding.Migrations
         {
             Create.Table("ApprovalStatus")
                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+               .WithColumn("Login_Id").AsInt32().NotNullable().ForeignKey("Login","Id")
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails", "Id")
                .WithColumn("Current_Status").AsInt32().NotNullable()
-               .WithColumn("Comments").AsString(150)
-               .WithColumn("Date_Created").AsDate().NotNullable()
-               .WithColumn("Date_Modified").AsDate()
+               .WithColumn("Comments").AsString(150).Nullable()
+               .WithColumn("Date_Created").AsDateTime().NotNullable()
+               .WithColumn("Date_Modified").AsDateTime().Nullable()
                .WithColumn("Created_By").AsString(100).NotNullable()
-               .WithColumn("Modified_By").AsString(100)
-               .WithColumn("Status").AsString(100).NotNullable();
+               .WithColumn("Modified_By").AsString(100).Nullable()
+               .WithColumn("Status").AsString(30).NotNullable();
         }
     }
 }

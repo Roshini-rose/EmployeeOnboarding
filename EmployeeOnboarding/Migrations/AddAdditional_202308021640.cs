@@ -15,18 +15,16 @@ namespace EmployeeOnboarding.Migrations
         public override void Up()
         {
             Create.Table("EmployeeAdditionalInfo").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
-
-               .WithColumn("EmpGen_Id").AsInt32().NotNullable()
-               .WithColumn("Disability").AsBoolean()
-               .WithColumn("Disablility_type").AsString(100)
+               .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails","Id")
+               .WithColumn("Disability").AsBoolean().Nullable()
+               .WithColumn("Disablility_type").AsString(100).Nullable()
                .WithColumn("Covid_VaccSts").AsString(100).NotNullable()
-               .WithColumn("Vacc_Certificate").AsString(100)
-
-               .WithColumn("Date_Created").AsDate().NotNullable()
-               .WithColumn("Date_Modified").AsDate()
+               .WithColumn("Vacc_Certificate").AsString(100).Nullable()
+               .WithColumn("Date_Created").AsDateTime().NotNullable()
+               .WithColumn("Date_Modified").AsDateTime().NotNullable()
                .WithColumn("Created_By").AsString(100).NotNullable()
-               .WithColumn("Modified_By").AsString(100)
-               .WithColumn("Status").AsString(100).NotNullable();
+               .WithColumn("Modified_By").AsString(100).NotNullable()
+               .WithColumn("Status").AsString(30).NotNullable();
 
         }
     }
