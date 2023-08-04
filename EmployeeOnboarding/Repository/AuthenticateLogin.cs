@@ -1,10 +1,12 @@
-﻿using EmployeeOnboarding.Contracts;
+﻿/*using EmployeeOnboarding.Contracts;
 using EmployeeOnboarding.Data;
 
 namespace EmployeeOnboarding.Repository
 {
-    public class AuthenticateLogin : ILogin
+
+    public class AuthenticateLogin // : ILogin
     {
+        /*
         
         private readonly ApplicationDbContext _context;
 
@@ -22,6 +24,6 @@ namespace EmployeeOnboarding.Repository
         {
             return _context.Login.ToList();
         }
-        
-    }
+         }
 }
+*/
