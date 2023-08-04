@@ -19,7 +19,6 @@ namespace EmployeeOnboarding.Services
             {
                 Name = logindet.Name,
                 EmailId = logindet.Emailid,
-                //Password = logindet.Password,
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
                 Created_By = "Admin",
@@ -28,6 +27,42 @@ namespace EmployeeOnboarding.Services
             };
             _context.Login.Add(_logindet);
             _context.SaveChanges();
+        }
+
+        public void LoginConfirm(string Emailid,loginconfirmVM logindet)
+        {
+            var confirm = _context.Login.FirstOrDefault(e => e.EmailId == Emailid);
+            if (logindet.Password == logindet.Conf_Password)
+            {
+                confirm.Password = logindet.Password;
+                confirm.Date_Modified = DateTime.UtcNow;
+                confirm.Modified_By = "User";
+                confirm.Status = "Confirmed";
+
+                _context.Login.Update(confirm);
+                _context.SaveChanges();
+            }
+            else
+                confirm.Password = null;
+
+        }
+
+        public async Task<Login> LoginCmp(string Emailid,loginconfirmVM logindet)
+        {
+            var confirm = _context.Login.FirstOrDefault(e => e.EmailId == Emailid);
+            if (logindet.Password == logindet.Conf_Password)
+            {
+                confirm.Password = logindet.Password;
+                confirm.Date_Modified = DateTime.UtcNow;
+                confirm.Modified_By = "User";
+                confirm.Status = "Confirmed";
+
+                _context.Login.Update(confirm);
+                _context.SaveChanges();
+                return confirm;
+            }
+            else
+                return (null);
         }
 
         public async Task<Login> LoginEmp(string Emailid, string Password)
