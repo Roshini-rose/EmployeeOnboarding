@@ -1,6 +1,6 @@
 ﻿namespace EmployeeOnboarding.ViewModels
 {
-    public class WorkExperience
+    public class WorkExperienceVM
     {
         public string? Company_name { get; set; }
         public string? Designation { get; set; }
