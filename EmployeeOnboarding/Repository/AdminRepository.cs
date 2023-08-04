@@ -23,119 +23,264 @@ namespace EmployeeOnboarding.Repository
             _context = context;
         }
 
-        public async Task DeleteEmployee(string[] employeeId)
+        public Task DeleteEmployee(string[] employeeId)
         {
-            for (int i = 0; i < employeeId.Count(); i++)
-            {
-                if (employeeId != null)
-                {
-                    var login = _context.Login.FirstOrDefault(l => l.Empid == employeeId[i]);
-                    var general = _context.EmployeeGeneralDetails.FirstOrDefault(g => g.Empid == employeeId[i]);
-                    var contact = _context.EmployeeContactDetails.FirstOrDefault(c => c.Empid == employeeId[i]);
-                    var address = _context.EmployeeAddressDetails.FirstOrDefault(a => a.Empid == employeeId[i]);
-                    var addtional = _context.EmployeeAdditionalInfo.FirstOrDefault(ad => ad.Empid == employeeId[i]);
-                    var education = _context.EmployeeEducationDetails.FirstOrDefault(ed => ed.Empid == employeeId[i]);
-                    var experience = _context.EmployeeExperienceDetails.FirstOrDefault(ex => ex.Empid == employeeId[i]);
-                    var approval = _context.Status.FirstOrDefault(app => app.Empid == employeeId[i]);
-                    if (login != null && general != null && contact != null && address != null && addtional != null && education != null & education != null && experience != null && approval != null)
-                    {
-                        login.Status = "D";
-                        login.Date_Modified = DateTime.UtcNow;
-                        login.Modified_by = "Admin";
-                        general.Status = "D";
-                        general.Date_Modified = DateTime.UtcNow;
-                        general.Modified_by = "Admin";
-                        contact.Status = "D";
-                        contact.Date_Modified = DateTime.UtcNow;
-                        contact.Modified_by = "Admin";
-                        address.Status = "D";
-                        address.Date_Modified = DateTime.UtcNow;
-                        address.Modified_by = "Admin";
-                        addtional.Status = "D";
-                        addtional.Date_Modified = DateTime.UtcNow;
-                        addtional.Modified_by = "Admin";
-                        education.Status = "D";
-                        education.Date_Modified = DateTime.UtcNow;
-                        education.Modified_by = "Admin";
-                        experience.Status = "D";
-                        experience.Date_Modified = DateTime.UtcNow;
-                        experience.Modified_by = "Admin";
-                        approval.Status = "D";
-                        approval.Date_Modified = DateTime.UtcNow;
-                        approval.Modified_by = "Admin";
-                        _context.SaveChanges();
-                    }
-                }
-            }
-        }
-        public async Task<List<DashboardVM>> GetEmployeeDetails()
-        {
-
-            var deg = (from e in _context.EmployeeGeneralDetails
-                       where e.Status == "A"
-                       join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
-                       where ee.Status == "A"
-                       select ee.Passoutyear).Max();
-            var employeedetails = (from e in _context.EmployeeGeneralDetails
-                                   where e.Status == "A"
-                                   join a in _context.Status on e.Empid equals a.Empid
-                                   where a.Status == "A" && a.Approved == null && a.Cancelled == null
-                                   join l in _context.Login on e.Empid equals l.Empid
-                                   where l.Status == "A"
-                                   join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
-                                   where ec.Status == "A"
-                                   join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
-                                   where ee.Passoutyear == deg && ee.Status == "A"
-                                   select new DashboardVM()
-                                   {
-                                       Empid = e.Empid,
-                                       Empname = e.EmployeeName,
-                                       designation = l.Designation,
-                                       Contact = ec.Contact_no,
-                                       Email = l.Emailid,
-                                       education = ee.Degree
-                                   }).ToList();
-            return employeedetails;
+            throw new NotImplementedException();
         }
 
-        public async Task<List<PersonalInfoVM>>? GetPersonalInfo(string employeeid)
+        public Task<List<DashboardVM>> GetEmployeeDetails()
         {
-            var address = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join ea in _context.EmployeeAddressDetails on e.Empid equals ea.Empid select ea).ToArray();
-            var degree = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid select ee).ToArray();
-            var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join eed in _context.EmployeeExperienceDetails on e.Empid equals eed.Empid select eed).ToArray();
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
+        {
+            var InvitedDetails = (from l in _context.Login
+                                  where l.Status == "A"
+                                  join a in _context.Status on l.Id equals a.Login_Id
+                                  where a.Status == "A" && a.Current_Status == 4
+                                  select new Dashboard1VM()
+                                  {
+                                      Login_Id = l.Id,
+                                      Name = l.Name,
+                                      DateModified = a.Date_Modified,
+                                      Email_id = l.EmailId,
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                  }).ToList();
+            return InvitedDetails;
+        }
+
+        /*
+public async Task DeleteEmployee(string[] employeeId)
+{
+   for (int i = 0; i < employeeId.Count(); i++)
+   {
+       if (employeeId != null)
+       {
+           var login = _context.Login.FirstOrDefault(l => l.Empid == employeeId[i]);
+           var general = _context.EmployeeGeneralDetails.FirstOrDefault(g => g.Empid == employeeId[i]);
+           var contact = _context.EmployeeContactDetails.FirstOrDefault(c => c.Empid == employeeId[i]);
+           var address = _context.EmployeeAddressDetails.FirstOrDefault(a => a.Empid == employeeId[i]);
+           var addtional = _context.EmployeeAdditionalInfo.FirstOrDefault(ad => ad.Empid == employeeId[i]);
+           var education = _context.EmployeeEducationDetails.FirstOrDefault(ed => ed.Empid == employeeId[i]);
+           var experience = _context.EmployeeExperienceDetails.FirstOrDefault(ex => ex.Empid == employeeId[i]);
+           var approval = _context.Status.FirstOrDefault(app => app.Empid == employeeId[i]);
+           if (login != null && general != null && contact != null && address != null && addtional != null && education != null & education != null && experience != null && approval != null)
+           {
+               login.Status = "D";
+               login.Date_Modified = DateTime.UtcNow;
+               login.Modified_by = "Admin";
+               general.Status = "D";
+               general.Date_Modified = DateTime.UtcNow;
+               general.Modified_by = "Admin";
+               contact.Status = "D";
+               contact.Date_Modified = DateTime.UtcNow;
+               contact.Modified_by = "Admin";
+               address.Status = "D";
+               address.Date_Modified = DateTime.UtcNow;
+               address.Modified_by = "Admin";
+               addtional.Status = "D";
+               addtional.Date_Modified = DateTime.UtcNow;
+               addtional.Modified_by = "Admin";
+               education.Status = "D";
+               education.Date_Modified = DateTime.UtcNow;
+               education.Modified_by = "Admin";
+               experience.Status = "D";
+               experience.Date_Modified = DateTime.UtcNow;
+               experience.Modified_by = "Admin";
+               approval.Status = "D";
+               approval.Date_Modified = DateTime.UtcNow;
+               approval.Modified_by = "Admin";
+               _context.SaveChanges();
+           }
+       }
+   }
+}
+public async Task<List<DashboardVM>> GetEmployeeDetails()
+{
+
+   var deg = (from e in _context.EmployeeGeneralDetails
+              where e.Status == "A"
+              join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
+              where ee.Status == "A"
+              select ee.Passoutyear).Max();
+   var employeedetails = (from e in _context.EmployeeGeneralDetails
+                          where e.Status == "A"
+                          join a in _context.Status on e.Empid equals a.Empid
+                          where a.Status == "A" && a.Approved == null && a.Cancelled == null
+                          join l in _context.Login on e.Empid equals l.Empid
+                          where l.Status == "A"
+                          join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
+                          where ec.Status == "A"
+                          join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
+                          where ee.Passoutyear == deg && ee.Status == "A"
+                          select new DashboardVM()
+                          {
+                              Empid = e.Empid,
+                              Empname = e.EmployeeName,
+                              designation = l.Designation,
+                              Contact = ec.Contact_no,
+                              Email = l.Emailid,
+                              education = ee.Degree
+                          }).ToList();
+   return employeedetails;
+}
+
+public async Task<List<PersonalInfoVM>>? GetPersonalInfo(string employeeid)
+{
+   var address = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join ea in _context.EmployeeAddressDetails on e.Empid equals ea.Empid select ea).ToArray();
+   var degree = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid select ee).ToArray();
+   var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join eed in _context.EmployeeExperienceDetails on e.Empid equals eed.Empid select eed).ToArray();
+   var employeepersonal = (from e in _context.EmployeeGeneralDetails
+                           where e.Empid == employeeid
+                           join ea in _context.EmployeeAddressDetails on e.Empid equals ea.Empid
+                           join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
+                           join ead in _context.EmployeeAdditionalInfo on e.Empid equals ead.Empid
+                           select new PersonalInfoVM()
+                           {
+                               Empid = e.Empid,
+                               EmpName = e.EmployeeName,
+                               FatherName = e.FatherName,
+                               DOB = e.DOB,
+                               mailId = ec.Personal_Emailid,
+                               MaritialStatus = e.MaritalName,
+                               DOM = e.DateOfMarriage,
+                               Contactno = ec.Contact_no,
+                               Gender = e.Gender,
+                               ECP = ec.Emgy_Contactperson,
+                               ECR = ec.Emgy_Contactrelation,
+                               ECN = ec.Emgy_Contactno,
+                               PermanentAddress = new AddressVM()
+                               {
+                                   Address = address[0].Address,
+                                   Country = address[0].Country,
+                                   City = address[0].City,
+                                   State = address[0].State,
+                                   Pincode = address[0].Pincode
+                               },
+                               TemporaryAddress = new AddressVM()
+                               {
+                                   Address = address[1].Address,
+                                   Country = address[1].Country,
+                                   City = address[1].City,
+                                   State = address[1].State,
+                                   Pincode = address[1].Pincode
+                               },
+                               CovidSts = ead.Covid_VaccSts,
+                               CovidCerti = ead.Vacc_Certificate,
+                               UGDetails = new EducationDetailsVM()
+                               {
+                                   CollegeName = degree[0].CollegeName,
+                                   Degree = degree[0].Degree,
+                                   Major = degree[0].specialization,
+                                   PassedoutYear = degree[0].Passoutyear,
+                                   Certificate = GetFile(degree[0].Certificate)
+                               },
+                               PGDetails = new EducationDetailsVM()
+                               {
+                                   CollegeName = degree[1].CollegeName,
+                                   Degree = degree[1].Degree,
+                                   Major = degree[1].specialization,
+                                   PassedoutYear = degree[1].Passoutyear,
+                                   Certificate = GetFile(degree[1].Certificate)
+                               },
+                               experienceVMs = Experrience(employeeid)
+                           }).ToList();
+
+   return employeepersonal;
+}*/
+public List<ExperienceVM> Experrience(int employeeid)
+{
+   List<ExperienceVM> exVM = new List<ExperienceVM>();
+   var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Id == employeeid join eed in _context.EmployeeExperienceDetails on e.Id equals eed.EmpGen_Id select eed);
+   foreach (var experience in experiencecount)
+   {
+       exVM.Add(new ExperienceVM()
+       {
+           CompanyName = experience.Company_name,
+           StartDate = (DateOnly)experience.StartDate,
+           EndDate = (DateOnly)experience.EndDate,
+           Designation = experience.Designation,
+           //TotalNoofMonths = experience.Totalmonths,
+           ReasonForLeaving = experience.Reason,
+           ExperienceCerti = GetFile(experience.Exp_Certificate)
+       });
+   }
+   return exVM;
+}
+
+public byte[] GetFile(string filepath)
+{
+   if (System.IO.File.Exists(filepath))
+   {
+       System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
+       byte[] file = new byte[fs.Length];
+       int br = fs.Read(file, 0, file.Length);
+       if (br != fs.Length)
+       {
+           throw new IOException("Invalid path");
+       }
+       return file;
+   }
+   return null;
+}
+
+        public async Task<List<Dashboard1VM>> GetPendingEmployeeDetails()
+        {
+            var PendingDetails = (from l in _context.Login where l.Status == "A"
+                                  join a in _context.Status on l.Id equals a.Login_Id where a.Status == "A" && a.Current_Status == 2
+                                  select new Dashboard1VM()
+                                  {
+                                      Login_Id = l.Id,
+                                      EmpGen_Id = a.EmpGen_Id,
+                                      Name = l.Name,
+                                      DateModified = a.Date_Modified,
+                                      Email_id = l.EmailId,
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                  }).ToList();
+            return PendingDetails;
+        }
+
+        public async Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
+        {
+            var address = (from e in _context.EmployeeGeneralDetails where e.Id == id join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id select ea).ToArray();
+            var degree = (from e in _context.EmployeeGeneralDetails where e.Id == id join ee in _context.EmployeeEducationDetails on e.Id equals ee.EmpGen_Id select ee).ToArray();
+            var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Id == id join eed in _context.EmployeeExperienceDetails on e.Id equals eed.EmpGen_Id select eed).ToArray();
             var employeepersonal = (from e in _context.EmployeeGeneralDetails
-                                    where e.Empid == employeeid
-                                    join ea in _context.EmployeeAddressDetails on e.Empid equals ea.Empid
-                                    join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
-                                    join ead in _context.EmployeeAdditionalInfo on e.Empid equals ead.Empid
+                                    where e.Id == id
+                                    join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id
+                                    join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
+                                    join ead in _context.EmployeeAdditionalInfo on e.Id equals ead.EmpGen_Id
                                     select new PersonalInfoVM()
                                     {
-                                        Empid = e.Empid,
+                                        Id= e.Id,
+                                        Empid=e.Empid,
+                                        Official_MailId=e.Official_EmailId,
                                         EmpName = e.EmployeeName,
                                         FatherName = e.FatherName,
                                         DOB = e.DOB,
                                         mailId = ec.Personal_Emailid,
-                                        MaritialStatus = e.MaritalName,
+                                        MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
                                         DOM = e.DateOfMarriage,
                                         Contactno = ec.Contact_no,
-                                        Gender = e.Gender,
+                                        Gender = ((Data.Enum.Gender)e.Gender).ToString(),
                                         ECP = ec.Emgy_Contactperson,
-                                        ECR = ec.Emgy_Contactrelation,
+                                        ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
                                         ECN = ec.Emgy_Contactno,
                                         PermanentAddress = new AddressVM()
                                         {
                                             Address = address[0].Address,
-                                            Country = address[0].Country,
-                                            City = address[0].City,
-                                            State = address[0].State,
+                                            Country = address[0].Country_Id,
+                                            City = address[0].City_Id,
+                                            State = address[0].State_Id,
                                             Pincode = address[0].Pincode
                                         },
                                         TemporaryAddress = new AddressVM()
                                         {
                                             Address = address[1].Address,
-                                            Country = address[1].Country,
-                                            City = address[1].City,
-                                            State = address[1].State,
+                                            Country = address[1].Country_Id,
+                                            City = address[1].City_Id,
+                                            State = address[1].State_Id,
                                             Pincode = address[1].Pincode
                                         },
                                         CovidSts = ead.Covid_VaccSts,
@@ -156,81 +301,10 @@ namespace EmployeeOnboarding.Repository
                                             PassedoutYear = degree[1].Passoutyear,
                                             Certificate = GetFile(degree[1].Certificate)
                                         },
-                                        experienceVMs = Experrience(employeeid)
+                                        experienceVMs = Experrience(id)
                                     }).ToList();
 
             return employeepersonal;
-        }
-        public List<ExperienceVM> Experrience(string employeeid)
-        {
-            List<ExperienceVM> exVM = new List<ExperienceVM>();
-            var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join eed in _context.EmployeeExperienceDetails on e.Empid equals eed.Empid select eed);
-            foreach (var experience in experiencecount)
-            {
-                exVM.Add(new ExperienceVM()
-                {
-                    CompanyName = experience.Company_name,
-                    StartDate = (DateTime)experience.StartDate,
-                    EndDate = (DateTime)experience.EndDate,
-                    Designation = experience.Designation,
-                    TotalNoofMonths = experience.Totalmonths,
-                    ReasonForLeaving = experience.Reason,
-                    ExperienceCerti = GetFile(experience.Exp_Certificate)
-                });
-            }
-            return exVM;
-        }
-
-        public byte[] GetFile(string filepath)
-        {
-            if (System.IO.File.Exists(filepath))
-            {
-                System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
-                byte[] file = new byte[fs.Length];
-                int br = fs.Read(file, 0, file.Length);
-                if (br != fs.Length)
-                {
-                    throw new IOException("Invalid path");
-                }
-                return file;
-            }
-            return null;
-        }
-
-        public async Task<List<Dashboard1VM>> GetPendingEmployeeDetails()
-        {
-            var PendingDetails = (from l in _context.Login where l.Status == "A"
-                                  join a in _context.Status on l.Id equals a.Id where a.Status == "A" && a.Current_Status == 2
-                                  select new Dashboard1VM()
-                                  {
-                                      Login_Id = l.Id,
-                                      EmpGen_Id = a.EmpGen_Id,
-                                      Name = l.Name,
-                                      DateModified = a.Date_Modified,
-                                      Email_id = l.EmailId,
-                                      Current_Status = a.Current_Status
-                                  }).ToList();
-            return PendingDetails;
-            /*var employeedetails = (from e in _context.EmployeeGeneralDetails
-                                   where e.Status == "A"
-                                   join a in _context.Status on e.Empid equals a.Empid
-                                   where a.Status == "A" && a.Approved == null && a.Cancelled == null
-                                   join l in _context.Login on e.Empid equals l.Empid
-                                   where l.Status == "A"
-                                   join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
-                                   where ec.Status == "A"
-                                   join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
-                                   where ee.Passoutyear == deg && ee.Status == "A"
-                                   select new DashboardVM()
-                                   {
-                                       Empid = e.Empid,
-                                       Empname = e.EmployeeName,
-                                       designation = l.Designation,
-                                       Contact = ec.Contact_no,
-                                       Email = l.Emailid,
-                                       education = ee.Degree
-                                   }).ToList();
-            return employeedetails;*/
         }
     }
 

@@ -17,7 +17,7 @@ namespace EmployeeOnboarding.Controllers
 
     public class StatusController : ControllerBase
     {
-        
+        /*
 
         public onboardstatusService _onboardstatusService;
         public ApplicationDbContext _context;
@@ -56,6 +56,7 @@ namespace EmployeeOnboarding.Controllers
 
             return model;
         }
+        */
     }
     
 }

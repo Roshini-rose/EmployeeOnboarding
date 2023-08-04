@@ -1,5 +1,5 @@
 ﻿using EmployeeOnboarding.Data.Services;
-using EmployeeOnboarding.Data.ViewModels;
+//using EmployeeOnboarding.Data.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,8 +8,10 @@ namespace EmployeeOnboarding.Controllers
     
     [Route("api/[controller]")]
     [ApiController]
+    
     public class UserDetailsController : ControllerBase
     {
+        /*
 
         public GeneralServices _generalservices;
         public UserDetailsController(GeneralServices generalservices)
@@ -85,7 +87,7 @@ namespace EmployeeOnboarding.Controllers
         }
 
 
-
+        */
     }
     
 }

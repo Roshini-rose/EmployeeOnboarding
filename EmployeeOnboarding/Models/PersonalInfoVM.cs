@@ -4,7 +4,9 @@ namespace EmployeeOnboarding.Models
 {
     public class PersonalInfoVM
     {
-        public string Empid { get; set; }
+        public int Id { get; set; } 
+        public string? Empid { get; set; }
+        public string? Official_MailId { get; set; } 
         public string EmpName { get; set; }
         public string FatherName { get; set; }
         public DateOnly DOB { get; set; }

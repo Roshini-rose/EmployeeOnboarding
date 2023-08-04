@@ -5,7 +5,7 @@ namespace EmployeeOnboarding.Data.Services
 {
     public class EducationService
     {
-
+        /*
         private ApplicationDbContext _context;
         public EducationService(ApplicationDbContext context)
         {
@@ -77,7 +77,7 @@ namespace EmployeeOnboarding.Data.Services
           }
           */
 
-        public void AddEducationUG(string empId, EducationVM education)
+        /*public void AddEducationUG(string empId, EducationVM education)
         {
             var existingEducation = _context.EmployeeEducationDetails.FirstOrDefault(e => e.Empid == empId && e.programme == "UG");
 
@@ -192,6 +192,6 @@ namespace EmployeeOnboarding.Data.Services
         }
 
 
-
+        */
     }
 }

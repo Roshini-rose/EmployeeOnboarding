@@ -16,7 +16,7 @@ namespace EmployeeOnboarding.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
+        /*
         public EducationService _educationService;
         public WorkExperienceService _experienceService;
         public UserController(EducationService educationService, WorkExperienceService experienceService)
@@ -67,5 +67,6 @@ namespace EmployeeOnboarding.Controllers
             var experience = _experienceService.GetExperience(id);
             return Ok(experience);
         }
+        */
     }
 }
