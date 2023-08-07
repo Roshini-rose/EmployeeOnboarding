@@ -1,5 +1,6 @@
 ﻿using EmployeeOnboarding.Data;
 using EmployeeOnboarding.ViewModels;
+using OnboardingWebsite.Models;
 using System.Data;
 using System.Xml.Linq;
 
@@ -63,15 +64,6 @@ namespace EmployeeOnboarding.Services
             }
             else
                 return (null);
-        }
-
-        public async Task<Login> LoginEmp(string Emailid, string Password)
-        {
-            var _succeeded = _context.Login.FirstOrDefault(n => n.EmailId == Emailid && n.Password == Password);
-            if (_succeeded == null)
-                return null;
-            else
-                return (_succeeded);
         }
     }
     

@@ -40,6 +40,13 @@ namespace EmployeeOnboarding.Controllers
             return Ok("Rejected");
         }
 
+        [HttpPost("pending/{id}")]
+        public IActionResult ChangePendingStatus(int id)
+        {
+            _onboardstatusService.ChangePendingStatus(id);
+            return Ok("Pending");
+        }
+
         //[HttpGet("status-dashboard")]
         //public async Task<statusdashVM> GetAdminStatusList()
         //{
