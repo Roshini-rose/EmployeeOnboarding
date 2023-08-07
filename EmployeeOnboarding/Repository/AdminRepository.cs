@@ -11,6 +11,8 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using OnboardingWebsite.Models;
+using System.Data.Entity.Core.Mapping;
 
 namespace EmployeeOnboarding.Repository
 { 
@@ -171,46 +173,7 @@ namespace EmployeeOnboarding.Repository
 
             return employeepersonal;
         }*/
-        /*public List<ExperienceVM> Experrience(string employeeid)
-        {
-            List<ExperienceVM> exVM = new List<ExperienceVM>();
-            var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Empid == employeeid join eed in _context.EmployeeExperienceDetails on e.Empid equals eed.Empid select eed);
-            foreach (var experience in experiencecount)
-            {
-                exVM.Add(new ExperienceVM()
-                {
-                    CompanyName = experience.Company_name,
-                    StartDate = (DateTime)experience.StartDate,
-                    EndDate = (DateTime)experience.EndDate,
-                    Designation = experience.Designation,
-                    TotalNoofMonths = experience.Totalmonths,
-                    ReasonForLeaving = experience.Reason,
-                    ExperienceCerti = GetFile(experience.Exp_Certificate)
-                });
-            }
-            return exVM;
-        }
-
-        public Task<List<DashboardVM>> GetEmployeeDetails()
-        {
-            throw new NotImplementedException();
-        }
-
-        public byte[] GetFile(string filepath)
-        {
-            if (System.IO.File.Exists(filepath))
-            {
-                System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
-                byte[] file = new byte[fs.Length];
-                int br = fs.Read(file, 0, file.Length);
-                if (br != fs.Length)
-                {
-                    throw new IOException("Invalid path");
-                }
-                return file;
-            }
-            return null;
-        }*/
+        
 
         public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
         {
@@ -225,9 +188,26 @@ namespace EmployeeOnboarding.Repository
                                       Name = l.Name,
                                       DateModified = a.Date_Modified,
                                       Email_id = l.EmailId,
-                                      Current_Status = a.Current_Status
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
                                   }).ToList();
             return InvitedDetails;
+        }
+        public async Task<List<Dashboard1VM>> GetRejectedEmployeeDetails()
+        {
+            var RejectedDetails = (from l in _context.Login
+                                  where l.Status == "A"
+                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
+                                  where a.Status == "A" && a.Current_Status == 3
+                                  select new Dashboard1VM()
+                                  {
+                                      Login_Id = l.Id,
+                                      //EmpGen_Id = a.EmpGen_Id,
+                                      Name = l.Name,
+                                      DateModified = a.Date_Modified,
+                                      Email_id = l.EmailId,
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                  }).ToList();
+            return RejectedDetails;
         }
 
         public async Task<List<Dashboard1VM>> GetPendingEmployeeDetails()
@@ -241,7 +221,7 @@ namespace EmployeeOnboarding.Repository
                                       Name = l.Name,
                                       DateModified = a.Date_Modified,
                                       Email_id = l.EmailId,
-                                      Current_Status = a.Current_Status
+                                      Current_Status =((Data.Enum.Status)a.Current_Status).ToString()
                                   }).ToList();
             return PendingDetails;
             /*var employeedetails = (from e in _context.EmployeeGeneralDetails
@@ -266,14 +246,110 @@ namespace EmployeeOnboarding.Repository
             return employeedetails;*/
         }
 
-        public Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
+
+        public async Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
         {
-            throw new NotImplementedException();
+            var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
+            var emppersonal = (from e in _context.EmployeeGeneralDetails
+                               where e.Id == id && e.Status == "A"
+                               join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
+                               where ec.Status == "A"
+                               join ead in _context.EmployeeAdditionalInfo on e.Id equals ead.EmpGen_Id
+                               where ead.Status == "A"
+                               select new PersonalInfoVM()
+                               {
+                                   Id = e.Id,
+                                   Empid = e.EmployeeName,
+                                   FatherName = e.FatherName,
+                                   DOB = e.DOB,
+                                   MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
+                                   DOM = e.DateOfMarriage,
+                                   Gender = ((Data.Enum.Gender)e.Gender).ToString(),
+                                   Contactno = ec.Contact_no,
+                                   ECP = ec.Emgy_Contactperson,
+                                   ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
+                                   ECN = ec.Emgy_Contactno,
+                                   PermanentAddress = new AddressVM()
+                                   {
+
+                                       Address = address[0].Address,
+                                       Country = address[0].Country_Id,
+                                       City = address[0].City_Id,
+                                       State = address[0].State_Id,
+                                       Pincode = address[0].Pincode
+                                   },
+                                   TemporaryAddress = new AddressVM()
+                                   {
+
+                                       Address = address[1].Address,
+                                       Country = address[1].Country_Id,
+                                       City = address[1].City_Id,
+                                       State = address[1].State_Id,
+                                       Pincode = address[0].Pincode
+                                   },
+                                   Disability = ead.Disability,
+                                   Disablility_type = ead.Disablility_type,
+                                   CovidSts = ead.Covid_VaccSts,
+                                   CovidCerti = GetFile(ead.Vacc_Certificate),
+                                   educationDetailsVMs = Education(id),
+                                   experienceVMs = Experrience(id)
+                               }).ToList();
+            return emppersonal;
+        }
+        public List<EducationDetailsVM> Education(int employeeid)
+        {
+            List<EducationDetailsVM> edVM = new List<EducationDetailsVM>();
+            var education = (from e in _context.EmployeeGeneralDetails where e.Id == employeeid && e.Status == "A" join eed in _context.EmployeeEducationDetails on e.Id equals eed.EmpGen_Id where eed.Status == "A" select eed);
+            foreach (var educationdetails in education)
+            {
+                edVM.Add(new EducationDetailsVM()
+                {
+                    programme = educationdetails.programme,
+                    CollegeName = educationdetails.CollegeName,
+                    Degree = educationdetails.Degree,
+                    Major = educationdetails.specialization,
+                    PassedoutYear = educationdetails.Passoutyear,
+                    Certificate = GetFile(educationdetails.Certificate)
+                });
+
+            }
+            return edVM;
+        }
+        public List<ExperienceVM> Experrience(int employeeid)
+        {
+            List<ExperienceVM> exVM = new List<ExperienceVM>();
+            var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Id == employeeid && e.Status == "A" join eed in _context.EmployeeExperienceDetails on e.Id equals eed.EmpGen_Id where eed.Status == "A" select eed);
+            foreach (var experience in experiencecount)
+            {
+                exVM.Add(new ExperienceVM()
+                {
+                    CompanyName = experience.Company_name,
+                    StartDate = (DateOnly)experience.StartDate,
+                    EndDate = (DateOnly)experience.EndDate,
+                    Designation = experience.Designation,
+                    //TotalNoofMonths = experience.Totalmonths,
+                    ReasonForLeaving = experience.Reason,
+                    ExperienceCerti = GetFile(experience.Exp_Certificate)
+                });
+            }
+            return exVM;
         }
 
-        public Task<List<Dashboard1VM>> GetRejectedEmployeeDetails()
+        public static byte[] GetFile(string filepath)
         {
-            throw new NotImplementedException();
+            if (System.IO.File.Exists(filepath))
+            {
+                System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
+                byte[] file = new byte[fs.Length];
+                int br = fs.Read(file, 0, file.Length);
+                if (br != fs.Length)
+                {
+                    throw new IOException("Invalid path");
+                }
+                return file;
+            }
+            return null;
+
         }
     }
 
