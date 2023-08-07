@@ -48,5 +48,10 @@ namespace OnboardingWebsite.Controllers
         {
             return await _adminRepository.GetInvitedEmployeeDetails();
         }
+        [HttpGet("api/GetRejectedEmployeeDetails")]
+        public async Task<List<Dashboard1VM>> GetRejectedDetails()
+        {
+            return await _adminRepository.GetRejectedEmployeeDetails();
+        }
     }
 }

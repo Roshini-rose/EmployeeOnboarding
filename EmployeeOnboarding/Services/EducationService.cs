@@ -1,4 +1,6 @@
 ﻿using EmployeeOnboarding.Data;
+using EmployeeOnboarding.Models;
+using EmployeeOnboarding.ViewModels;
 using OnboardingWebsite.Models;
 
 namespace EmployeeOnboarding.Data.Services
@@ -13,6 +15,10 @@ namespace EmployeeOnboarding.Data.Services
 
         private string SaveCertificateFile(IFormFile certificateFile, string empId, string fileName)
         {
+            if (certificateFile == null)
+            {
+                return null; // Return null if no certificate file is provided
+            }
             var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", empId);
             if (!Directory.Exists(empFolderPath))
             {
@@ -28,6 +34,7 @@ namespace EmployeeOnboarding.Data.Services
 
             return filePath; // Return the file path
         }
+
 
         public void AddEducationUG(int empId, EducationVM education)
         {
@@ -118,36 +125,51 @@ namespace EmployeeOnboarding.Data.Services
         }
 
 
-/*
-        public EducationVM GetEducationUG(string educationId)
+
+        public getEducationVM GetEducationUG(int educationId)
         {
-            var _education = _context.EmployeeEducationDetails.Where(n => n.Empid == educationId && n.programme == "UG").Select(education => new EducationVM()
+            var _education = _context.EmployeeEducationDetails.Where(n => n.EmpGen_Id == educationId && n.programme == "UG").Select(education => new getEducationVM()
             {
                 programme = "UG",
                 CollegeName = education.CollegeName,
                 Degree = education.Degree,
                 specialization = education.specialization,
                 Passoutyear = education.Passoutyear,
-            }).FirstOrDefault();//
+                getCertificate = GetFile(education.Certificate)
+            }).FirstOrDefault();
 
             return _education;
         }
 
-        public EducationVM GetEducationPG(string educationId)
+        public getEducationVM GetEducationPG(int educationId)
         {
-            var _education = _context.EmployeeEducationDetails.Where(n => n.Empid == educationId && n.programme == "PG").Select(education => new EducationVM()
+            var _education = _context.EmployeeEducationDetails.Where(n => n.EmpGen_Id == educationId && n.programme == "PG").Select(education => new getEducationVM()
             {
                 programme = "PG",
                 CollegeName = education.CollegeName,
                 Degree = education.Degree,
                 specialization = education.specialization,
                 Passoutyear = education.Passoutyear,
+                getCertificate = GetFile(education.Certificate)
             }).FirstOrDefault();
 
             return _education;
         }
-*/
 
-
+        public static byte[] GetFile(string filepath)
+        {
+            if (System.IO.File.Exists(filepath))
+            {
+                System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
+                byte[] file = new byte[fs.Length];
+                int br = fs.Read(file, 0, file.Length);
+                if (br != fs.Length)
+                {
+                    throw new IOException("Invalid path");
+                }
+                return file;
+            }
+            return null;
+        }
     }
 }

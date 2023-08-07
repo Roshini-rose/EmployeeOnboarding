@@ -5,6 +5,7 @@ using EmployeeOnboarding.Data.Services;
 //using EmployeeOnboarding.Models;
 using EmployeeOnboarding.ViewModels;
 using OnboardingWebsite.Models;
+using EmployeeOnboarding.Services;
 //using EmployeeOnboarding.Services;
 
 namespace EmployeeOnboarding.Controllers
@@ -14,16 +15,14 @@ namespace EmployeeOnboarding.Controllers
     public class UserController : ControllerBase
     {
 
+        private readonly EducationService _educationService;
+        private readonly WorkExperienceService _experienceService; // Corrected the type here.
 
-
-        public EducationService _educationService;
-        //        public WorkExperienceService _experienceService;
-        public UserController(EducationService educationService)
+        public UserController(EducationService educationService, WorkExperienceService experienceService)
         {
             _educationService = educationService;
-            //            _experienceService = experienceService;
+            _experienceService = experienceService;
         }
-
 
 
         [HttpPost("add-UG-education/{empId}")]
@@ -44,39 +43,36 @@ namespace EmployeeOnboarding.Controllers
 
 
 
-        /*        [HttpPost("add-experience/{empId}")]
-                public async Task<IActionResult> AddExperience(string empId, [FromForm] WorkExperienceVM experience)
-                {
-                    _experienceService.AddExperience(empId, experience);
-                    return Ok();
-                }
+        [HttpPost("add-experience/{empId}")]
+        public async Task<IActionResult> AddExperience(int empId, [FromForm] WorkExperienceVM experience)
+        {
+            _experienceService.AddExperience(empId, experience);
+            return Ok();
+        }
+
+
+        [HttpGet("get-UG-education/{id}")]
+        public IActionResult GetEducationUG(int id)
+        {
+            var education = _educationService.GetEducationUG(id);
+            return Ok(education);
+        }
 
 
 
-        */
-        /*       [HttpGet("get-UG-education/{id}")]
-                public IActionResult GetEducationUG(string id)
-                {
-                    var education = _educationService.GetEducationUG(id);
-                    return Ok(education);
-                }
+        [HttpGet("get-PG-education/{id}")]
+        public IActionResult GetEducationPG(int id)
+        {
+            var education = _educationService.GetEducationPG(id);
+            return Ok(education);
+        }
 
 
-
-                [HttpGet("get-PG-education/{id}")]
-                public IActionResult GetEducationPG(string id)
-                {
-                    var education = _educationService.GetEducationPG(id);
-                    return Ok(education);
-                }*/
-
-
-
-        /*        [HttpGet("get-experience/{id}")]
-                public IActionResult GetExperience(string id)
-                {
-                    var experience = _experienceService.GetExperience(id);
-                    return Ok(experience);
-                }*/
+        [HttpGet("get-experience/{id}")]
+        public IActionResult GetExperience(int id)
+        {
+            var experience = _experienceService.GetExperience(id);
+            return Ok(experience);
+        }
     }
 }
