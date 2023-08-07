@@ -59,6 +59,24 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
+        public void ChangePendingStatus(int Empid)
+        {
+            var _onboard = new ApprovalStatus()
+            {
+                Login_Id = Empid,
+                EmpGen_Id = Empid,
+                Current_Status = (int)Status.Pending,
+                Comments = "",
+                Date_Created = DateTime.UtcNow,
+                Date_Modified = DateTime.UtcNow,
+                Created_By = Empid.ToString(),
+                Modified_By = "Admin",
+                Status = Status.Pending.ToString(),
+            };
+            _context.ApprovalStatus.Add(_onboard);
+            _context.SaveChanges();
+        }
+
     }
     
 }

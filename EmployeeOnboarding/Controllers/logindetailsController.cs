@@ -21,41 +21,17 @@ namespace EmployeeOnboarding.Controllers
             _loginemp = loginemp;
         }
 
-        [HttpPost("add-userLoginInvite")]
+        [HttpPost("Login-Invite")]
         public IActionResult LoginDetails([FromBody] logininviteVM logindetails)
         {
             _logindetailsService.LoginInvite(logindetails);
             return Ok("Invite Sent");
         }
 
-        [HttpPost("user-LoginConfirm")]
-        public IActionResult LoginConfirm(string email,[FromBody] loginconfirmVM logindetails)
-        {
-            _logindetailsService.LoginConfirm(email,logindetails);
-            return Ok("Employee Confirmed");
-        }
-
-        [HttpPost("employee-login")]
-        public IActionResult Logins(string email, string password)
-        {
-            var issuccess = _loginemp.AuthenticateEmp(email, password);
-
-
-            if (issuccess.Result != null)
-            {
-                return Ok("Logged in");
-            }
-            else
-            {
-                return Ok("Invaild");
-            }
-        }
-
-        [HttpPost("conf-login")]
+        [HttpPost("confirm-login")]
         public IActionResult CLogins(string email, [FromBody] loginconfirmVM logindetails)
         {
             var issuccess = _logindetailsService.LoginCmp(email, logindetails);
-
 
             if (issuccess.Result != null)
             {
@@ -67,8 +43,23 @@ namespace EmployeeOnboarding.Controllers
             }
         }
 
+        [HttpGet("employee-login")]
+        public IActionResult Logins(string email, string password)
+        {
+            var issuccess = _loginemp.AuthenticateEmp(email, password);
+
+            if (issuccess != null)
+            {
+                return Ok(issuccess);
+            }
+            else
+            {
+                return Ok("Invaild");
+            }
+        }
+
         [HttpPost("admin-login")]
-        public IActionResult AdminLogins(string email, string password)
+        public IActionResult AdminLogin(string email, string password)
         {
 
             if (email == "admin@ideassion.com" && password == "admin123")

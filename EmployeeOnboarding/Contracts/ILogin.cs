@@ -1,10 +1,11 @@
 ﻿using EmployeeOnboarding.Data;
+using EmployeeOnboarding.ViewModels;
 
 namespace EmployeeOnboarding.Contracts
 {
     public interface ILogin
     {
         Task<IEnumerable<Login>> getemp();
-        Task<Login> AuthenticateEmp(string emailid, string password);
+        Task<employloginVM> AuthenticateEmp(string emailid, string password);
     }
 }

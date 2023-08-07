@@ -51,10 +51,8 @@ namespace EmployeeOnboarding.Controllers
         }
 
 
-
-
-/*        [HttpGet("get-UG-education/{id}")]
-        public IActionResult GetEducationUG(string id)
+        [HttpGet("get-UG-education/{id}")]
+        public IActionResult GetEducationUG(int id)
         {
             var education = _educationService.GetEducationUG(id);
             return Ok(education);
@@ -63,12 +61,11 @@ namespace EmployeeOnboarding.Controllers
 
 
         [HttpGet("get-PG-education/{id}")]
-        public IActionResult GetEducationPG(string id)
+        public IActionResult GetEducationPG(int id)
         {
             var education = _educationService.GetEducationPG(id);
             return Ok(education);
         }
-*/
 
 
         [HttpGet("get-experience/{id}")]
