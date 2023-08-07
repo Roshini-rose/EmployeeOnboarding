@@ -2,6 +2,7 @@
 {
     public class EducationDetailsVM
     {
+        public string programme { get; set; }
         public string CollegeName { get; set; }
         public string Degree { get; set; }
         public string Major { get; set; }

@@ -4,6 +4,7 @@ namespace EmployeeOnboarding.Models
 {
     public class PersonalInfoVM
     {
+        public int Id { get; set; }
         public string Empid { get; set; }
         public string EmpName { get; set; }
         public string FatherName { get; set; }
@@ -19,10 +20,12 @@ namespace EmployeeOnboarding.Models
         public AddressVM PermanentAddress { get; set; }
         public AddressVM TemporaryAddress { get; set; }
 
+        public bool? Disability { get; set; }
+        public string? Disablility_type { get; set; }
+
         public string CovidSts { get; set; }
         public string? CovidCerti { get; set; }
-        public EducationDetailsVM UGDetails { get; set; }
-        public EducationDetailsVM PGDetails { get; set; }
+        public List<EducationDetailsVM> educationDetailsVMs { get; set; }
         public List<ExperienceVM> experienceVMs { get; set; }
     }
 }
