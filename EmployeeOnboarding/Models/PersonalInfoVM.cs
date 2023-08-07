@@ -24,7 +24,7 @@ namespace EmployeeOnboarding.Models
         public string? Disablility_type { get; set; }
 
         public string CovidSts { get; set; }
-        public string? CovidCerti { get; set; }
+        public byte[]? CovidCerti { get; set; }
         public List<EducationDetailsVM> educationDetailsVMs { get; set; }
         public List<ExperienceVM> experienceVMs { get; set; }
     }
