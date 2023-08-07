@@ -12,6 +12,6 @@ namespace EmployeeOnboarding.Contracts
        Task<List<DashboardVM>> GetEmployeeDetails();
       // Task DeleteEmployee(string[] employeeId);    
        Task <List<PersonalInfoVM>>? GetPersonalInfo(int id);
-        Task<List<ApprovedUserDetails>>? GetApprovedEmpDetails(int id);
+       Task<List<ApprovedUserDetails>>? GetApprovedEmpDetails(int id);
     }
 }
