@@ -11,7 +11,6 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using OnboardingWebsite.Models;
 using System.Data.Entity.Core.Mapping;
 
 namespace EmployeeOnboarding.Repository
@@ -23,11 +22,6 @@ namespace EmployeeOnboarding.Repository
         public AdminRepository(ApplicationDbContext context)
         {
             _context = context;
-        }
-
-        public Task<List<DashboardVM>> GetEmployeeDetails()
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
@@ -104,7 +98,7 @@ namespace EmployeeOnboarding.Repository
 
         public async Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
         {
-            int findvendorstatesId = _context.EmployeeAddressDetails.Where(x => x.EmpGen_Id == id).Select(x => x.Country_Id).FirstOrDefault();
+            //int findvendorstatesId = _context.EmployeeAddressDetails.Where(x => x.EmpGen_Id == id).Select(x => x.Country_Id).FirstOrDefault();
             var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
             var emppersonal = (from e in _context.EmployeeGeneralDetails
                                where e.Id == id && e.Status == "A"
@@ -149,7 +143,7 @@ namespace EmployeeOnboarding.Repository
                                    CovidSts = ead.Covid_VaccSts,
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
-                                   experienceVMs = Experrience(id).
+                                   experienceVMs = Experrience(id)
                                }).ToList();
             return emppersonal;
         }
@@ -206,6 +200,56 @@ namespace EmployeeOnboarding.Repository
                 return file;
             }
             return null;
+        }
+
+        public async Task<List<DashboardVM>> GetEmployeeDetails()
+        {
+            // return null;
+            var employeedetails = (from l in _context.Login where l.Status=="A"
+                                   join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
+                                   where e.Status == "A" 
+                                   join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
+                                   where al.Current_Status == 1 && al.Status == "A"
+                                   join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
+                                   where ec.Status == "A"
+                                   join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
+                                   where ed.Status == "A"
+                                   select new DashboardVM()
+                                   {
+                                       EmpGen_Id=e.Id,
+                                       Empid = e.Empid,
+                                       Empname = e.EmployeeName,
+                                       Contact = ec.Contact_no,
+                                       Email = e.Official_EmailId
+                                       //education = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == getMaxPassoutYear(ed.EmpGen_Id)).Select(x => x.Degree).FirstOrDefault()
+                                   }).ToList();
+            return employeedetails;
+            ////var employeedetails = (from e in _context.EmployeeGeneralDetails
+            ////                       where e.Status == "A"
+            ////                       join a in _context.Status on e.Empid equals a.Empid
+            ////                       where a.Status == "A" && a.Approved == null && a.Cancelled == null
+            ////                       join l in _context.Login on e.Empid equals l.Empid
+            ////                       where l.Status == "A"
+            ////                       join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
+            ////                       where ec.Status == "A"
+            ////                       join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
+            ////                       where ee.Passoutyear == deg && ee.Status == "A"
+            ////                       select new DashboardVM()
+            ////                       {
+            ////                           Empid = e.Empid,
+            ////                           Empname = e.EmployeeName,
+            ////                           designation = l.Designation,
+            ////                           Contact = ec.Contact_no,
+            ////                           Email = l.Emailid,
+            ////                           education = ee.Degree
+            ////                       }).ToList();
+            ////return employeedetails;
+        }
+
+        public string getMaxPassoutYear(int id)
+        {
+            var maxyear = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == id).Select(x => x.Degree).ToString();
+            return maxyear;
         }
 
 

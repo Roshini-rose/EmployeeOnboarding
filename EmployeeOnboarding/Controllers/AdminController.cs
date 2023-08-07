@@ -26,11 +26,11 @@ namespace OnboardingWebsite.Controllers
             return await _adminRepository.GetEmployeeDetails();
         }
 
-        [HttpPost("api/AdminDeleteById")]
-        public async Task deleteEmployee(string[] employeeid)
-        {
-            await _adminRepository.DeleteEmployee(employeeid);
-        }
+        ////[HttpPost("api/AdminDeleteById")]
+        ////public async Task deleteEmployee(string[] employeeid)
+        ////{
+        ////    await _adminRepository.DeleteEmployee(employeeid);
+        ////}
 
         [HttpPost("api/GetEmployeeDetails")]
         public async Task <List<PersonalInfoVM>> GetPersonalInfo(int employee)
