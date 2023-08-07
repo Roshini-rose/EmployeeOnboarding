@@ -205,7 +205,7 @@ namespace EmployeeOnboarding.Repository
                                       Name = l.Name,
                                       DateModified = a.Date_Modified,
                                       Email_id = l.EmailId,
-                                      Current_Status = a.Current_Status
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
                                   }).ToList();
             return RejectedDetails;
         }
@@ -221,7 +221,7 @@ namespace EmployeeOnboarding.Repository
                                       Name = l.Name,
                                       DateModified = a.Date_Modified,
                                       Email_id = l.EmailId,
-                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                      Current_Status =((Data.Enum.Status)a.Current_Status).ToString()
                                   }).ToList();
             return PendingDetails;
             /*var employeedetails = (from e in _context.EmployeeGeneralDetails
@@ -246,9 +246,10 @@ namespace EmployeeOnboarding.Repository
             return employeedetails;*/
         }
 
+
         public async Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
         {
-            var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status=="A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status=="A" select ea).ToArray();
+            var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
             var emppersonal = (from e in _context.EmployeeGeneralDetails
                                where e.Id == id && e.Status == "A"
                                join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
@@ -295,11 +296,10 @@ namespace EmployeeOnboarding.Repository
                                }).ToList();
             return emppersonal;
         }
-
         public List<EducationDetailsVM> Education(int employeeid)
         {
             List<EducationDetailsVM> edVM = new List<EducationDetailsVM>();
-            var education = (from e in _context.EmployeeGeneralDetails where e.Id == employeeid && e.Status=="A" join eed in _context.EmployeeEducationDetails on e.Id equals eed.EmpGen_Id where eed.Status=="A" select eed);
+            var education = (from e in _context.EmployeeGeneralDetails where e.Id == employeeid && e.Status == "A" join eed in _context.EmployeeEducationDetails on e.Id equals eed.EmpGen_Id where eed.Status == "A" select eed);
             foreach (var educationdetails in education)
             {
                 edVM.Add(new EducationDetailsVM()
@@ -318,7 +318,7 @@ namespace EmployeeOnboarding.Repository
         public List<ExperienceVM> Experrience(int employeeid)
         {
             List<ExperienceVM> exVM = new List<ExperienceVM>();
-            var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Id == employeeid && e.Status=="A" join eed in _context.EmployeeExperienceDetails on e.Id equals eed.EmpGen_Id where eed.Status=="A" select eed);
+            var experiencecount = (from e in _context.EmployeeGeneralDetails where e.Id == employeeid && e.Status == "A" join eed in _context.EmployeeExperienceDetails on e.Id equals eed.EmpGen_Id where eed.Status == "A" select eed);
             foreach (var experience in experiencecount)
             {
                 exVM.Add(new ExperienceVM()
@@ -335,7 +335,7 @@ namespace EmployeeOnboarding.Repository
             return exVM;
         }
 
-        public byte[] GetFile(string filepath)
+        public static byte[] GetFile(string filepath)
         {
             if (System.IO.File.Exists(filepath))
             {
@@ -349,24 +349,7 @@ namespace EmployeeOnboarding.Repository
                 return file;
             }
             return null;
-        }
 
-        public async Task<List<Dashboard1VM>> GetRejectedEmployeeDetails()
-        {
-            var RejectedDetails = (from l in _context.Login
-                                  where l.Status == "A"
-                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
-                                  where a.Status == "A" && a.Current_Status == 3
-                                  select new Dashboard1VM()
-                                  {
-                                      Login_Id = l.Id,
-                                      EmpGen_Id = a.EmpGen_Id,
-                                      Name = l.Name,
-                                      DateModified = a.Date_Modified,
-                                      Email_id = l.EmailId,
-                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
-                                  }).ToList();
-            return RejectedDetails;
         }
     }
 
