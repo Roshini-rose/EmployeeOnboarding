@@ -1,8 +1,14 @@
 ﻿using EmployeeOnboarding.Data;
 using EmployeeOnboarding.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using OnboardingWebsite.Models;
 using System.Data;
 using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Encodings.Web;
+using System.Security.Policy;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace EmployeeOnboarding.Services
 {
@@ -10,11 +16,14 @@ namespace EmployeeOnboarding.Services
     {
         
         private ApplicationDbContext _context;
-        public logindetailsService(ApplicationDbContext context)
+        private IEmailSender emailSender;
+
+        public logindetailsService(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            this.emailSender = emailSender;
         }
-        public void LoginInvite(logininviteVM logindet)
+        public async void LoginInvite(logininviteVM logindet)
         {
             var _logindet = new Login()
             {
@@ -26,6 +35,11 @@ namespace EmployeeOnboarding.Services
                 Modified_By = "Admin",
                 Status = "Invited",
             };
+
+            var callbackUrl = "/confirm-login/";
+
+            await emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
+                       $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
             _context.Login.Add(_logindet);
             _context.SaveChanges();
         }
