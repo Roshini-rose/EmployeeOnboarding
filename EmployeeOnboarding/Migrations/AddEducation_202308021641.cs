@@ -21,7 +21,7 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Degree").AsString(100).NotNullable()
                .WithColumn("specialization").AsString(100).NotNullable()
                .WithColumn("Passoutyear").AsInt32().NotNullable()
-               .WithColumn("Certificate").AsString(100).NotNullable()
+               .WithColumn("Certificate").AsString(500).NotNullable()
                .WithColumn("Date_Created").AsDateTime().NotNullable()
                .WithColumn("Date_Modified").AsDateTime().NotNullable()
                .WithColumn("Created_by").AsString(100).NotNullable()

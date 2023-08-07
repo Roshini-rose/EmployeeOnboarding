@@ -188,7 +188,7 @@ namespace EmployeeOnboarding.Repository
                                       Name = l.Name,
                                       DateModified = a.Date_Modified,
                                       Email_id = l.EmailId,
-                                      Current_Status = a.Current_Status
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
                                   }).ToList();
             return InvitedDetails;
         }
@@ -221,7 +221,7 @@ namespace EmployeeOnboarding.Repository
                                       Name = l.Name,
                                       DateModified = a.Date_Modified,
                                       Email_id = l.EmailId,
-                                      Current_Status = a.Current_Status
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
                                   }).ToList();
             return PendingDetails;
             /*var employeedetails = (from e in _context.EmployeeGeneralDetails
@@ -349,6 +349,24 @@ namespace EmployeeOnboarding.Repository
                 return file;
             }
             return null;
+        }
+
+        public async Task<List<Dashboard1VM>> GetRejectedEmployeeDetails()
+        {
+            var RejectedDetails = (from l in _context.Login
+                                  where l.Status == "A"
+                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
+                                  where a.Status == "A" && a.Current_Status == 3
+                                  select new Dashboard1VM()
+                                  {
+                                      Login_Id = l.Id,
+                                      EmpGen_Id = a.EmpGen_Id,
+                                      Name = l.Name,
+                                      DateModified = a.Date_Modified,
+                                      Email_id = l.EmailId,
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                  }).ToList();
+            return RejectedDetails;
         }
     }
 

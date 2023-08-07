@@ -19,7 +19,7 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Disability").AsBoolean().Nullable()
                .WithColumn("Disablility_type").AsString(100).Nullable()
                .WithColumn("Covid_VaccSts").AsString(100).NotNullable()
-               .WithColumn("Vacc_Certificate").AsString(100).Nullable()
+               .WithColumn("Vacc_Certificate").AsString(500).Nullable()
                .WithColumn("Date_Created").AsDateTime().NotNullable()
                .WithColumn("Date_Modified").AsDateTime().NotNullable()
                .WithColumn("Created_by").AsString(100).NotNullable()
