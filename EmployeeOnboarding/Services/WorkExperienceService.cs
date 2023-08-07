@@ -17,6 +17,10 @@ namespace EmployeeOnboarding.Services
 
         private string SaveCertificateFile(IFormFile certificateFile, string empId, string fileName)
         {
+             if (certificateFile == null)
+            {
+                return null; // Return null if no certificate file is provided
+            }
             var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", empId);
             if (!Directory.Exists(empFolderPath))
             {
@@ -32,6 +36,7 @@ namespace EmployeeOnboarding.Services
 
             return filePath; // Return the file path
         }
+
 
         public void AddExperience(int empId, WorkExperienceVM experience)
         {
@@ -79,40 +84,36 @@ namespace EmployeeOnboarding.Services
         }
 
 
-        public WorkExperienceVM GetExperience(int experienceId)
+        public getExperienceVM GetExperience(int experienceId)
         {
-            var _education = _context.EmployeeExperienceDetails
-                .Where(n => n.EmpGen_Id == experienceId)
-                .Select(experience => new WorkExperienceVM()
+            var _education = _context.EmployeeExperienceDetails.Where(n => n.EmpGen_Id == experienceId).Select(experience => new getExperienceVM()
                 {
                     Company_name = experience.Company_name,
                     Designation = experience.Designation,
                     Reason = experience.Reason,
                     StartDate = experience.StartDate,
                     EndDate = experience.EndDate,
-                    Exp_Certificate = experience.Exp_Certificate != null ? new UploadedCertificate() : null
+                    getCertificate = GetFile(experience.Exp_Certificate)
                 })
                 .FirstOrDefault();
 
             return _education;
         }
 
-        public class UploadedCertificate : IFormFile
+        public static byte[] GetFile(string filepath)
         {
-            public string ContentType => "text/plain";
-            public string ContentDisposition => null;
-            public IHeaderDictionary Headers => new HeaderDictionary();
-            public long Length => 0;
-            public string Name => null;
-            public string FileName => "Uploaded";
-
-            public void CopyTo(Stream target) => throw new NotImplementedException();
-            public Task CopyToAsync(Stream target, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-            public Stream OpenReadStream() => Stream.Null;
-
-            public override string ToString() => "Uploaded";  // Change this line to return "Uploaded"
+            if (System.IO.File.Exists(filepath))
+            {
+                System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
+                byte[] file = new byte[fs.Length];
+                int br = fs.Read(file, 0, file.Length);
+                if (br != fs.Length)
+                {
+                    throw new IOException("Invalid path");
+                }
+                return file;
+            }
+            return null;
         }
-
-
     }
 }
