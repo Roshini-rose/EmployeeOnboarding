@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Uploads\Certificates\" />
     <Folder Include="Certificates\" />
   </ItemGroup>
 
