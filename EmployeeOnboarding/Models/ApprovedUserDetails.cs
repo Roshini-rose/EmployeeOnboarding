@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace EmployeeOnboarding.Models
+﻿namespace EmployeeOnboarding.Models
 {
-    public class PersonalInfoVM
+    public class ApprovedUserDetails
     {
         public int Id { get; set; }
+        public string EmpId { get; set; }
         public string EmpName { get; set; }
+        public string Offical_EmailId { get; set; }
         public string FatherName { get; set; }
         public DateOnly DOB { get; set; }
         public string MaritialStatus { get; set; }
