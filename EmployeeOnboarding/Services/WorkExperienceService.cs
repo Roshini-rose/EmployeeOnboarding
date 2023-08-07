@@ -78,20 +78,41 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-/*
+
         public WorkExperienceVM GetExperience(int experienceId)
         {
-            var _education = _context.EmployeeExperienceDetails.Where(n => n.EmpGen_Id == experienceId).Select(experience => new WorkExperienceVM()
-            {
-                Company_name = experience.Company_name,
-                Designation = experience.Designation,
-                Reason = experience.Reason,
-                StartDate = experience.StartDate,
-                EndDate = experience.EndDate,
-            }).FirstOrDefault();
+            var _education = _context.EmployeeExperienceDetails
+                .Where(n => n.EmpGen_Id == experienceId)
+                .Select(experience => new WorkExperienceVM()
+                {
+                    Company_name = experience.Company_name,
+                    Designation = experience.Designation,
+                    Reason = experience.Reason,
+                    StartDate = experience.StartDate,
+                    EndDate = experience.EndDate,
+                    Exp_Certificate = experience.Exp_Certificate != null ? new UploadedCertificate() : null
+                })
+                .FirstOrDefault();
 
             return _education;
-        }*/
+        }
+
+        public class UploadedCertificate : IFormFile
+        {
+            public string ContentType => "text/plain";
+            public string ContentDisposition => null;
+            public IHeaderDictionary Headers => new HeaderDictionary();
+            public long Length => 0;
+            public string Name => null;
+            public string FileName => "Uploaded";
+
+            public void CopyTo(Stream target) => throw new NotImplementedException();
+            public Task CopyToAsync(Stream target, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Stream OpenReadStream() => Stream.Null;
+
+            public override string ToString() => "Uploaded";  // Change this line to return "Uploaded"
+        }
+
 
     }
 }

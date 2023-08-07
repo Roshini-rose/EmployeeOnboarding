@@ -71,11 +71,11 @@ namespace EmployeeOnboarding.Controllers
 */
 
 
-/*        [HttpGet("get-experience/{id}")]
+        [HttpGet("get-experience/{id}")]
         public IActionResult GetExperience(int id)
         {
             var experience = _experienceService.GetExperience(id);
             return Ok(experience);
-        }*/
+        }
     }
 }
