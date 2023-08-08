@@ -261,7 +261,7 @@ namespace EmployeeOnboarding.Repository
                                join ead in _context.EmployeeAdditionalInfo on e.Id equals ead.EmpGen_Id
                                where ead.Status == "A"
                                join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
-                               where al.Current_Status == 1
+                               where al.Current_Status == 1 && al.Status=="A"
                                select new ApprovedUserDetails()
                                {
                                    Id = e.Id,
