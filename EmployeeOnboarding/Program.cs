@@ -39,6 +39,10 @@ builder.Services.AddTransient<logindetailsService>();
 builder.Services.AddTransient<EducationService>();
 builder.Services.AddTransient<WorkExperienceService>();
 builder.Services.AddTransient<IAdminRepository, AdminRepository>();
+builder.Services.AddTransient<GeneralDetailService>();
+builder.Services.AddTransient<ContactDetails>();
+builder.Services.AddTransient<AddressDetails>();
+builder.Services.AddTransient<AdditionalDetails>();
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
     .AddFluentMigratorCore()

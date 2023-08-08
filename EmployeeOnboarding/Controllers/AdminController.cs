@@ -38,6 +38,12 @@ namespace OnboardingWebsite.Controllers
             return await _adminRepository.GetPersonalInfo(employee);
         }
 
+        [HttpPost("api/GetApprovedEmployeeDetails")]
+        public async Task<List<ApprovedUserDetails>> GetApprovedEmployeeDetails(int EmpGen_Id)
+        {
+            return await _adminRepository.GetApprovedEmpDetails(EmpGen_Id);
+        }
+
         [HttpGet("api/GetPendingEmployeeDetails")]
         public async Task<List<Dashboard1VM>> GetPendingEmployee()
         {

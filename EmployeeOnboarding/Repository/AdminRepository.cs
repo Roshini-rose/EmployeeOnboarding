@@ -15,7 +15,7 @@ using System.Data.Entity.Core.Mapping;
 
 namespace EmployeeOnboarding.Repository
 { 
-    public class AdminRepository  : IAdminRepository
+    public class AdminRepository  : IAdminRepository     
     {
         
         public readonly ApplicationDbContext _context;
@@ -120,7 +120,7 @@ namespace EmployeeOnboarding.Repository
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
                                    ECN = ec.Emgy_Contactno,
-                                   PermanentAddress = new AddressVM()
+                                   PermanentAddress = new AddressVM1()
                                    {
 
                                        Address = address[0].Address,
@@ -129,7 +129,7 @@ namespace EmployeeOnboarding.Repository
                                        State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
                                        Pincode = address[0].Pincode
                                    },
-                                   TemporaryAddress = new AddressVM()
+                                   TemporaryAddress = new AddressVM1()
                                    {
 
                                        Address = address[1].Address,
