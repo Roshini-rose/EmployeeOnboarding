@@ -50,8 +50,8 @@ namespace EmployeeOnboarding.Controllers
             }
         }
 
-        [HttpPost("conf-login")]
-        public IActionResult CLogins(string email, [FromBody] loginconfirmVM logindetails)
+        [HttpGet("employee-login")]
+        public IActionResult Logins(string email,string password)
         {
             var issuccess = _loginemp.AuthenticateEmp(email, password);
 
