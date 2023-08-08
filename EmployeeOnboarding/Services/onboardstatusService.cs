@@ -27,7 +27,7 @@ namespace EmployeeOnboarding.Services
                 Date_Modified = DateTime.UtcNow,
                 Created_by = "Admin",
                 Modified_by = "Admin",
-                Status = Status.Approved.ToString(),
+                Status = "A",
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
@@ -53,7 +53,7 @@ namespace EmployeeOnboarding.Services
                 Date_Modified = DateTime.UtcNow,
                 Created_by = "Admin",
                 Modified_by = "Admin",
-                Status = Status.Rejected.ToString(),
+                Status = "A",
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
