@@ -22,8 +22,8 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Comments").AsString(150).Nullable()
                .WithColumn("Date_Created").AsDateTime().NotNullable()
                .WithColumn("Date_Modified").AsDateTime().Nullable()
-               .WithColumn("Created_By").AsString(100).NotNullable()
-               .WithColumn("Modified_By").AsString(100).Nullable()
+               .WithColumn("Created_by").AsString(100).NotNullable()
+               .WithColumn("Modified_by").AsString(100).Nullable()
                .WithColumn("Status").AsString(30).NotNullable();
         }
     }
