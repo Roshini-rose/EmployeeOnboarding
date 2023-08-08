@@ -42,7 +42,7 @@ namespace EmployeeOnboarding.Services
 
                 var _contact = new EmployeeAddressDetails()
                 {
-
+                    EmpGen_Id = Id,
                     Address_Type = address.Address_Type,
                     Address = address.Address,
                     Country_Id = address.Country_Id,

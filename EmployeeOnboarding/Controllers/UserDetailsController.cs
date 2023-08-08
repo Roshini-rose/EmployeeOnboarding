@@ -29,7 +29,7 @@ namespace EmployeeOnboarding.Controllers
 
         //General details
         //post method
-        [HttpPost("add-general-details")]
+        [HttpPost("add-general-details/{Id}")]
         public IActionResult AddGeneral(int Id, [FromForm] GeneralVM general)
         {
            _generalservices.AddGeneral(Id, general);
@@ -39,7 +39,7 @@ namespace EmployeeOnboarding.Controllers
 
         //get method
 
-       [HttpGet("get-general-details/{id}")]
+       [HttpGet("get-general-details/{Id}")]
         public IActionResult GetGeneral(int Id)
         {
          var generaldetails = _generalservices.GetGeneral(Id);
@@ -48,7 +48,7 @@ namespace EmployeeOnboarding.Controllers
 
         //Contact details
        //Post method
-       [HttpPost("add-contact-details")]
+       [HttpPost("add-contact-details/{Id}")]
        public IActionResult AddContact(int Id, [FromForm] ContactVM contact)
        {
            _contactdetails.AddContact(Id, contact);
@@ -65,7 +65,7 @@ namespace EmployeeOnboarding.Controllers
         }
 
         //Post method
-        [HttpPost("add-address-details")]
+        [HttpPost("add-address-details/{Id}")]
         public IActionResult AddAddress(int Id, AddressVM address)
         {
            _addressdetails.AddAddress(Id,address);
@@ -84,7 +84,7 @@ namespace EmployeeOnboarding.Controllers
         
         //Additional details
         //Post method
-        [HttpPost("add-additional-details")]
+        [HttpPost("add-additional-details/{Id}")]
         public IActionResult AddAdditional(int Id, [FromForm] AdditionalVM additional)
         {
           _additionaldetails.AddAdditional(Id, additional);
@@ -99,8 +99,6 @@ namespace EmployeeOnboarding.Controllers
           var Additionaldetails = _additionaldetails.GetAdditional(id);
           return Ok(Additionaldetails);
        }
-
-
 
    }
     
