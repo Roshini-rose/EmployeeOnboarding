@@ -32,7 +32,7 @@ namespace EmployeeOnboarding.Services
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
 
-            var official = _context.EmployeeGeneralDetails.FirstOrDefault(e => e.Login_ID == Empid);
+            var official = _context.EmployeeGeneralDetails.FirstOrDefault(e => e.Login_ID == lid);
 
             official.Empid = onboardstatus.Emp_id;
             official.Official_EmailId = onboardstatus.Official_EmailId;
