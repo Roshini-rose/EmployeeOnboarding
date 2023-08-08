@@ -215,15 +215,16 @@ namespace EmployeeOnboarding.Repository
                                    where al.Current_Status == 1 && al.Status == "A"
                                    join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
                                    where ec.Status == "A"
-                                   join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
-                                   where ed.Status == "A"
+                                   ////join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
+                                   ////where ed.Status == "A"
                                    select new DashboardVM()
                                    {
                                        EmpGen_Id=e.Id,
                                        Empid = e.Empid,
                                        Empname = e.EmployeeName,
                                        Contact = ec.Contact_no,
-                                       Email = e.Official_EmailId
+                                       Email = e.Official_EmailId,
+                                       education= (_context.EmployeeEducationDetails.Where(x => x.EmpGen_Id == e.Id).Select(x => x.Degree).OrderBy(x => x).LastOrDefault())
                                        //education = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == getMaxPassoutYear(ed.EmpGen_Id)).Select(x => x.Degree).FirstOrDefault()
                                    }).ToList();
             return employeedetails;
@@ -310,6 +311,11 @@ namespace EmployeeOnboarding.Repository
         {
             var maxyear = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == id).Select(x => x.Degree).ToString();
             return maxyear;
+        }
+
+        public Task<List<DashboardVM>>? SearchApprovedEmpDetails(string name)
+        {
+            throw new NotImplementedException();
         }
 
 
