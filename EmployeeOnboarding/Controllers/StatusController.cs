@@ -27,23 +27,23 @@ namespace EmployeeOnboarding.Controllers
         }
 
         [HttpPost("approve/{id}")]
-        public IActionResult ChangeApprovalStatus(int id,[FromBody] onboardstatusVM onboardstatus)
+        public IActionResult ChangeApprovalStatus(int lid,int eid,[FromBody] onboardstatusVM onboardstatus)
         {
-            _onboardstatusService.ChangeApprovalStatus(id,onboardstatus);
+            _onboardstatusService.ChangeApprovalStatus(lid,eid,onboardstatus);
             return Ok("Approved");
         }
 
         [HttpPost("reject/{id}")]
-        public IActionResult ChangeCancelStatus(int id, [FromBody] commentVM onboardstatus)
+        public IActionResult ChangeCancelStatus(int lid, int eid, [FromBody] commentVM onboardstatus)
         {
-            _onboardstatusService.ChangeCancelStatus(id,onboardstatus);
+            _onboardstatusService.ChangeCancelStatus(lid, eid, onboardstatus);
             return Ok("Rejected");
         }
 
         [HttpPost("pending/{id}")]
-        public IActionResult ChangePendingStatus(int id)
+        public IActionResult ChangePendingStatus(int lid, int eid)
         {
-            _onboardstatusService.ChangePendingStatus(id);
+            _onboardstatusService.ChangePendingStatus(lid, eid);
             return Ok("Pending");
         }
 

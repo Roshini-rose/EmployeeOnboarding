@@ -15,11 +15,11 @@ namespace EmployeeOnboarding.Services
         {
             _context = context;
         }
-        public void ChangeApprovalStatus(int Empid,onboardstatusVM onboardstatus)
+        public void ChangeApprovalStatus(int lid,int Empid,onboardstatusVM onboardstatus)
         {
             var _onboard = new ApprovalStatus()
             {
-                Login_Id = Empid,
+                Login_Id = lid,
                 EmpGen_Id = Empid,
                 Current_Status = (int)Status.Approved,
                 Comments="",
@@ -41,11 +41,11 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-        public void ChangeCancelStatus(int Empid,commentVM onboardstatus)
+        public void ChangeCancelStatus(int lid, int Empid,commentVM onboardstatus)
         {
             var _onboard = new ApprovalStatus()
             {
-                Login_Id = Empid,
+                Login_Id = lid,
                 EmpGen_Id = Empid,
                 Current_Status = (int)Status.Rejected,
                 Comments = onboardstatus.Comments,
@@ -59,11 +59,11 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-        public void ChangePendingStatus(int Empid)
+        public void ChangePendingStatus(int lid, int Empid)
         {
             var _onboard = new ApprovalStatus()
             {
-                Login_Id = Empid,
+                Login_Id = lid,
                 EmpGen_Id = Empid,
                 Current_Status = (int)Status.Pending,
                 Comments = "",
