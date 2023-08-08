@@ -23,6 +23,7 @@ namespace EmployeeOnboarding.Services
             _context = context;
             this.emailSender = emailSender;
         }
+
         public async void LoginInvite(logininviteVM logindet)
         {
             var _logindet = new Login()
@@ -36,12 +37,16 @@ namespace EmployeeOnboarding.Services
                 Status = "Invited",
             };
 
-            var callbackUrl = "/confirm-login/";
-
-            await emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
-                       $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
             _context.Login.Add(_logindet);
             _context.SaveChanges();
+        
+            var callbackUrl = "http://localhost:7136/swagger/index.html";
+            //var callbackUrl = "http://localhost:7136/api/logindetails/confirm-login";
+
+            await emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
+                       $"Please confirm your account by  <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here.");
+
+
         }
 
         public void LoginConfirm(string Emailid,loginconfirmVM logindet)
@@ -80,5 +85,24 @@ namespace EmployeeOnboarding.Services
                 return (null);
         }
     }
-    
+
+    //public async Task LoginIn(string name,string email)
+    //{
+    //    var _logindet = new Login()
+    //    {
+    //        Name = name,
+    //        EmailId = email,
+    //        Date_Created = DateTime.UtcNow,
+    //        Date_Modified = DateTime.UtcNow,
+    //        Created_By = "Admin",
+    //        Modified_By = "Admin",
+    //        Status = "Invited",
+    //    };
+
+    //    _context.Login.Add(_logindet);
+    //    _context.SaveChanges();
+
+
+    //}
+
 }
