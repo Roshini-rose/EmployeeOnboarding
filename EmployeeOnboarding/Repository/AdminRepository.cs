@@ -15,7 +15,7 @@ using System.Data.Entity.Core.Mapping;
 
 namespace EmployeeOnboarding.Repository
 { 
-    public class AdminRepository  : IAdminRepository
+    public class AdminRepository  : IAdminRepository     
     {
         
         public readonly ApplicationDbContext _context;
