@@ -46,12 +46,12 @@ namespace EmployeeOnboarding.Controllers
             }
             else
             {
-                return Ok("Password not equal");
+                return Ok("Invaild");
             }
         }
 
-        [HttpGet("employee-login")]
-        public IActionResult Logins(string email, string password)
+        [HttpPost("conf-login")]
+        public IActionResult CLogins(string email, [FromBody] loginconfirmVM logindetails)
         {
             var issuccess = _loginemp.AuthenticateEmp(email, password);
 
