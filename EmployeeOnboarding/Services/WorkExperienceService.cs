@@ -17,6 +17,10 @@ namespace EmployeeOnboarding.Services
 
         private string SaveCertificateFile(IFormFile certificateFile, string empId, string fileName)
         {
+             if (certificateFile == null)
+            {
+                return null; // Return null if no certificate file is provided
+            }
             var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", empId);
             if (!Directory.Exists(empFolderPath))
             {
@@ -32,6 +36,7 @@ namespace EmployeeOnboarding.Services
 
             return filePath; // Return the file path
         }
+
 
         public void AddExperience(int empId, WorkExperienceVM experience)
         {
@@ -78,20 +83,37 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-/*
-        public WorkExperienceVM GetExperience(int experienceId)
+
+        public getExperienceVM GetExperience(int experienceId)
         {
-            var _education = _context.EmployeeExperienceDetails.Where(n => n.EmpGen_Id == experienceId).Select(experience => new WorkExperienceVM()
-            {
-                Company_name = experience.Company_name,
-                Designation = experience.Designation,
-                Reason = experience.Reason,
-                StartDate = experience.StartDate,
-                EndDate = experience.EndDate,
-            }).FirstOrDefault();
+            var _education = _context.EmployeeExperienceDetails.Where(n => n.EmpGen_Id == experienceId).Select(experience => new getExperienceVM()
+                {
+                    Company_name = experience.Company_name,
+                    Designation = experience.Designation,
+                    Reason = experience.Reason,
+                    StartDate = experience.StartDate,
+                    EndDate = experience.EndDate,
+                    getCertificate = GetFile(experience.Exp_Certificate)
+                })
+                .FirstOrDefault();
 
             return _education;
-        }*/
+        }
 
+        public static byte[] GetFile(string filepath)
+        {
+            if (System.IO.File.Exists(filepath))
+            {
+                System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
+                byte[] file = new byte[fs.Length];
+                int br = fs.Read(file, 0, file.Length);
+                if (br != fs.Length)
+                {
+                    throw new IOException("Invalid path");
+                }
+                return file;
+            }
+            return null;
+        }
     }
 }

@@ -21,41 +21,24 @@ namespace EmployeeOnboarding.Controllers
             _loginemp = loginemp;
         }
 
-        [HttpPost("add-userLoginInvite")]
+        [HttpPost("Login-Invite")]
         public IActionResult LoginDetails([FromBody] logininviteVM logindetails)
         {
             _logindetailsService.LoginInvite(logindetails);
             return Ok("Invite Sent");
         }
 
-        //[HttpPost("user-Confirm")]
-        //public IActionResult LoginConfirm(string email,[FromBody] loginconfirmVM logindetails)
+        //[HttpPost("Login-In")]
+        //public async Task<IActionResult> LoginDetail(string name, string email)
         //{
-        //    _logindetailsService.LoginConfirm(email,logindetails);
-        //    return Ok("Employee Confirmed");
+        //  await _logindetailsService.LoginIn(name,email);
+        //    return Ok("Invite");
         //}
 
-        [HttpPost("employee-login")]
-        public IActionResult Logins(string email, string password)
-        {
-            var issuccess = _loginemp.AuthenticateEmp(email, password);
-
-
-            if (issuccess.Result != null)
-            {
-                return Ok("Logged in");
-            }
-            else
-            {
-                return Ok("Invalid");
-            }
-        }
-
-        [HttpPost("user-LoginConfirm")]
+        [HttpPost("confirm-login")]
         public IActionResult CLogins(string email, [FromBody] loginconfirmVM logindetails)
         {
             var issuccess = _logindetailsService.LoginCmp(email, logindetails);
-
 
             if (issuccess.Result != null)
             {
@@ -67,8 +50,23 @@ namespace EmployeeOnboarding.Controllers
             }
         }
 
+        [HttpGet("employee-login")]
+        public IActionResult Logins(string email, string password)
+        {
+            var issuccess = _loginemp.AuthenticateEmp(email, password);
+
+            if (issuccess != null)
+            {
+                return Ok(issuccess);
+            }
+            else
+            {
+                return Ok("Invaild");
+            }
+        }
+
         [HttpPost("admin-login")]
-        public IActionResult AdminLogins(string email, string password)
+        public IActionResult AdminLogin(string email, string password)
         {
 
             if (email == "admin@ideassion.com" && password == "admin123")

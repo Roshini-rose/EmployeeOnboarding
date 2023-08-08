@@ -26,16 +26,22 @@ namespace OnboardingWebsite.Controllers
             return await _adminRepository.GetEmployeeDetails();
         }
 
-        [HttpPost("api/AdminDeleteById")]
-        public async Task deleteEmployee(string[] employeeid)
-        {
-            await _adminRepository.DeleteEmployee(employeeid);
-        }
+        ////[HttpPost("api/AdminDeleteById")]
+        ////public async Task deleteEmployee(string[] employeeid)
+        ////{
+        ////    await _adminRepository.DeleteEmployee(employeeid);
+        ////}
 
         [HttpPost("api/GetEmployeeDetails")]
         public async Task <List<PersonalInfoVM>> GetPersonalInfo(int employee)
         {
             return await _adminRepository.GetPersonalInfo(employee);
+        }
+
+        [HttpPost("api/GetApprovedEmployeeDetails")]
+        public async Task<List<ApprovedUserDetails>> GetApprovedEmployeeDetails(int EmpGen_Id)
+        {
+            return await _adminRepository.GetApprovedEmpDetails(EmpGen_Id);
         }
 
         [HttpGet("api/GetPendingEmployeeDetails")]
@@ -47,6 +53,23 @@ namespace OnboardingWebsite.Controllers
         public async Task<List<Dashboard1VM>> GetInvitedEmployee()
         {
             return await _adminRepository.GetInvitedEmployeeDetails();
+        }
+        [HttpGet("api/GetRejectedEmployeeDetails")]
+        public async Task<List<Dashboard1VM>> GetRejectedDetails()
+        {
+            return await _adminRepository.GetRejectedEmployeeDetails();
+        }
+
+        [HttpPost("api/SearchApprovedEmployeeDetails")]
+        public async Task<List<DashboardVM>> SearchApprovedEmployee(string name)
+        {
+            return await _adminRepository.SearchApprovedEmpDetails(name);
+        }
+
+        [HttpPost("api/SearchPendingEmployeeDetails")]
+        public async Task<List<Dashboard1VM>> SearchPendingEmployee(string name)
+        {
+            return await _adminRepository.SearchPendingEmpDetails(name);
         }
     }
 }

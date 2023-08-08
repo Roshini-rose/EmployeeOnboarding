@@ -1,7 +1,14 @@
 ﻿using EmployeeOnboarding.Data;
 using EmployeeOnboarding.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using OnboardingWebsite.Models;
 using System.Data;
 using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Encodings.Web;
+using System.Security.Policy;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace EmployeeOnboarding.Services
 {
@@ -9,11 +16,15 @@ namespace EmployeeOnboarding.Services
     {
         
         private ApplicationDbContext _context;
-        public logindetailsService(ApplicationDbContext context)
+        private IEmailSender emailSender;
+
+        public logindetailsService(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            this.emailSender = emailSender;
         }
-        public void LoginInvite(logininviteVM logindet)
+
+        public async void LoginInvite(logininviteVM logindet)
         {
             var _logindet = new Login()
             {
@@ -25,8 +36,15 @@ namespace EmployeeOnboarding.Services
                 Modified_By = "Admin",
                 Status = "Invited",
             };
+
             _context.Login.Add(_logindet);
             _context.SaveChanges();
+        
+            var callbackUrl = "http://localhost:7136/swagger/index.html";
+            //var callbackUrl = "http://localhost:7136/api/logindetails/confirm-login";
+
+            await emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
+                       $"Please confirm your account by  <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here.");
         }
 
         public void LoginConfirm(string Emailid,loginconfirmVM logindet)
@@ -64,15 +82,5 @@ namespace EmployeeOnboarding.Services
             else
                 return (null);
         }
-
-        public async Task<Login> LoginEmp(string Emailid, string Password)
-        {
-            var _succeeded = _context.Login.FirstOrDefault(n => n.EmailId == Emailid && n.Password == Password);
-            if (_succeeded == null)
-                return null;
-            else
-                return (_succeeded);
-        }
     }
-    
 }
