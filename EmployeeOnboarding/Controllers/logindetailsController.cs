@@ -28,6 +28,13 @@ namespace EmployeeOnboarding.Controllers
             return Ok("Invite Sent");
         }
 
+        //[HttpPost("Login-In")]
+        //public async Task<IActionResult> LoginDetail(string name, string email)
+        //{
+        //  await _logindetailsService.LoginIn(name,email);
+        //    return Ok("Invite");
+        //}
+
         [HttpPost("confirm-login")]
         public IActionResult CLogins(string email, [FromBody] loginconfirmVM logindetails)
         {
