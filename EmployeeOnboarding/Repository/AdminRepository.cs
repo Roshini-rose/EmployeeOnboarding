@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Data.Entity.Core.Mapping;
+using EmployeeOnboarding.ViewModels;
 
 namespace EmployeeOnboarding.Repository
 { 
@@ -245,6 +246,63 @@ namespace EmployeeOnboarding.Repository
             ////                       }).ToList();
             ////return employeedetails;
         }
+
+
+        public async Task<List<ApprovedUserDetails>>? GetApprovedEmpDetails(int id)
+        {
+            var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
+            var emppersonal = (from e in _context.EmployeeGeneralDetails
+                               where e.Id == id && e.Status == "A"
+                               join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
+                               where ec.Status == "A"
+                               join ead in _context.EmployeeAdditionalInfo on e.Id equals ead.EmpGen_Id
+                               where ead.Status == "A"
+                               join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
+                               where al.Current_Status == 1
+                               select new ApprovedUserDetails()
+                               {
+                                   Id = e.Id,
+                                   EmpId = e.Empid,
+                                   EmpName = e.EmployeeName,
+                                   Offical_EmailId = e.Official_EmailId,
+                                   FatherName = e.FatherName,
+                                   DOB = e.DOB,
+                                   MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
+                                   DOM = e.DateOfMarriage,
+                                   Gender = ((Data.Enum.Gender)e.Gender).ToString(),
+                                   Contactno = ec.Contact_no,
+                                   ECP = ec.Emgy_Contactperson,
+                                   ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
+                                   ECN = ec.Emgy_Contactno,
+                                   PermanentAddress = new AddressVM1()
+                                   {
+
+                                       Address = address[0].Address,
+                                       Country = _context.Country.Where(x => x.Id == address[0].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       Pincode = address[0].Pincode
+                                   },
+                                   TemporaryAddress = new AddressVM1()
+                                   {
+
+                                       Address = address[1].Address,
+                                       Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       Pincode = address[0].Pincode
+                                   },
+                                   Disability = ead.Disability,
+                                   Disablility_type = ead.Disablility_type,
+                                   CovidSts = ead.Covid_VaccSts,
+                                   CovidCerti = GetFile(ead.Vacc_Certificate),
+                                   educationDetailsVMs = Education(id),
+                                   experienceVMs = Experrience(id)
+                               }).ToList();
+            return emppersonal;
+        }
+
+
 
         public string getMaxPassoutYear(int id)
         {
