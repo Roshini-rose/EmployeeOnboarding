@@ -49,8 +49,13 @@ namespace EmployeeOnboarding.Services
                 existingExperience.Company_name = experience.Company_name;
                 existingExperience.Designation = experience.Designation;
                 existingExperience.Reason = experience.Reason;
-                existingExperience.StartDate = experience.StartDate;
-                existingExperience.EndDate = experience.EndDate;
+
+                // Parse and assign DateOnly values
+                DateOnly startDate = DateOnly.ParseExact(experience.StartDate, "dd-MM-yyyy");
+                DateOnly endDate = DateOnly.ParseExact(experience.EndDate, "dd-MM-yyyy");
+
+                existingExperience.StartDate = startDate;
+                existingExperience.EndDate = endDate;
                 existingExperience.Exp_Certificate = SaveCertificateFile(experience.Exp_Certificate, empId.ToString(), "Experience.pdf");
                 existingExperience.Date_Modified = DateTime.UtcNow;
                 existingExperience.Modified_by = empId.ToString();
@@ -67,8 +72,10 @@ namespace EmployeeOnboarding.Services
                     Company_name = experience.Company_name,
                     Designation = experience.Designation,
                     Reason = experience.Reason,
-                    StartDate = experience.StartDate,
-                    EndDate = experience.EndDate,
+                    // Parse and assign DateOnly values
+                    StartDate = DateOnly.ParseExact(experience.StartDate, "dd-MM-yyyy"),
+                    EndDate = DateOnly.ParseExact(experience.EndDate, "dd-MM-yyyy"), 
+
                     Exp_Certificate = SaveCertificateFile(experience.Exp_Certificate, empId.ToString(), certificateFileName),
                     Date_Created = DateTime.UtcNow,
                     Date_Modified = DateTime.UtcNow,
