@@ -38,7 +38,7 @@ namespace EmployeeOnboarding.Services
 
                 var _contact = new EmployeeContactDetails()
                 {
-
+                    EmpGen_Id = Id,
                     Personal_Emailid = contact.Personal_Emailid,
                     Contact_no = contact.Contact_no,
                     Emgy_Contactperson = contact.Emgy_Contactperson,

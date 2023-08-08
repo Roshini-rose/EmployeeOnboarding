@@ -38,7 +38,7 @@ namespace EmployeeOnboarding.Services
 
                 var _general= new EmployeeGeneralDetails()
                 {
-                   
+                   Login_ID = Id,
                     EmployeeName = general.EmployeeName,
                     DOB = general.DOB,
                     FatherName = general.FatherName,
