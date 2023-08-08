@@ -13,6 +13,8 @@ using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Data.Entity.Core.Mapping;
 
+
+
 namespace EmployeeOnboarding.Repository
 { 
     public class AdminRepository  : IAdminRepository
@@ -302,7 +304,32 @@ namespace EmployeeOnboarding.Repository
             ////return employeedetails;
         }
 
-        
+        public async Task<List<DashboardVM>>? SearchApprovedEmpDetails(string name)
+        {
+            var employeedetails = (from l in _context.Login
+                                   where l.Status == "A"
+                                   join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
+                                   where e.Status == "A" &&  e.EmployeeName.Contains(name)
+                                   join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
+                                   where al.Current_Status == 1 && al.Status == "A"
+                                   join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
+                                   where ec.Status == "A"
+                                   //join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
+                                   //where ed.Status == "A"
+                                   select new DashboardVM()
+                                   {
+                                       EmpGen_Id = e.Id,
+                                       Empid = e.Empid,
+                                       Empname = e.EmployeeName,
+                                       Contact = ec.Contact_no,
+                                       Email = e.Official_EmailId,
+                                       education = (_context.EmployeeEducationDetails.Where(x => x.EmpGen_Id == e.Id).Select(x => x.Degree).OrderBy(x => x).LastOrDefault())
+                                   }).ToList();
+            return employeedetails;
+        }
+
+
+
 
         ////public int getMaxPassoutYear(int id)
         ////{
