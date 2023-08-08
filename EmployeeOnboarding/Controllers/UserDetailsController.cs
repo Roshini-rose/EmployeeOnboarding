@@ -30,7 +30,7 @@ namespace EmployeeOnboarding.Controllers
         //General details
         //post method
         [HttpPost("add-general-details/{Id}")]
-        public IActionResult AddGeneral(int Id, [FromForm] GeneralVM general)
+        public IActionResult AddGeneral(int Id, [FromBody] GeneralVM general)
         {
            _generalservices.AddGeneral(Id, general);
             return Ok();
@@ -49,7 +49,7 @@ namespace EmployeeOnboarding.Controllers
         //Contact details
        //Post method
        [HttpPost("add-contact-details/{Id}")]
-       public IActionResult AddContact(int Id, [FromForm] ContactVM contact)
+       public IActionResult AddContact(int Id, [FromBody] ContactVM contact)    
        {
            _contactdetails.AddContact(Id, contact);
             return Ok();
