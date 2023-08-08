@@ -15,5 +15,6 @@ namespace EmployeeOnboarding.Contracts
         Task<List<ApprovedUserDetails>>? GetApprovedEmpDetails(int id);
         Task<List<DashboardVM>>? SearchApprovedEmpDetails(string name);
         Task<List<Dashboard1VM>>? SearchPendingEmpDetails(string name);
+        Task<List<Dashboard1VM>>? SearchInvitedEmpDetails(string name);
     }
 }
