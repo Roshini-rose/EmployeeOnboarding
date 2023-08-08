@@ -28,12 +28,12 @@ namespace EmployeeOnboarding.Controllers
             return Ok("Invite Sent");
         }
 
-        [HttpPost("user-LoginConfirm")]
-        public IActionResult LoginConfirm(string email,[FromBody] loginconfirmVM logindetails)
-        {
-            _logindetailsService.LoginConfirm(email,logindetails);
-            return Ok("Employee Confirmed");
-        }
+        //[HttpPost("user-Confirm")]
+        //public IActionResult LoginConfirm(string email,[FromBody] loginconfirmVM logindetails)
+        //{
+        //    _logindetailsService.LoginConfirm(email,logindetails);
+        //    return Ok("Employee Confirmed");
+        //}
 
         [HttpPost("employee-login")]
         public IActionResult Logins(string email, string password)
@@ -47,11 +47,11 @@ namespace EmployeeOnboarding.Controllers
             }
             else
             {
-                return Ok("Invaild");
+                return Ok("Invalid");
             }
         }
 
-        [HttpPost("conf-login")]
+        [HttpPost("user-LoginConfirm")]
         public IActionResult CLogins(string email, [FromBody] loginconfirmVM logindetails)
         {
             var issuccess = _logindetailsService.LoginCmp(email, logindetails);
