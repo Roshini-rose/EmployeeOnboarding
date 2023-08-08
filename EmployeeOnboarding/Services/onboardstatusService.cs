@@ -25,9 +25,9 @@ namespace EmployeeOnboarding.Services
                 Comments="",
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_By = "Admin",
-                Modified_By = "Admin",
-                Status = Status.Approved.ToString(),
+                Created_by = "Admin",
+                Modified_by = "Admin",
+                Status = "A",
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
@@ -51,9 +51,9 @@ namespace EmployeeOnboarding.Services
                 Comments = onboardstatus.Comments,
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_By = "Admin",
-                Modified_By = "Admin",
-                Status = Status.Rejected.ToString(),
+                Created_by = "Admin",
+                Modified_by = "Admin",
+                Status = "A",
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
@@ -69,8 +69,8 @@ namespace EmployeeOnboarding.Services
                 Comments = "",
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_By = Empid.ToString(),
-                Modified_By = "Admin",
+                Created_by = Empid.ToString(),
+                Modified_by = "Admin",
                 Status = Status.Pending.ToString(),
             };
             _context.ApprovalStatus.Add(_onboard);
