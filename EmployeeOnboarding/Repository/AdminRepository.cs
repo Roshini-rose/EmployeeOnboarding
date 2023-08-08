@@ -313,10 +313,50 @@ namespace EmployeeOnboarding.Repository
             return maxyear;
         }
 
-        public Task<List<DashboardVM>>? SearchApprovedEmpDetails(string name)
+        public async Task<List<DashboardVM>>? SearchApprovedEmpDetails(string name)
         {
-            throw new NotImplementedException();
+            var employeedetails = (from l in _context.Login
+                                   where l.Status == "A"
+                                   join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
+                                   where e.Status == "A" && e.EmployeeName.Contains(name)
+                                   join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
+                                   where al.Current_Status == 1 && al.Status == "A"
+                                   join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
+                                   where ec.Status == "A"
+                                   ////join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
+                                   ////where ed.Status == "A"
+                                   select new DashboardVM()
+                                   {
+                                       EmpGen_Id = e.Id,
+                                       Empid = e.Empid,
+                                       Empname = e.EmployeeName,
+                                       Contact = ec.Contact_no,
+                                       Email = e.Official_EmailId,
+                                       education = (_context.EmployeeEducationDetails.Where(x => x.EmpGen_Id == e.Id).Select(x => x.Degree).OrderBy(x => x).LastOrDefault())
+                                       //education = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == getMaxPassoutYear(ed.EmpGen_Id)).Select(x => x.Degree).FirstOrDefault()
+                                   }).ToList();
+            return employeedetails;
         }
+
+        public async Task<List<Dashboard1VM>>? SearchPendingEmpDetails(string name)
+        {
+            var PendingDetails = (from l in _context.Login
+                                  where l.Status == "A" 
+                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
+                                  where a.Status == "A" && a.Current_Status == 2 && l.Name.Contains(name)
+                                  select new Dashboard1VM()
+                                  {
+                                      Login_Id = l.Id,
+                                      EmpGen_Id = a.EmpGen_Id,
+                                      Name = l.Name,
+                                      DateModified = a.Date_Modified,
+                                      Email_id = l.EmailId,
+                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                  }).ToList();
+            return PendingDetails;
+        }
+
+
 
 
         /*public async Task DeleteEmployee(string[] employeeId)
