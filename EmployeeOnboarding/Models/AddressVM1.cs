@@ -1,6 +1,6 @@
 ﻿namespace EmployeeOnboarding.Models
 {
-    public class AddressVM
+    public class AddressVM1
     {
         public string Address { get; set; }
         public string Country { get; set; }
