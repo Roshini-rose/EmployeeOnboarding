@@ -59,5 +59,11 @@ namespace OnboardingWebsite.Controllers
         {
             return await _adminRepository.GetRejectedEmployeeDetails();
         }
+
+        [HttpPost("api/SearchApprovedEmployeeDetails")]
+        public async Task<List<DashboardVM>> SearchApprovedEmployee(string name)
+        {
+            return await _adminRepository.SearchApprovedEmpDetails(name);
+        }
     }
 }
