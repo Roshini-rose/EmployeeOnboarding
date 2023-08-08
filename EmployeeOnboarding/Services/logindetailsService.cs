@@ -40,11 +40,11 @@ namespace EmployeeOnboarding.Services
             _context.Login.Add(_logindet);
             _context.SaveChanges();
         
-            var callbackUrl = "http://localhost:7136/swagger/index.html";
-            //var callbackUrl = "http://localhost:7136/api/logindetails/confirm-login";
+            //var callbackUrl = "http://localhost:7136/swagger/index.html";
+            ////var callbackUrl = "http://localhost:7136/api/logindetails/confirm-login";
 
-            await emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
-                       $"Please confirm your account by  <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here.");
+            //await emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
+            //           $"Please confirm your account by  <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here.");
         }
 
         public void LoginConfirm(string Emailid,loginconfirmVM logindet)
