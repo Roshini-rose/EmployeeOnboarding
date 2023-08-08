@@ -45,8 +45,6 @@ namespace EmployeeOnboarding.Services
 
             await emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
                        $"Please confirm your account by  <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here.");
-
-
         }
 
         public void LoginConfirm(string Emailid,loginconfirmVM logindet)
@@ -85,24 +83,4 @@ namespace EmployeeOnboarding.Services
                 return (null);
         }
     }
-
-    //public async Task LoginIn(string name,string email)
-    //{
-    //    var _logindet = new Login()
-    //    {
-    //        Name = name,
-    //        EmailId = email,
-    //        Date_Created = DateTime.UtcNow,
-    //        Date_Modified = DateTime.UtcNow,
-    //        Created_By = "Admin",
-    //        Modified_By = "Admin",
-    //        Status = "Invited",
-    //    };
-
-    //    _context.Login.Add(_logindet);
-    //    _context.SaveChanges();
-
-
-    //}
-
 }
