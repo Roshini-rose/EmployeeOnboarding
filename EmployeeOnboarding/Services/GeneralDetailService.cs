@@ -59,6 +59,7 @@ namespace EmployeeOnboarding.Services
 
             _context.SaveChanges();
         }
+
         //get method
         public GeneralVM GetGeneral(int Id)
         {
