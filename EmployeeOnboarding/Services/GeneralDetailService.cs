@@ -71,7 +71,7 @@ namespace EmployeeOnboarding.Services
                 Gender = ((Gender)general.Gender).ToString(),
                 MaritalStatus = ((MartialStatus)general.Gender).ToString(),
                 DateOfMarriage = general.DateOfMarriage.ToString(),
-                BloodGrp = general.BloodGrp,
+                BloodGrp = ((BloodGroup)general.BloodGrp).ToString(),
             }).FirstOrDefault();
 
 
