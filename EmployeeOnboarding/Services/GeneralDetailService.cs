@@ -69,7 +69,7 @@ namespace EmployeeOnboarding.Services
                 DOB = general.DOB.ToString(),
                 FatherName = general.FatherName,
                 Gender = ((Gender)general.Gender).ToString(),
-                MaritalStatus = ((MartialStatus)general.MaritalStatus).ToString(),
+                MaritalStatus = ((MartialStatus)general.Gender).ToString(),
                 DateOfMarriage = general.DateOfMarriage.ToString(),
                 BloodGrp = general.BloodGrp,
             }).FirstOrDefault();
