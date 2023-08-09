@@ -141,8 +141,8 @@ namespace EmployeeOnboarding.Repository
                                        Pincode = address[0].Pincode
                                    },
                                    Disability = ead.Disability,
-                                   Disablility_type = ead.Disablility_type,
-                                   CovidSts = ead.Covid_VaccSts,
+                                   Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
+                                   CovidSts =((VaccinationStatus) ead.Covid_VaccSts).ToString(),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)
@@ -295,8 +295,8 @@ namespace EmployeeOnboarding.Repository
                                        Pincode = address[0].Pincode
                                    },
                                    Disability = ead.Disability,
-                                   Disablility_type = ead.Disablility_type,
-                                   CovidSts = ead.Covid_VaccSts,
+                                   Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
+                                   CovidSts =((VaccinationStatus) ead.Covid_VaccSts).ToString(),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)

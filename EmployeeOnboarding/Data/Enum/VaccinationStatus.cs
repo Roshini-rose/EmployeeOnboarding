@@ -5,7 +5,6 @@ namespace EmployeeOnboarding.Data.Enum
 {
     public enum VaccinationStatus
     {
-        
         [Display(Name ="Partially Vaccinated")]
         Partially_Vaccinated=1,
         [Display(Name ="Fully Vaccinated")]
