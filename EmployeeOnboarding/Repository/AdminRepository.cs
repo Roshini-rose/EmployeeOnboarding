@@ -101,11 +101,12 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
         {
             //int findvendorstatesId = _context.EmployeeAddressDetails.Where(x => x.EmpGen_Id == id).Select(x => x.Country_Id).FirstOrDefault();
-            var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
+            //var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
             var emppersonal = (from e in _context.EmployeeGeneralDetails
                                where e.Id == id && e.Status == "A"
                                join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
                                where ec.Status == "A"
+                               join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A"
                                join ead in _context.EmployeeAdditionalInfo on e.Id equals ead.EmpGen_Id
                                where ead.Status == "A"
                                join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id where al.Current_Status==2
@@ -122,23 +123,18 @@ namespace EmployeeOnboarding.Repository
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
                                    ECN = ec.Emgy_Contactno,
-                                   PermanentAddress = new AddressVM1()
+                                   Address = new AddressVM1()
                                    {
-
-                                       Address = address[0].Address,
-                                       Country = _context.Country.Where(x=>x.Id== address[0].Country_Id).Select(x=>x.Country_Name).FirstOrDefault() ,
-                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
-                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
-                                       Pincode = address[0].Pincode
-                                   },
-                                   TemporaryAddress = new AddressVM1()
-                                   {
-
-                                       Address = address[1].Address,
-                                       Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault() ,
-                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
-                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
-                                       Pincode = address[0].Pincode
+                                       Per_Address=ea.Per_Address,
+                                       Per_Country = _context.Country.Where(x => x.Id == ea.Per_Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Per_State = _context.Country.Where(x => x.Id == ea.Per_State_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Per_City = _context.Country.Where(x => x.Id == ea.Per_City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Per_Pincode=ea.Per_Pincode,
+                                       Temp_Address=ea.Temp_Address,
+                                       Temp_Country = _context.Country.Where(x => x.Id == ea.Temp_Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Temp_State = _context.Country.Where(x => x.Id == ea.Temp_State_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Temp_City = _context.Country.Where(x => x.Id == ea.Temp_City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Temp_Pincode=ea.Temp_Pincode
                                    },
                                    Disability = ead.Disability,
                                    Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
@@ -252,11 +248,13 @@ namespace EmployeeOnboarding.Repository
 
         public async Task<List<ApprovedUserDetails>>? GetApprovedEmpDetails(int id)
         {
-            var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
+            //var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
             var emppersonal = (from e in _context.EmployeeGeneralDetails
                                where e.Id == id && e.Status == "A"
                                join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
                                where ec.Status == "A"
+                               join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id
+                               where ea.Status=="A"
                                join ead in _context.EmployeeAdditionalInfo on e.Id equals ead.EmpGen_Id
                                where ead.Status == "A"
                                join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
@@ -276,23 +274,18 @@ namespace EmployeeOnboarding.Repository
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
                                    ECN = ec.Emgy_Contactno,
-                                   PermanentAddress = new AddressVM1()
+                                   Address = new AddressVM1()
                                    {
-
-                                       Address = address[0].Address,
-                                       Country = _context.Country.Where(x => x.Id == address[0].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
-                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
-                                       Pincode = address[0].Pincode
-                                   },
-                                   TemporaryAddress = new AddressVM1()
-                                   {
-
-                                       Address = address[1].Address,
-                                       Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
-                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
-                                       Pincode = address[0].Pincode
+                                       Per_Address = ea.Per_Address,
+                                       Per_Country = _context.Country.Where(x => x.Id == ea.Per_Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Per_State = _context.Country.Where(x => x.Id == ea.Per_State_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Per_City = _context.Country.Where(x => x.Id == ea.Per_City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Per_Pincode = ea.Per_Pincode,
+                                       Temp_Address = ea.Temp_Address,
+                                       Temp_Country = _context.Country.Where(x => x.Id == ea.Temp_Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Temp_State = _context.Country.Where(x => x.Id == ea.Temp_State_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Temp_City = _context.Country.Where(x => x.Id == ea.Temp_City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Temp_Pincode = ea.Temp_Pincode
                                    },
                                    Disability = ead.Disability,
                                    Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),

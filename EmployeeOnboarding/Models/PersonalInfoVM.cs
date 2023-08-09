@@ -17,8 +17,8 @@ namespace EmployeeOnboarding.Models
         public string? ECP { get; set; }
         public string? ECR { get; set; }
         public double? ECN { get; set; }
-        public AddressVM1 PermanentAddress { get; set; }
-        public AddressVM1 TemporaryAddress { get; set; }
+        public AddressVM1 Address { get; set; }
+        //public AddressVM1 TemporaryAddress { get; set; }
 
         public bool? Disability { get; set; }
         public string? Disablility_type { get; set; }
