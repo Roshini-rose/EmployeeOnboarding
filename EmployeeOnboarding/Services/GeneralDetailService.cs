@@ -60,15 +60,15 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
         //get method
-        public GeneralVM GetGeneral(int Id)
+        public GetGeneralVM GetGeneral(int Id)
         {
-            var _general = _context.EmployeeGeneralDetails.Where(n => n.Login_ID == Id).Select(general => new GeneralVM()
+            var _general = _context.EmployeeGeneralDetails.Where(n => n.Login_ID == Id).Select(general => new GetGeneralVM()
             {
                 EmployeeName = general.EmployeeName,
                 DOB = general.DOB.ToString(),
                 FatherName = general.FatherName,
-                Gender = general.Gender,
-                MaritalStatus = general.MaritalStatus,
+                Gender = ((Gender)general.Gender).ToString(),
+                MaritalStatus = ((MartialStatus)general.MaritalStatus).ToString(),
                 DateOfMarriage = general.DateOfMarriage.ToString(),
                 BloodGrp = general.BloodGrp,
             }).FirstOrDefault();

@@ -1,4 +1,5 @@
 ﻿using EmployeeOnboarding.Data;
+using EmployeeOnboarding.Data.Enum;
 using EmployeeOnboarding.ViewModels;
 
 namespace EmployeeOnboarding.Services
@@ -60,14 +61,14 @@ namespace EmployeeOnboarding.Services
 
         //get method
 
-        public ContactVM GetContact(int Id)
+        public GetContactVM GetContact(int Id)
         {
-            var _contact = _context.EmployeeContactDetails.Where(n => n.EmpGen_Id == Id).Select(contact => new ContactVM()
+            var _contact = _context.EmployeeContactDetails.Where(n => n.EmpGen_Id == Id).Select(contact => new GetContactVM()
             {
                 Personal_Emailid = contact.Personal_Emailid,
                 Contact_no = contact.Contact_no,
                 Emgy_Contactperson = contact.Emgy_Contactperson,
-                Emgy_Contactrelation = contact.Emgy_Contactrelation,
+                Emgy_Contactrelation = ((EmergencyContactRelation)contact.Emgy_Contactrelation).ToString(),
                 Emgy_Contactno = contact.Emgy_Contactno,      
 
             }).FirstOrDefault();
