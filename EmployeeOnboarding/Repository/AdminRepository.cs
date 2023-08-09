@@ -13,8 +13,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Data.Entity.Core.Mapping;
 using EmployeeOnboarding.ViewModels;
-
-
+using EmployeeOnboarding.Data.Enum;
 
 namespace EmployeeOnboarding.Repository
 { 
@@ -30,31 +29,29 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A"
-                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
-                                  where a.Status == "A" && a.Current_Status == 4
+                                  where l.Status == "A" && l.Invited_Status=="Invited"
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
                                       //EmpGen_Id = a.EmpGen_Id,
                                       Name = l.Name,
-                                      DateModified = a.Date_Modified,
+                                      DateModified = l.Date_Modified,
                                       Email_id = l.EmailId,
-                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                      Current_Status = l.Invited_Status
                                   }).ToList();
             return InvitedDetails;
         }
         public async Task<List<Dashboard1VM>> GetRejectedEmployeeDetails()
         {
-            var RejectedDetails = (from l in _context.Login
-                                  where l.Status == "A"
-                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
+            var RejectedDetails = (from e in _context.EmployeeGeneralDetails
+                                  where e.Status == "A"
+                                  join l in _context.Login on e.Login_ID equals l.Id where l.Status=="A"
+                                  join a in _context.ApprovalStatus on e.Id equals a.EmpGen_Id
                                   where a.Status == "A" && a.Current_Status == 3
                                   select new Dashboard1VM()
                                   {
-                                      Login_Id = l.Id,
-                                      //EmpGen_Id = a.EmpGen_Id,
-                                      Name = l.Name,
+                                      EmpGen_Id = a.EmpGen_Id,
+                                      Name = e.EmployeeName,
                                       DateModified = a.Date_Modified,
                                       Email_id = l.EmailId,
                                       Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
@@ -65,7 +62,9 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>> GetPendingEmployeeDetails()
         {
             var PendingDetails = (from l in _context.Login where l.Status == "A"
-                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id where a.Status == "A" && a.Current_Status == 2
+                                  join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
+                                  join a in _context.ApprovalStatus on e.Id equals a.EmpGen_Id
+                                  where a.Status == "A" && a.Current_Status == 2
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -341,8 +340,9 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>>? SearchPendingEmpDetails(string name)
         {
             var PendingDetails = (from l in _context.Login
-                                  where l.Status == "A" 
-                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
+                                  where l.Status == "A"
+                                  join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
+                                  join a in _context.ApprovalStatus on e.Id equals a.EmpGen_Id
                                   where a.Status == "A" && a.Current_Status == 2 && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
@@ -359,26 +359,26 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>>? SearchInvitedEmpDetails(string name)
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A"
-                                  join a in _context.ApprovalStatus on l.Id equals a.Login_Id
-                                  where a.Status == "A" && a.Current_Status == 4 && l.Name.ToLower().Contains(name.ToLower())
+                                  where l.Status == "A" && l.Invited_Status == "Invited" && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
                                       //EmpGen_Id = a.EmpGen_Id,
                                       Name = l.Name,
-                                      DateModified = a.Date_Modified,
+                                      DateModified = l.Date_Modified,
                                       Email_id = l.EmailId,
-                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                      Current_Status = l.Invited_Status
                                   }).ToList();
             return InvitedDetails;
         }
 
         public async Task<List<Dashboard1VM>>? SearchRejectedEmpDetails(string name)
         {
-            var RejectedDetails = (from l in _context.Login
+            var RejectedDetails = (from e in _context.EmployeeGeneralDetails
+                                   where e.Status == "A"
+                                   join l in _context.Login on e.Login_ID equals l.Id
                                    where l.Status == "A"
-                                   join a in _context.ApprovalStatus on l.Id equals a.Login_Id
+                                   join a in _context.ApprovalStatus on e.Id equals a.EmpGen_Id
                                    where a.Status == "A" && a.Current_Status == 3 && l.Name.ToLower().Contains(name.ToLower())
                                    select new Dashboard1VM()
                                    {
