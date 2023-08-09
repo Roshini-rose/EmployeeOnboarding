@@ -4,8 +4,8 @@
     {
 
         public bool? Disability { get; set; }
-        public string? Disablility_type { get; set; }
-        public string Covid_VaccSts { get; set; }
+        public int? Disablility_type { get; set; }
+        public int Covid_VaccSts { get; set; }
         public IFormFile? Vacc_Certificate { get; set; }
     }
 }
