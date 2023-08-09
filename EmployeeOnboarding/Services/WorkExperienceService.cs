@@ -51,8 +51,8 @@ namespace EmployeeOnboarding.Services
                 existingExperience.Reason = experience.Reason;
 
                 // Parse and assign DateOnly values
-                DateOnly startDate = DateOnly.ParseExact(experience.StartDate, "dd-MM-yyyy");
-                DateOnly endDate = DateOnly.ParseExact(experience.EndDate, "dd-MM-yyyy");
+                DateOnly startDate = DateOnly.Parse(experience.StartDate);
+                DateOnly endDate = DateOnly.Parse(experience.EndDate);
 
                 existingExperience.StartDate = startDate;
                 existingExperience.EndDate = endDate;
