@@ -12,13 +12,13 @@ namespace EmployeeOnboarding.Controllers
 
         public GeneralDetailService _generalservices;
         public ContactDetails _contactdetails;
-        public AddressDetails _addressdetails;
+       // public AddressDetails _addressdetails;
         public AdditionalDetails _additionaldetails;
         public UserDetailsController(GeneralDetailService generalservices,ContactDetails contactDetails,AddressDetails addressdetails,AdditionalDetails additionalDetails)
         {
             _generalservices = generalservices;
             _contactdetails= contactDetails;
-            _addressdetails= addressdetails;
+           // _addressdetails= addressdetails;
             _additionaldetails= additionalDetails;  
 
         }
@@ -59,27 +59,27 @@ namespace EmployeeOnboarding.Controllers
         //get method
         [HttpGet("get-contact-details/{id}")]
         public IActionResult GetContact(int id)
-       {
+        {
             var Contactdetails = _contactdetails.GetContact(id);
             return Ok(Contactdetails);
         }
 
-        //Post method
-        [HttpPost("add-address-details/{Id}")]
-        public IActionResult AddAddress(int Id, AddressVM address)
-        {
-           _addressdetails.AddAddress(Id,address);
-            return Ok();
-        }
+        ////Post method
+        //[HttpPost("add-address-details/{Id}")]
+        //public IActionResult AddAddress(int Id, AddressVM address)
+        //{
+        //    _addressdetails.AddAddress(Id, address);
+        //    return Ok();
+        //}
 
-        //get method
+        ////get method
 
-        [HttpGet("get-address-details/{id}")]
-        public IActionResult GetAddress(int id)
-        {
-            var Addressdetails = _addressdetails.GetAddress(id);
-            return Ok(Addressdetails);
-        }
+        //[HttpGet("get-address-details/{id}")]
+        //public IActionResult GetAddress(int id)
+        //{
+        //    var Addressdetails = _addressdetails.GetAddress(id);
+        //    return Ok(Addressdetails);
+        //}
 
         
         //Additional details
