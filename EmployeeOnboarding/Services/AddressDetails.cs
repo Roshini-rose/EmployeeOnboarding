@@ -14,7 +14,7 @@ namespace EmployeeOnboarding.Services
             _context = context;
 
         }
-
+        /*
         public void AddPermanentAddress(int Id, AddressVM address)
             
         {
@@ -122,6 +122,7 @@ namespace EmployeeOnboarding.Services
             }).FirstOrDefault();
             return _address;
         }
+        */
     }
 }
   
