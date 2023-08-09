@@ -17,7 +17,7 @@ namespace EmployeeOnboarding.Data
         public int Gender { get; set; }
         public int? MaritalStatus { get; set; }
         public DateOnly? DateOfMarriage { get; set; }
-        public string BloodGrp { get; set; }
+        public int BloodGrp { get; set; }
         public DateTime Date_Created { get; set; }
         public DateTime? Date_Modified { get; set; }
         public string Created_by { get; set; }

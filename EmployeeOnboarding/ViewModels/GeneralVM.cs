@@ -13,7 +13,7 @@
         public int Gender { get; set; } 
         public int? MaritalStatus { get; set; }
         public string? DateOfMarriage { get; set; }
-        public string BloodGrp { get; set; }
+        public int BloodGrp { get; set; }
        
     }
 }
