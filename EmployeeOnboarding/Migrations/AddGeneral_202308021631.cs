@@ -24,7 +24,7 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Gender").AsInt64().NotNullable()
                .WithColumn("MaritalStatus").AsInt32().Nullable()
                .WithColumn("DateOfMarriage").AsDate().Nullable()
-               .WithColumn("BloodGrp").AsString().NotNullable()
+               .WithColumn("BloodGrp").AsInt16().NotNullable()
                .WithColumn("Date_Created").AsDateTime().NotNullable()
                .WithColumn("Date_Modified").AsDateTime().NotNullable()
                .WithColumn("Created_by").AsString().NotNullable()

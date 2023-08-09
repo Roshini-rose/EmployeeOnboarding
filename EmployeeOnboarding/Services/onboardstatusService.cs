@@ -4,6 +4,7 @@ using EmployeeOnboarding.Data;
 using EmployeeOnboarding.ViewModels;
 using EmployeeOnboarding.Data.Enum;
 using Microsoft.AspNetCore.Mvc;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace EmployeeOnboarding.Services
 {
@@ -15,11 +16,10 @@ namespace EmployeeOnboarding.Services
         {
             _context = context;
         }
-        public void ChangeApprovalStatus(int lid,int Empid,onboardstatusVM onboardstatus)
+        public void ChangeApprovalStatus(int Empid,onboardstatusVM onboardstatus)
         {
             var _onboard = new ApprovalStatus()
             {
-                Login_Id = lid,
                 EmpGen_Id = Empid,
                 Current_Status = (int)Status.Approved,
                 Comments="",
@@ -28,12 +28,11 @@ namespace EmployeeOnboarding.Services
                 Created_by = "Admin",
                 Modified_by = "Admin",
                 Status="A",
-                //Status = Status.Approved.ToString(),
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
 
-            var official = _context.EmployeeGeneralDetails.FirstOrDefault(e => e.Login_ID == lid);
+            var official = _context.EmployeeGeneralDetails.FirstOrDefault(e => e.Login_ID == Empid);
 
             official.Empid = onboardstatus.Emp_id;
             official.Official_EmailId = onboardstatus.Official_EmailId;
@@ -42,11 +41,10 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-        public void ChangeCancelStatus(int lid, int Empid,commentVM onboardstatus)
+        public void ChangeCancelStatus(int Empid,commentVM onboardstatus)
         {
             var _onboard = new ApprovalStatus()
             {
-                Login_Id = lid,
                 EmpGen_Id = Empid,
                 Current_Status = (int)Status.Rejected,
                 Comments = onboardstatus.Comments,
@@ -60,11 +58,10 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
-        public void ChangePendingStatus(int lid, int Empid)
+        public void ChangePendingStatus(int Empid)
         {
             var _onboard = new ApprovalStatus()
             {
-                Login_Id = lid,
                 EmpGen_Id = Empid,
                 Current_Status = (int)Status.Pending,
                 Comments = "",
@@ -73,10 +70,21 @@ namespace EmployeeOnboarding.Services
                 Created_by = Empid.ToString(),
                 Modified_by = "Admin",
                 Status= "A",
-                //Status = Status.Pending.ToString(),
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
+        }
+
+        public async Task<rejectcommentVM> RejectedComment(int Empid)
+        {
+            var _onboard = _context.ApprovalStatus.Where(n => n.EmpGen_Id == Empid).
+               Select(onboard => new rejectcommentVM()
+               {
+                   Comment = onboard.Comments,
+
+               }).FirstOrDefault();
+
+           return _onboard;
         }
 
     }

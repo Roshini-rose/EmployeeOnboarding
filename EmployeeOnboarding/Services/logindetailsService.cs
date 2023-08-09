@@ -31,12 +31,12 @@ namespace EmployeeOnboarding.Services
             {
                 Name = logindet.Name,
                 EmailId = logindet.Emailid,
+                Invited_Status="Invited",
                 Date_Created = DateTime.UtcNow,
                 Date_Modified = DateTime.UtcNow,
-                Created_By = "Admin",
-                Modified_By = "Admin",
+                Created_by = "Admin",
+                Modified_by = "Admin",
                 Status = "A",
-                //Status = "Invited",
             };
 
             _context.Login.Add(_logindet);
@@ -55,10 +55,10 @@ namespace EmployeeOnboarding.Services
             if (logindet.Password == logindet.Conf_Password)
             {
                 confirm.Password = logindet.Password;
+                confirm.Invited_Status = "Confirmed";
                 confirm.Date_Modified = DateTime.UtcNow;
-                confirm.Modified_By = "User";
+                confirm.Modified_by = "User";
                 confirm.Status = "A";
-                //confirm.Status = "Confirmed";
 
                 _context.Login.Update(confirm);
                 _context.SaveChanges();
@@ -74,8 +74,9 @@ namespace EmployeeOnboarding.Services
             if (logindet.Password == logindet.Conf_Password)
             {
                 confirm.Password = logindet.Password;
+                confirm.Invited_Status = "Confirmed";
                 confirm.Date_Modified = DateTime.UtcNow;
-                confirm.Modified_By = "User";
+                confirm.Modified_by = "User";
                 confirm.Status = "A";
                // confirm.Status = "Confirmed";
 

@@ -8,8 +8,8 @@ namespace EmployeeOnboarding.Data
         [ForeignKey("EmpGen_Id")]
         public int EmpGen_Id { get; set; } 
         public bool? Disability { get; set; }
-        public string? Disablility_type { get; set; }
-        public string Covid_VaccSts { get; set; }
+        public int? Disablility_type { get; set; }
+        public int Covid_VaccSts { get; set; }
         public string? Vacc_Certificate { get; set; }
         public DateTime Date_Created { get; set; }
         public DateTime? Date_Modified { get; set; }
