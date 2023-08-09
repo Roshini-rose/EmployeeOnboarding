@@ -12,13 +12,13 @@ namespace EmployeeOnboarding.Controllers
 
         public GeneralDetailService _generalservices;
         public ContactDetails _contactdetails;
-       // public AddressDetails _addressdetails;
+        public AddressDetails _addressdetails;
         public AdditionalDetails _additionaldetails;
         public UserDetailsController(GeneralDetailService generalservices,ContactDetails contactDetails,AddressDetails addressdetails,AdditionalDetails additionalDetails)
         {
             _generalservices = generalservices;
             _contactdetails= contactDetails;
-           // _addressdetails= addressdetails;
+            _addressdetails= addressdetails;
             _additionaldetails= additionalDetails;  
 
         }
@@ -61,7 +61,7 @@ namespace EmployeeOnboarding.Controllers
             var Contactdetails = _contactdetails.GetContact(id);
             return Ok(Contactdetails);
         }
-/*
+
         //Post method
         [HttpPost("add-address-details/{Id}")]
         public IActionResult AddAddress(int Id, AddressVM address)
@@ -77,7 +77,7 @@ namespace EmployeeOnboarding.Controllers
         {
             var Addressdetails = _addressdetails.GetAddress(id);
             return Ok(Addressdetails);
-        }*/
+        }
 
 
         //Additional details
