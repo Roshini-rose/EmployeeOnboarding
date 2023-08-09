@@ -72,9 +72,10 @@ namespace EmployeeOnboarding.Services
                     Company_name = experience.Company_name,
                     Designation = experience.Designation,
                     Reason = experience.Reason,
+
                     // Parse and assign DateOnly values
-                    StartDate = DateOnly.ParseExact(experience.StartDate, "dd-MM-yyyy"),
-                    EndDate = DateOnly.ParseExact(experience.EndDate, "dd-MM-yyyy"), 
+                    StartDate = DateOnly.Parse(experience.StartDate),
+                    EndDate = DateOnly.Parse(experience.EndDate), 
 
                     Exp_Certificate = SaveCertificateFile(experience.Exp_Certificate, empId.ToString(), certificateFileName),
                     Date_Created = DateTime.UtcNow,
