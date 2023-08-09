@@ -12,6 +12,6 @@
         public string Gender { get; set; }
         public string? MaritalStatus { get; set; }
         public string? DateOfMarriage { get; set; }
-        public int BloodGrp { get; set; }
+        public string BloodGrp { get; set; }
     }
 }
