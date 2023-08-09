@@ -23,11 +23,11 @@ namespace EmployeeOnboarding.Services
                 //Update existing record
 
                 existingGeneral.EmployeeName = general.EmployeeName;
-                DateOnly DOB= DateOnly.ParseExact(general.DOB, "dd-MM-yyyy");
+                DateOnly DOB= DateOnly.Parse(general.DOB);
                 existingGeneral.FatherName = general.FatherName;
                 existingGeneral.Gender = general.Gender;
                 existingGeneral.MaritalStatus = general.MaritalStatus;
-                DateOnly DateOfMarriage = DateOnly.ParseExact(general.DateOfMarriage, "dd-MM-yyyy");
+                DateOnly DateOfMarriage = DateOnly.Parse(general.DateOfMarriage);
                 existingGeneral.BloodGrp = general.BloodGrp;
                 existingGeneral.Date_Modified = DateTime.UtcNow;
                 existingGeneral.Modified_by = Id.ToString();
@@ -41,11 +41,11 @@ namespace EmployeeOnboarding.Services
                 {
                     Login_ID = Id,
                     EmployeeName = general.EmployeeName,
-                    DOB = DateOnly.ParseExact(general.DOB, "dd-MM-yyyy"),
+                    DOB = DateOnly.Parse(general.DOB),
                     FatherName = general.FatherName,
                     Gender = general.Gender,
                     MaritalStatus= general.MaritalStatus,
-                    DateOfMarriage = DateOnly.ParseExact(general.DateOfMarriage, "dd-MM-yyyy"),
+                    DateOfMarriage = DateOnly.Parse(general.DateOfMarriage),
                     BloodGrp = general.BloodGrp,
                     Date_Created = DateTime.UtcNow,
                     Date_Modified = DateTime.UtcNow,
