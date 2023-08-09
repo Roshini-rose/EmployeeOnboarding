@@ -5,11 +5,12 @@ namespace EmployeeOnboarding.Data.Enum
 {
     public enum VaccinationStatus
     {
-        [Display(Name ="None")]
-        None=1,
+        
         [Display(Name ="Partially Vaccinated")]
-        Partially_Vaccinated=2,
+        Partially_Vaccinated=1,
         [Display(Name ="Fully Vaccinated")]
-        Fully_Vaccinated=3
+        Fully_Vaccinated=2,
+        [Display(Name = "None")]
+        None = 3
     }
 }
