@@ -27,7 +27,8 @@ namespace EmployeeOnboarding.Services
                 Date_Modified = DateTime.UtcNow,
                 Created_by = "Admin",
                 Modified_by = "Admin",
-                Status = "A",
+                Status="A",
+                //Status = Status.Approved.ToString(),
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
@@ -71,7 +72,8 @@ namespace EmployeeOnboarding.Services
                 Date_Modified = DateTime.UtcNow,
                 Created_by = Empid.ToString(),
                 Modified_by = "Admin",
-                Status = Status.Pending.ToString(),
+                Status= "A",
+                //Status = Status.Pending.ToString(),
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
