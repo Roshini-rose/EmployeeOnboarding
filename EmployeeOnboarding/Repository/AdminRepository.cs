@@ -307,18 +307,18 @@ namespace EmployeeOnboarding.Repository
 
 
 
-        public string getMaxPassoutYear(int id)
+       /* public string getMaxPassoutYear(int id)
         {
             var maxyear = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == id).Select(x => x.Degree).ToString();
             return maxyear;
-        }
+        }*/
 
         public async Task<List<DashboardVM>>? SearchApprovedEmpDetails(string name)
         {
             var employeedetails = (from l in _context.Login
                                    where l.Status == "A"
                                    join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
-                                   where e.Status == "A" && e.EmployeeName.Contains(name)
+                                   where e.Status == "A" && e.EmployeeName.ToLower().Contains(name.ToLower())
                                    join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
                                    where al.Current_Status == 1 && al.Status == "A"
                                    join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
@@ -343,7 +343,7 @@ namespace EmployeeOnboarding.Repository
             var PendingDetails = (from l in _context.Login
                                   where l.Status == "A" 
                                   join a in _context.ApprovalStatus on l.Id equals a.Login_Id
-                                  where a.Status == "A" && a.Current_Status == 2 && l.Name.Contains(name)
+                                  where a.Status == "A" && a.Current_Status == 2 && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -361,7 +361,7 @@ namespace EmployeeOnboarding.Repository
             var InvitedDetails = (from l in _context.Login
                                   where l.Status == "A"
                                   join a in _context.ApprovalStatus on l.Id equals a.Login_Id
-                                  where a.Status == "A" && a.Current_Status == 4 && l.Name.Contains(name)
+                                  where a.Status == "A" && a.Current_Status == 4 && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -372,6 +372,24 @@ namespace EmployeeOnboarding.Repository
                                       Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
                                   }).ToList();
             return InvitedDetails;
+        }
+
+        public async Task<List<Dashboard1VM>>? SearchRejectedEmpDetails(string name)
+        {
+            var RejectedDetails = (from l in _context.Login
+                                   where l.Status == "A"
+                                   join a in _context.ApprovalStatus on l.Id equals a.Login_Id
+                                   where a.Status == "A" && a.Current_Status == 3 && l.Name.ToLower().Contains(name.ToLower())
+                                   select new Dashboard1VM()
+                                   {
+                                       Login_Id = l.Id,
+                                       //EmpGen_Id = a.EmpGen_Id,
+                                       Name = l.Name,
+                                       DateModified = a.Date_Modified,
+                                       Email_id = l.EmailId,
+                                       Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+                                   }).ToList();
+            return RejectedDetails;
         }
 
 

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using System.Security.Policy;
 using Microsoft.AspNetCore.Mvc.Routing;
+using EmployeeOnboarding.Data.Enum;
 
 namespace EmployeeOnboarding.Services
 {
@@ -34,7 +35,8 @@ namespace EmployeeOnboarding.Services
                 Date_Modified = DateTime.UtcNow,
                 Created_By = "Admin",
                 Modified_By = "Admin",
-                Status = "Invited",
+                Status = "A",
+                //Status = "Invited",
             };
 
             _context.Login.Add(_logindet);
@@ -55,7 +57,8 @@ namespace EmployeeOnboarding.Services
                 confirm.Password = logindet.Password;
                 confirm.Date_Modified = DateTime.UtcNow;
                 confirm.Modified_By = "User";
-                confirm.Status = "Confirmed";
+                confirm.Status = "A";
+                //confirm.Status = "Confirmed";
 
                 _context.Login.Update(confirm);
                 _context.SaveChanges();
@@ -73,7 +76,8 @@ namespace EmployeeOnboarding.Services
                 confirm.Password = logindet.Password;
                 confirm.Date_Modified = DateTime.UtcNow;
                 confirm.Modified_By = "User";
-                confirm.Status = "Confirmed";
+                confirm.Status = "A";
+               // confirm.Status = "Confirmed";
 
                 _context.Login.Update(confirm);
                 _context.SaveChanges();
