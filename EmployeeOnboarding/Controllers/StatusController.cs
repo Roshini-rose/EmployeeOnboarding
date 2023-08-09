@@ -26,24 +26,24 @@ namespace EmployeeOnboarding.Controllers
             _context = context;
         }
 
-        [HttpPost("approve/{id}")]
-        public IActionResult ChangeApprovalStatus(int lid,int eid,[FromBody] onboardstatusVM onboardstatus)
+        [HttpPost("approve/{eid}")]
+        public IActionResult ChangeApprovalStatus(int eid,[FromBody] onboardstatusVM onboardstatus)
         {
-            _onboardstatusService.ChangeApprovalStatus(lid,eid,onboardstatus);
+            _onboardstatusService.ChangeApprovalStatus(eid,onboardstatus);
             return Ok("Approved");
         }
 
-        [HttpPost("reject/{id}")]
-        public IActionResult ChangeCancelStatus(int lid, int eid, [FromBody] commentVM onboardstatus)
+        [HttpPost("reject/{eid}")]
+        public IActionResult ChangeCancelStatus(int eid, [FromBody] commentVM onboardstatus)
         {
-            _onboardstatusService.ChangeCancelStatus(lid, eid, onboardstatus);
+            _onboardstatusService.ChangeCancelStatus(eid, onboardstatus);
             return Ok("Rejected");
         }
 
-        [HttpPost("pending/{id}")]
-        public IActionResult ChangePendingStatus(int lid, int eid)
+        [HttpPost("pending/{eid}")]
+        public IActionResult ChangePendingStatus(int eid)
         {
-            _onboardstatusService.ChangePendingStatus(lid, eid);
+            _onboardstatusService.ChangePendingStatus(eid);
             return Ok("Pending");
         }
 

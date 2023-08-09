@@ -1,4 +1,5 @@
 ﻿using EmployeeOnboarding.Data;
+using EmployeeOnboarding.Data.Enum;
 using EmployeeOnboarding.Models;
 using EmployeeOnboarding.ViewModels;
 using OnboardingWebsite.Models;
@@ -82,13 +83,13 @@ public void AddAdditional(int Id, AdditionalVM additional)
 
 //get method
 
-        public getAdditionalVM GetAdditional(int Id)
+        public GetAdditionalVM GetAdditional(int Id)
         {
-            var _additional = _context.EmployeeAdditionalInfo.Where(n => n.EmpGen_Id == Id).Select(additional => new getAdditionalVM()
+            var _additional = _context.EmployeeAdditionalInfo.Where(n => n.EmpGen_Id == Id).Select(additional => new GetAdditionalVM()
             {
                 Disability = additional.Disability,
-                Disablility_type = additional.Disablility_type,
-                Covid_VaccSts = additional.Covid_VaccSts,
+                Disablility_type = ((DisabilityType)additional.Disablility_type).ToString(),
+                Covid_VaccSts = ((VaccinationStatus)additional.Covid_VaccSts).ToString(),
                 Vacc_Certificate = GetFile(additional.Vacc_Certificate)
 
             }).FirstOrDefault();
