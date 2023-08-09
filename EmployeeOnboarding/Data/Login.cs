@@ -8,6 +8,7 @@ namespace EmployeeOnboarding.Data
         public string Name { get; set; }
         public string EmailId { get; set; }
         public string? Password { get; set; }
+        public string? Invited_Status { get; set; }
         public DateTime Date_Created { get; set; }
         public DateTime? Date_Modified { get; set; }
         public string Created_By { get; set; }
