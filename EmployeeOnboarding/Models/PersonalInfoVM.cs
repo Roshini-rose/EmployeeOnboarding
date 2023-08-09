@@ -13,6 +13,7 @@ namespace EmployeeOnboarding.Models
         public string MaritialStatus { get; set; }
         public DateOnly? DOM { get; set; }
         public string Gender { get; set; }
+        public string bloodgrp { get; set; }
         public double Contactno { get; set; }
         public string? ECP { get; set; }
         public string? ECR { get; set; }
