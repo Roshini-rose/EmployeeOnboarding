@@ -1,6 +1,6 @@
 ﻿namespace EmployeeOnboarding.ViewModels
 {
-    public class getAdditionalVM
+    public class GetAdditionalVM
     {
         public bool? Disability { get; set; }
         public string? Disablility_type { get; set; }

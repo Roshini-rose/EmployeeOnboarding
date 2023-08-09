@@ -29,11 +29,10 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status=="Invited"
+                                  where l.Status == "A" && l.Invited_Status=="Invited" || l.Invited_Status=="Confirmed"
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
-                                      //EmpGen_Id = a.EmpGen_Id,
                                       Name = l.Name,
                                       DateModified = l.Date_Modified,
                                       Email_id = l.EmailId,
@@ -124,25 +123,23 @@ namespace EmployeeOnboarding.Repository
                                    ECN = ec.Emgy_Contactno,
                                    PermanentAddress = new AddressVM1()
                                    {
-
                                        Address = address[0].Address,
-                                       Country = _context.Country.Where(x=>x.Id== address[0].Country_Id).Select(x=>x.Country_Name).FirstOrDefault() ,
-                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
-                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       Country = _context.Country.Where(x => x.Id == address[0].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.Country.Where(x => x.Id == address[0].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       City = _context.Country.Where(x => x.Id == address[0].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
                                        Pincode = address[0].Pincode
                                    },
                                    TemporaryAddress = new AddressVM1()
                                    {
-
                                        Address = address[1].Address,
-                                       Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault() ,
-                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
-                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
-                                       Pincode = address[0].Pincode
+                                       Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.Country.Where(x => x.Id == address[1].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       City = _context.Country.Where(x => x.Id == address[1].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
-                                   Disablility_type = ead.Disablility_type,
-                                   CovidSts = ead.Covid_VaccSts,
+                                   Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
+                                   CovidSts =((VaccinationStatus) ead.Covid_VaccSts).ToString(),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)
@@ -278,25 +275,23 @@ namespace EmployeeOnboarding.Repository
                                    ECN = ec.Emgy_Contactno,
                                    PermanentAddress = new AddressVM1()
                                    {
-
                                        Address = address[0].Address,
                                        Country = _context.Country.Where(x => x.Id == address[0].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
-                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       State = _context.Country.Where(x => x.Id == address[0].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       City = _context.Country.Where(x => x.Id == address[0].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
                                        Pincode = address[0].Pincode
                                    },
-                                   TemporaryAddress = new AddressVM1()
+                                   TemporaryAddress=new AddressVM1()
                                    {
-
                                        Address = address[1].Address,
                                        Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
-                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
-                                       Pincode = address[0].Pincode
+                                       State = _context.Country.Where(x => x.Id == address[1].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       City = _context.Country.Where(x => x.Id == address[1].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
-                                   Disablility_type = ead.Disablility_type,
-                                   CovidSts = ead.Covid_VaccSts,
+                                   Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
+                                   CovidSts =((VaccinationStatus) ead.Covid_VaccSts).ToString(),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)
@@ -359,7 +354,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>>? SearchInvitedEmpDetails(string name)
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status == "Invited" && l.Name.ToLower().Contains(name.ToLower())
+                                  where l.Status == "A" && l.Invited_Status == "Invited" || l.Invited_Status=="Confirmed" && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,

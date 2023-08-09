@@ -23,8 +23,6 @@ namespace EmployeeOnboarding.Controllers
 
         }
        
-        
-
 
 
         //General details
@@ -59,7 +57,7 @@ namespace EmployeeOnboarding.Controllers
         //get method
         [HttpGet("get-contact-details/{id}")]
         public IActionResult GetContact(int id)
-       {
+        {
             var Contactdetails = _contactdetails.GetContact(id);
             return Ok(Contactdetails);
         }
@@ -68,7 +66,7 @@ namespace EmployeeOnboarding.Controllers
         [HttpPost("add-address-details/{Id}")]
         public IActionResult AddAddress(int Id, AddressVM address)
         {
-           _addressdetails.AddAddress(Id,address);
+            _addressdetails.AddAddress(Id, address);
             return Ok();
         }
 
@@ -81,7 +79,7 @@ namespace EmployeeOnboarding.Controllers
             return Ok(Addressdetails);
         }
 
-        
+
         //Additional details
         //Post method
         [HttpPost("add-additional-details/{Id}")]

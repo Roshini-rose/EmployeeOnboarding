@@ -3,20 +3,18 @@ using EmployeeOnboarding.ViewModels;
 using EmployeeOnboarding.Models;
 
 namespace EmployeeOnboarding.Services
-{ 
+{
     public class AddressDetails
     {
         private ApplicationDbContext _context;
         public AddressDetails(ApplicationDbContext context)
 
         {
-
             _context = context;
-
         }
 
         public void AddAddress(int Id, AddressVM address)
-            
+
         {
             var existingAddress = _context.EmployeeAddressDetails.FirstOrDefault(e => e.EmpGen_Id == Id);
 
@@ -79,4 +77,3 @@ namespace EmployeeOnboarding.Services
         }
     }
 }
-  
