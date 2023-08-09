@@ -47,6 +47,14 @@ namespace EmployeeOnboarding.Controllers
             return Ok("Pending");
         }
 
+        [HttpGet("reject-comment/{id}")]
+        public IActionResult RejectedComment(int id)
+        {
+            var issuccess = _onboardstatusService.RejectedComment(id);
+
+            return Ok(issuccess);
+        }
+
         //[HttpGet("status-dashboard")]
         //public async Task<statusdashVM> GetAdminStatusList()
         //{

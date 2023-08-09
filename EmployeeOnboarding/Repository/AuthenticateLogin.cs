@@ -20,7 +20,8 @@ namespace EmployeeOnboarding.Repository
             var _succeeded = _context.Login.Where(authUser => authUser.EmailId == email && authUser.Password == password).
                Select(succeeded => new employloginVM()
                {
-                   Id = succeeded.Id
+                   Id = succeeded.Id,
+                   Name = succeeded.Name,
 
                }).FirstOrDefault();
 

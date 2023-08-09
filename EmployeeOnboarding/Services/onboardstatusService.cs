@@ -4,6 +4,7 @@ using EmployeeOnboarding.Data;
 using EmployeeOnboarding.ViewModels;
 using EmployeeOnboarding.Data.Enum;
 using Microsoft.AspNetCore.Mvc;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace EmployeeOnboarding.Services
 {
@@ -72,6 +73,18 @@ namespace EmployeeOnboarding.Services
             };
             _context.ApprovalStatus.Add(_onboard);
             _context.SaveChanges();
+        }
+
+        public async Task<rejectcommentVM> RejectedComment(int Empid)
+        {
+            var _onboard = _context.ApprovalStatus.Where(n => n.EmpGen_Id == Empid).
+               Select(onboard => new rejectcommentVM()
+               {
+                   Comment = onboard.Comments,
+
+               }).FirstOrDefault();
+
+           return _onboard;
         }
 
     }
