@@ -42,19 +42,30 @@ namespace EmployeeOnboarding.Services
 
         public void ChangeCancelStatus(int Empid,commentVM onboardstatus)
         {
-            var _onboard = new ApprovalStatus()
+            var rejected = _context.ApprovalStatus.FirstOrDefault(e => e.EmpGen_Id == Empid && e.Current_Status==3);
+
+            if (rejected != null)
             {
-                EmpGen_Id = Empid,
-                Current_Status = (int)Status.Rejected,
-                Comments = onboardstatus.Comments,
-                Date_Created = DateTime.UtcNow,
-                Date_Modified = DateTime.UtcNow,
-                Created_by = "Admin",
-                Modified_by = "Admin",
-                Status = "A",
-            };
-            _context.ApprovalStatus.Add(_onboard);
-            _context.SaveChanges();
+                rejected.Date_Modified = DateTime.UtcNow;
+                rejected.Modified_by = "Admin";
+                rejected.Status = "D";
+                _context.ApprovalStatus.Update(rejected);
+                _context.SaveChanges();
+            }
+
+                var _onboard = new ApprovalStatus()
+                {
+                    EmpGen_Id = Empid,
+                    Current_Status = (int)Status.Rejected,
+                    Comments = onboardstatus.Comments,
+                    Date_Created = DateTime.UtcNow,
+                    Date_Modified = DateTime.UtcNow,
+                    Created_by = "Admin",
+                    Modified_by = "Admin",
+                    Status = "A",
+                };
+                _context.ApprovalStatus.Add(_onboard);
+                _context.SaveChanges();
         }
 
         public void ChangePendingStatus(int Empid)
