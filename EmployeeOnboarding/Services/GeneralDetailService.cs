@@ -1,8 +1,10 @@
-﻿using EmployeeOnboarding.Data;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using EmployeeOnboarding.Data;
 using EmployeeOnboarding.Data.Enum;
 using EmployeeOnboarding.Models;
 using EmployeeOnboarding.ViewModels;
 using OnboardingWebsite.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeOnboarding.Services
 {
@@ -71,8 +73,8 @@ namespace EmployeeOnboarding.Services
                 Gender = ((Gender)general.Gender).ToString(),
                 MaritalStatus = ((MartialStatus)general.Gender).ToString(),
                 DateOfMarriage = general.DateOfMarriage.ToString(),
-                BloodGrp = ((BloodGroup)general.BloodGrp).ToString(),
-            }).FirstOrDefault();
+                BloodGrp =((BloodGroup)general.BloodGrp).ToString(),
+             }).FirstOrDefault();
 
 
 
