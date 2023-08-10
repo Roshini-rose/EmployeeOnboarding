@@ -58,6 +58,13 @@ namespace EmployeeOnboarding.Services
             }
 
             _context.SaveChanges();
+
+            var sumbit = _context.Login.FirstOrDefault(e => e.Id == Id);
+
+            sumbit.Invited_Status = "Submitted";
+
+            _context.Login.Update(sumbit);
+            _context.SaveChanges();
         }
 
         //get method
@@ -73,8 +80,6 @@ namespace EmployeeOnboarding.Services
                 DateOfMarriage = general.DateOfMarriage.ToString(),
                 BloodGrp = ((BloodGroup)general.BloodGrp).ToString(),
             }).FirstOrDefault();
-
-
 
             return _general;
         }
