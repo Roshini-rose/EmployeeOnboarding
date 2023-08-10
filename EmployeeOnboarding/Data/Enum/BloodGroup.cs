@@ -21,6 +21,7 @@ namespace EmployeeOnboarding.Data.Enum
         [Display(Name = "B-")]
         BNegative=7,
         [Display(Name = "O-")]
-        ONegative=8
+        ONegative=8,
+        
     }
 }
