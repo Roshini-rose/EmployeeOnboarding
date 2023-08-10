@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeOnboarding.Models
 {
@@ -29,4 +30,5 @@ namespace EmployeeOnboarding.Models
         public List<EducationDetailsVM> educationDetailsVMs { get; set; }
         public List<ExperienceVM> experienceVMs { get; set; }
     }
+    
 }
