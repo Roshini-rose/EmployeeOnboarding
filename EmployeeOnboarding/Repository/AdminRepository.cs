@@ -29,7 +29,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status=="Invited" || l.Invited_Status=="Confirmed"
+                                  where l.Status == "A" && l.Invited_Status=="Invited"
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -49,6 +49,7 @@ namespace EmployeeOnboarding.Repository
                                   where a.Status == "A" && a.Current_Status == 3
                                   select new Dashboard1VM()
                                   {
+                                      Login_Id=e.Login_ID,
                                       EmpGen_Id = a.EmpGen_Id,
                                       Name = e.EmployeeName,
                                       DateModified = a.Date_Modified,
@@ -97,6 +98,7 @@ namespace EmployeeOnboarding.Repository
                                    MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
                                    DOM = e.DateOfMarriage,
                                    Gender = ((Data.Enum.Gender)e.Gender).ToString(),
+                                   bloodgrp=((Data.Enum.BloodGroup)e.BloodGrp).ToString(),
                                    Contactno = ec.Contact_no,
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
@@ -105,16 +107,16 @@ namespace EmployeeOnboarding.Repository
                                    {
                                        Address = address[0].Address,
                                        Country = _context.Country.Where(x => x.Id == address[0].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       State = _context.Country.Where(x => x.Id == address[0].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.Country.Where(x => x.Id == address[0].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
                                        Pincode = address[0].Pincode
                                    },
                                    TemporaryAddress = new AddressVM1()
                                    {
                                        Address = address[1].Address,
                                        Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       State = _context.Country.Where(x => x.Id == address[1].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.Country.Where(x => x.Id == address[1].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[1].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[1].City_Id).Select(x => x.City_Name).FirstOrDefault(),
                                        Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
@@ -233,16 +235,16 @@ namespace EmployeeOnboarding.Repository
                                    {
                                        Address = address[0].Address,
                                        Country = _context.Country.Where(x => x.Id == address[0].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       State = _context.Country.Where(x => x.Id == address[0].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.Country.Where(x => x.Id == address[0].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
                                        Pincode = address[0].Pincode
                                    },
                                    TemporaryAddress=new AddressVM1()
                                    {
                                        Address = address[1].Address,
                                        Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       State = _context.Country.Where(x => x.Id == address[1].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.Country.Where(x => x.Id == address[1].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[1].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[1].City_Id).Select(x => x.City_Name).FirstOrDefault(),
                                        Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
@@ -299,7 +301,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>>? SearchInvitedEmpDetails(string name)
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status == "Invited" || l.Invited_Status=="Confirmed" && l.Name.ToLower().Contains(name.ToLower())
+                                  where l.Status == "A" && l.Invited_Status == "Invited" && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -323,7 +325,7 @@ namespace EmployeeOnboarding.Repository
                                    select new Dashboard1VM()
                                    {
                                        Login_Id = l.Id,
-                                       //EmpGen_Id = a.EmpGen_Id,
+                                       EmpGen_Id = a.EmpGen_Id,
                                        Name = l.Name,
                                        DateModified = a.Date_Modified,
                                        Email_id = l.EmailId,
