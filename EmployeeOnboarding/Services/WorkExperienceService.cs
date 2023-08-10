@@ -94,37 +94,17 @@ namespace EmployeeOnboarding.Services
         public getExperienceVM GetExperience(int experienceId)
         {
             var _experience = _context.EmployeeExperienceDetails.Where(n => n.EmpGen_Id == experienceId).Select(experience => new getExperienceVM()
-                {
-                    Company_name = experience.Company_name,
-                    Designation = experience.Designation,
-                    Reason = experience.Reason,
-                    StartDate = experience.StartDate,
-                    EndDate = experience.EndDate,
-                    getCertificate = GetFile(experience.Exp_Certificate)
-                })
+            {
+                Company_name = experience.Company_name,
+                Designation = experience.Designation,
+                Reason = experience.Reason,
+                StartDate = experience.StartDate,
+                EndDate = experience.EndDate,
+            })
                 .FirstOrDefault();
 
             return _experience;
         }
-
-        public static byte[] GetFile(string filepath)
-        {
-            try
-            {
-                if (System.IO.File.Exists(filepath))
-                {
-                    return System.IO.File.ReadAllBytes(filepath);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions here, such as logging or returning an error message.
-                Console.WriteLine("Error reading file: " + ex.Message);
-            }
-
-            return null;
-        }
-
 
     }
 }

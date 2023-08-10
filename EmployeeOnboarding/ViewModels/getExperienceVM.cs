@@ -7,7 +7,7 @@
         public string? Reason { get; set; }
         public DateOnly? StartDate { get; set; }
         public DateOnly? EndDate { get; set; }
-        public IFormFile? Exp_Certificate { get; set; }
-        public byte[]? getCertificate { get; set; }
+        //public IFormFile? Exp_Certificate { get; set; }
+        //public byte[]? getCertificate { get; set; }
     }  //
 }
