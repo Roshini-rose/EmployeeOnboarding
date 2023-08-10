@@ -30,5 +30,5 @@ namespace EmployeeOnboarding.Models
         public List<EducationDetailsVM> educationDetailsVMs { get; set; }
         public List<ExperienceVM> experienceVMs { get; set; }
     }
-    
+        
 }

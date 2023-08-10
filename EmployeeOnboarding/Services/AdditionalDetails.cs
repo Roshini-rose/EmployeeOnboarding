@@ -88,29 +88,14 @@ public void AddAdditional(int Id, AdditionalVM additional)
             var _additional = _context.EmployeeAdditionalInfo.Where(n => n.EmpGen_Id == Id).Select(additional => new GetAdditionalVM()
             {
                 Disability = additional.Disability,
-                Disablility_type = ((DisabilityType)additional.Disablility_type).ToString(),
-                Covid_VaccSts = ((VaccinationStatus)additional.Covid_VaccSts).ToString(),
-                Vacc_Certificate = GetFile(additional.Vacc_Certificate)
+                Disablility_type = EnumExtensionMethods.GetEnumDescription((DisabilityType)additional.Disablility_type),
+                Covid_VaccSts = EnumExtensionMethods.GetEnumDescription((VaccinationStatus)additional.Covid_VaccSts),
+
 
             }).FirstOrDefault();
             return _additional;
         }
 
-        public static byte[] GetFile(string filepath)
-        {
-            if (System.IO.File.Exists(filepath))
-            {
-                System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
-                byte[] file = new byte[fs.Length];
-                int br = fs.Read(file, 0, file.Length);
-                if (br != fs.Length)
-                {
-                    throw new IOException("Invalid path");
-                }
-                return file;
-            }
-            return null;
-        }
 
     }
 
