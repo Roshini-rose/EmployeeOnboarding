@@ -24,7 +24,6 @@ namespace EmployeeOnboarding.Controllers
         }
        
 
-
         //General details
         //post method
         [HttpPost("add-general-details/{Id}")]

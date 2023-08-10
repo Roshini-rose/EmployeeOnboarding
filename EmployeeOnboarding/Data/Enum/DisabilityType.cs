@@ -1,22 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeOnboarding.Data.Enum
 {
     public enum DisabilityType
     {
-        [Display(Name ="Blindness")]
-        Blindness=1,
-        [Display(Name = "Hearing Impairment")]
+        [Description("Blindness")]
+        Blindness =1,
+        [Description("Hearing Impairment")]
         Hearing_Impairment=2,
-        [Display(Name ="Handicap")]
+        [Description("Handicap")]
         Handicap=3,
-        [Display(Name ="Mental Illness")]
+        [Description("Mental Illness")]
         Mental_Illness=4,
-        [Display(Name = "Intellectual Disability")]
+        [Description("Intellectual Disability")]
         Intellectual_Disability =5,
-        [Display(Name = "Leprosy Cured Person")]
+        [Description("Leprosy Cured Person")]
         Leprosy_cured_person = 6,
-        [Display(Name ="Others")]
+        [Description("Others")]
         others=7
     }
 }
