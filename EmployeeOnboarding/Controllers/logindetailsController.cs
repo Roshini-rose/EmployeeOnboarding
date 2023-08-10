@@ -46,7 +46,7 @@ namespace EmployeeOnboarding.Controllers
             }
             else
             {
-                return Ok("Invaild");
+                return Ok("Password not same");
             }
         }
 

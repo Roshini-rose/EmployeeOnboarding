@@ -29,7 +29,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status=="Invited" || l.Invited_Status=="Confirmed"
+                                  where l.Status == "A" && l.Invited_Status=="Invited"
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -49,6 +49,7 @@ namespace EmployeeOnboarding.Repository
                                   where a.Status == "A" && a.Current_Status == 3
                                   select new Dashboard1VM()
                                   {
+                                      Login_Id=e.Login_ID,
                                       EmpGen_Id = a.EmpGen_Id,
                                       Name = e.EmployeeName,
                                       DateModified = a.Date_Modified,
@@ -74,32 +75,12 @@ namespace EmployeeOnboarding.Repository
                                       Current_Status =((Data.Enum.Status)a.Current_Status).ToString()
                                   }).ToList();
             return PendingDetails;
-            /*var employeedetails = (from e in _context.EmployeeGeneralDetails
-                                   where e.Status == "A"
-                                   join a in _context.Status on e.Empid equals a.Empid
-                                   where a.Status == "A" && a.Approved == null && a.Cancelled == null
-                                   join l in _context.Login on e.Empid equals l.Empid
-                                   where l.Status == "A"
-                                   join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
-                                   where ec.Status == "A"
-                                   join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
-                                   where ee.Passoutyear == deg && ee.Status == "A"
-                                   select new DashboardVM()
-                                   {
-                                       Empid = e.Empid,
-                                       Empname = e.EmployeeName,
-                                       designation = l.Designation,
-                                       Contact = ec.Contact_no,
-                                       Email = l.Emailid,
-                                       education = ee.Degree
-                                   }).ToList();
-            return employeedetails;*/
+           
         }
 
-
+        //EnumExtensionMethods.GetEnumDescription((BloodGroup)general.BloodGrp)
         public async Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
         {
-            //int findvendorstatesId = _context.EmployeeAddressDetails.Where(x => x.EmpGen_Id == id).Select(x => x.Country_Id).FirstOrDefault();
             var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
             var emppersonal = (from e in _context.EmployeeGeneralDetails
                                where e.Id == id && e.Status == "A"
@@ -117,6 +98,7 @@ namespace EmployeeOnboarding.Repository
                                    MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
                                    DOM = e.DateOfMarriage,
                                    Gender = ((Data.Enum.Gender)e.Gender).ToString(),
+                                   bloodgrp=EnumExtensionMethods.GetEnumDescription((BloodGroup)e.BloodGrp),
                                    Contactno = ec.Contact_no,
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
@@ -125,16 +107,16 @@ namespace EmployeeOnboarding.Repository
                                    {
                                        Address = address[0].Address,
                                        Country = _context.Country.Where(x => x.Id == address[0].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       State = _context.Country.Where(x => x.Id == address[0].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.Country.Where(x => x.Id == address[0].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
                                        Pincode = address[0].Pincode
                                    },
                                    TemporaryAddress = new AddressVM1()
                                    {
                                        Address = address[1].Address,
                                        Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       State = _context.Country.Where(x => x.Id == address[1].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.Country.Where(x => x.Id == address[1].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[1].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[1].City_Id).Select(x => x.City_Name).FirstOrDefault(),
                                        Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
@@ -177,7 +159,6 @@ namespace EmployeeOnboarding.Repository
                     StartDate = (DateOnly)experience.StartDate,
                     EndDate = (DateOnly)experience.EndDate,
                     Designation = experience.Designation,
-                    //TotalNoofMonths = experience.Totalmonths,
                     ReasonForLeaving = experience.Reason,
                     ExperienceCerti = GetFile(experience.Exp_Certificate)
                 });
@@ -203,7 +184,6 @@ namespace EmployeeOnboarding.Repository
 
         public async Task<List<DashboardVM>> GetEmployeeDetails()
         {
-            // return null;
             var employeedetails = (from l in _context.Login where l.Status=="A"
                                    join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
                                    where e.Status == "A" 
@@ -211,8 +191,6 @@ namespace EmployeeOnboarding.Repository
                                    where al.Current_Status == 1 && al.Status == "A"
                                    join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
                                    where ec.Status == "A"
-                                   ////join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
-                                   ////where ed.Status == "A"
                                    select new DashboardVM()
                                    {
                                        EmpGen_Id=e.Id,
@@ -221,29 +199,9 @@ namespace EmployeeOnboarding.Repository
                                        Contact = ec.Contact_no,
                                        Email = e.Official_EmailId,
                                        education= (_context.EmployeeEducationDetails.Where(x => x.EmpGen_Id == e.Id).Select(x => x.Degree).OrderBy(x => x).LastOrDefault())
-                                       //education = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == getMaxPassoutYear(ed.EmpGen_Id)).Select(x => x.Degree).FirstOrDefault()
                                    }).ToList();
             return employeedetails;
-            ////var employeedetails = (from e in _context.EmployeeGeneralDetails
-            ////                       where e.Status == "A"
-            ////                       join a in _context.Status on e.Empid equals a.Empid
-            ////                       where a.Status == "A" && a.Approved == null && a.Cancelled == null
-            ////                       join l in _context.Login on e.Empid equals l.Empid
-            ////                       where l.Status == "A"
-            ////                       join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
-            ////                       where ec.Status == "A"
-            ////                       join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
-            ////                       where ee.Passoutyear == deg && ee.Status == "A"
-            ////                       select new DashboardVM()
-            ////                       {
-            ////                           Empid = e.Empid,
-            ////                           Empname = e.EmployeeName,
-            ////                           designation = l.Designation,
-            ////                           Contact = ec.Contact_no,
-            ////                           Email = l.Emailid,
-            ////                           education = ee.Degree
-            ////                       }).ToList();
-            ////return employeedetails;
+           
         }
 
 
@@ -269,6 +227,7 @@ namespace EmployeeOnboarding.Repository
                                    MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
                                    DOM = e.DateOfMarriage,
                                    Gender = ((Data.Enum.Gender)e.Gender).ToString(),
+                                   bloodgrp= EnumExtensionMethods.GetEnumDescription((BloodGroup)e.BloodGrp),
                                    Contactno = ec.Contact_no,
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
@@ -277,16 +236,16 @@ namespace EmployeeOnboarding.Repository
                                    {
                                        Address = address[0].Address,
                                        Country = _context.Country.Where(x => x.Id == address[0].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       State = _context.Country.Where(x => x.Id == address[0].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.Country.Where(x => x.Id == address[0].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[0].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
                                        Pincode = address[0].Pincode
                                    },
                                    TemporaryAddress=new AddressVM1()
                                    {
                                        Address = address[1].Address,
                                        Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       State = _context.Country.Where(x => x.Id == address[1].State_Id).Select(x => x.Country_Name).FirstOrDefault(),
-                                       City = _context.Country.Where(x => x.Id == address[1].City_Id).Select(x => x.Country_Name).FirstOrDefault(),
+                                       State = _context.State.Where(x => x.Id == address[1].State_Id).Select(x => x.State_Name).FirstOrDefault(),
+                                       City = _context.City.Where(x => x.Id == address[1].City_Id).Select(x => x.City_Name).FirstOrDefault(),
                                        Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
@@ -299,14 +258,6 @@ namespace EmployeeOnboarding.Repository
             return emppersonal;
         }
 
-
-
-       /* public string getMaxPassoutYear(int id)
-        {
-            var maxyear = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == id).Select(x => x.Degree).ToString();
-            return maxyear;
-        }*/
-
         public async Task<List<DashboardVM>>? SearchApprovedEmpDetails(string name)
         {
             var employeedetails = (from l in _context.Login
@@ -317,8 +268,6 @@ namespace EmployeeOnboarding.Repository
                                    where al.Current_Status == 1 && al.Status == "A"
                                    join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
                                    where ec.Status == "A"
-                                   ////join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
-                                   ////where ed.Status == "A"
                                    select new DashboardVM()
                                    {
                                        EmpGen_Id = e.Id,
@@ -327,7 +276,6 @@ namespace EmployeeOnboarding.Repository
                                        Contact = ec.Contact_no,
                                        Email = e.Official_EmailId,
                                        education = (_context.EmployeeEducationDetails.Where(x => x.EmpGen_Id == e.Id).Select(x => x.Degree).OrderBy(x => x).LastOrDefault())
-                                       //education = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == getMaxPassoutYear(ed.EmpGen_Id)).Select(x => x.Degree).FirstOrDefault()
                                    }).ToList();
             return employeedetails;
         }
@@ -354,7 +302,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>>? SearchInvitedEmpDetails(string name)
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status == "Invited" || l.Invited_Status=="Confirmed" && l.Name.ToLower().Contains(name.ToLower())
+                                  where l.Status == "A" && l.Invited_Status == "Invited" && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -378,7 +326,7 @@ namespace EmployeeOnboarding.Repository
                                    select new Dashboard1VM()
                                    {
                                        Login_Id = l.Id,
-                                       //EmpGen_Id = a.EmpGen_Id,
+                                       EmpGen_Id = a.EmpGen_Id,
                                        Name = l.Name,
                                        DateModified = a.Date_Modified,
                                        Email_id = l.EmailId,
@@ -388,6 +336,69 @@ namespace EmployeeOnboarding.Repository
         }
 
 
+
+
+
+
+
+
+        /*var employeedetails = (from e in _context.EmployeeGeneralDetails
+                                  where e.Status == "A"
+                                  join a in _context.Status on e.Empid equals a.Empid
+                                  where a.Status == "A" && a.Approved == null && a.Cancelled == null
+                                  join l in _context.Login on e.Empid equals l.Empid
+                                  where l.Status == "A"
+                                  join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
+                                  where ec.Status == "A"
+                                  join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
+                                  where ee.Passoutyear == deg && ee.Status == "A"
+                                  select new DashboardVM()
+                                  {
+                                      Empid = e.Empid,
+                                      Empname = e.EmployeeName,
+                                      designation = l.Designation,
+                                      Contact = ec.Contact_no,
+                                      Email = l.Emailid,
+                                      education = ee.Degree
+                                  }).ToList();
+           return employeedetails;*/
+
+
+        ////join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
+        ////where ed.Status == "A"
+
+        ////join ed in _context.EmployeeEducationDetails on e.Id equals ed.EmpGen_Id
+        ////where ed.Status == "A"
+        ///
+        //education = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == getMaxPassoutYear(ed.EmpGen_Id)).Select(x => x.Degree).FirstOrDefault()
+        //education = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == getMaxPassoutYear(ed.EmpGen_Id)).Select(x => x.Degree).FirstOrDefault()
+
+        /* public string getMaxPassoutYear(int id)
+        {
+            var maxyear = _context.EmployeeEducationDetails.Where(x => x.Passoutyear == id).Select(x => x.Degree).ToString();
+            return maxyear;
+        }*/
+
+        ////var employeedetails = (from e in _context.EmployeeGeneralDetails
+        ////                       where e.Status == "A"
+        ////                       join a in _context.Status on e.Empid equals a.Empid
+        ////                       where a.Status == "A" && a.Approved == null && a.Cancelled == null
+        ////                       join l in _context.Login on e.Empid equals l.Empid
+        ////                       where l.Status == "A"
+        ////                       join ec in _context.EmployeeContactDetails on e.Empid equals ec.Empid
+        ////                       where ec.Status == "A"
+        ////                       join ee in _context.EmployeeEducationDetails on e.Empid equals ee.Empid
+        ////                       where ee.Passoutyear == deg && ee.Status == "A"
+        ////                       select new DashboardVM()
+        ////                       {
+        ////                           Empid = e.Empid,
+        ////                           Empname = e.EmployeeName,
+        ////                           designation = l.Designation,
+        ////                           Contact = ec.Contact_no,
+        ////                           Email = l.Emailid,
+        ////                           education = ee.Degree
+        ////                       }).ToList();
+        ////return employeedetails;
 
 
         /*public async Task DeleteEmployee(string[] employeeId)

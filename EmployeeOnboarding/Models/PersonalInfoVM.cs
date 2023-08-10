@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeOnboarding.Models
 {
@@ -13,6 +14,7 @@ namespace EmployeeOnboarding.Models
         public string MaritialStatus { get; set; }
         public DateOnly? DOM { get; set; }
         public string Gender { get; set; }
+        public string bloodgrp { get; set; }
         public double Contactno { get; set; }
         public string? ECP { get; set; }
         public string? ECR { get; set; }
@@ -28,4 +30,5 @@ namespace EmployeeOnboarding.Models
         public List<EducationDetailsVM> educationDetailsVMs { get; set; }
         public List<ExperienceVM> experienceVMs { get; set; }
     }
+    
 }
