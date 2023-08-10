@@ -60,6 +60,13 @@ namespace EmployeeOnboarding.Services
             }
 
             _context.SaveChanges();
+
+            var sumbit = _context.Login.FirstOrDefault(e => e.Id == Id);
+
+            sumbit.Invited_Status = "Submitted";
+
+            _context.Login.Update(sumbit);
+            _context.SaveChanges();
         }
 
         //get method
@@ -76,8 +83,6 @@ namespace EmployeeOnboarding.Services
                 BloodGrp = EnumExtensionMethods.GetEnumDescription((BloodGroup)general.BloodGrp)
                 //BloodGrp = ((BloodGroup)general.BloodGrp).ToString(),
             }).FirstOrDefault();
-
-
 
             return _general;
         }
