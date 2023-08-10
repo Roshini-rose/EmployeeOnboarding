@@ -1,26 +1,27 @@
 ﻿
 
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeOnboarding.Data.Enum
 {
     public enum BloodGroup
     {
-        [Display(Name = "O+")]
-        OPositive=1,
-        [Display(Name = "A+")]
+        [Description("O+")]
+        OPositive = 1,
+        [Description( "A+")]
         APositive=2,
-        [Display(Name = "B+")]
+        [Description("B+")]
         BPositive=3,
-        [Display(Name = "AB+")]
+        [Description("AB+")]
         ABPositive=4,
-        [Display(Name = "AB-")]
+        [Description("AB-")]
         ABNegative=5,
-        [Display(Name = "A-")]
+        [Description("A-")]
         ANegative=6,
-        [Display(Name = "B-")]
+        [Description("B-")]
         BNegative=7,
-        [Display(Name = "O-")]
+        [Description("O-")]
         ONegative=8
     }
 }
