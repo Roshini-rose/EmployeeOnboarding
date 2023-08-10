@@ -5,6 +5,8 @@ namespace EmployeeOnboarding.Data.Enum
 {
     public enum DisabilityType
     {
+        [Description("None")]
+        None = 0,
         [Description("Blindness")]
         Blindness =1,
         [Description("Hearing Impairment")]

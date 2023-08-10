@@ -120,8 +120,8 @@ namespace EmployeeOnboarding.Repository
                                        Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
-                                   Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
-                                   CovidSts =((VaccinationStatus) ead.Covid_VaccSts).ToString(),
+                                   Disablility_type = EnumExtensionMethods.GetEnumDescription((DisabilityType)ead.Disablility_type),
+                                   CovidSts =EnumExtensionMethods.GetEnumDescription((VaccinationStatus)ead.Covid_VaccSts),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)
@@ -249,8 +249,8 @@ namespace EmployeeOnboarding.Repository
                                        Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
-                                   Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
-                                   CovidSts =((VaccinationStatus) ead.Covid_VaccSts).ToString(),
+                                   Disablility_type = EnumExtensionMethods.GetEnumDescription((DisabilityType)ead.Disablility_type),
+                                   CovidSts = EnumExtensionMethods.GetEnumDescription((VaccinationStatus)ead.Covid_VaccSts),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)
