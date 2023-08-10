@@ -39,8 +39,8 @@ namespace EmployeeOnboarding.Services
 
 
         public void AddExperiences(int empId, WorkExperienceVM experience)
-        {
-            var existingExperience = _context.EmployeeExperienceDetails.FirstOrDefault(e => e.EmpGen_Id == empId);
+        {          
+                var existingExperience = _context.EmployeeExperienceDetails.FirstOrDefault(e => e.EmpGen_Id == empId);
 
                 if (existingExperience != null)
                 {
@@ -53,7 +53,6 @@ namespace EmployeeOnboarding.Services
                     // Parse and assign DateOnly values
                     DateOnly startDate = DateOnly.Parse(experience.StartDate);
                     DateOnly endDate = DateOnly.Parse(experience.EndDate);
-
                     existingExperience.StartDate = startDate;
                     existingExperience.EndDate = endDate;
                     existingExperience.Exp_Certificate = SaveCertificateFile(experience.Exp_Certificate, empId.ToString(), "Experience.pdf");
@@ -76,7 +75,6 @@ namespace EmployeeOnboarding.Services
                         // Parse and assign DateOnly values
                         StartDate = DateOnly.Parse(experience.StartDate),
                         EndDate = DateOnly.Parse(experience.EndDate),
-
                         Exp_Certificate = SaveCertificateFile(experience.Exp_Certificate, empId.ToString(), certificateFileName),
                         Date_Created = DateTime.UtcNow,
                         Date_Modified = DateTime.UtcNow,
@@ -95,17 +93,18 @@ namespace EmployeeOnboarding.Services
 
         public getExperienceVM GetExperience(int experienceId)
         {
-            var _education = _context.EmployeeExperienceDetails.Where(n => n.EmpGen_Id == experienceId).Select(experience => new getExperienceVM()
-                {
-                    Company_name = experience.Company_name,
-                    Designation = experience.Designation,
-                    Reason = experience.Reason,
-                    StartDate = experience.StartDate,
-                    EndDate = experience.EndDate,
-                })
+            var _experience = _context.EmployeeExperienceDetails.Where(n => n.EmpGen_Id == experienceId).Select(experience => new getExperienceVM()
+            {
+                Company_name = experience.Company_name,
+                Designation = experience.Designation,
+                Reason = experience.Reason,
+                StartDate = experience.StartDate,
+                EndDate = experience.EndDate,
+            })
                 .FirstOrDefault();
 
-            return _education;
+            return _experience;
         }
+
     }
 }
