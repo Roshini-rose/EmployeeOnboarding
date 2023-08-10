@@ -78,7 +78,7 @@ namespace EmployeeOnboarding.Repository
            
         }
 
-
+        //EnumExtensionMethods.GetEnumDescription((BloodGroup)general.BloodGrp)
         public async Task<List<PersonalInfoVM>>? GetPersonalInfo(int id)
         {
             var address = (from e in _context.EmployeeGeneralDetails where e.Id == id && e.Status == "A" join ea in _context.EmployeeAddressDetails on e.Id equals ea.EmpGen_Id where ea.Status == "A" select ea).ToArray();
@@ -98,7 +98,7 @@ namespace EmployeeOnboarding.Repository
                                    MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
                                    DOM = e.DateOfMarriage,
                                    Gender = ((Data.Enum.Gender)e.Gender).ToString(),
-                                   bloodgrp=((Data.Enum.BloodGroup)e.BloodGrp).ToString(),
+                                   bloodgrp=EnumExtensionMethods.GetEnumDescription((BloodGroup)e.BloodGrp),
                                    Contactno = ec.Contact_no,
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
@@ -227,6 +227,7 @@ namespace EmployeeOnboarding.Repository
                                    MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
                                    DOM = e.DateOfMarriage,
                                    Gender = ((Data.Enum.Gender)e.Gender).ToString(),
+                                   bloodgrp= EnumExtensionMethods.GetEnumDescription((BloodGroup)e.BloodGrp),
                                    Contactno = ec.Contact_no,
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
