@@ -135,7 +135,6 @@ namespace EmployeeOnboarding.Data.Services
                 Degree = education.Degree,
                 specialization = education.specialization,
                 Passoutyear = education.Passoutyear,
-                getCertificate = GetFile(education.Certificate)
             }).FirstOrDefault();
 
             return _education;
@@ -150,26 +149,9 @@ namespace EmployeeOnboarding.Data.Services
                 Degree = education.Degree,
                 specialization = education.specialization,
                 Passoutyear = education.Passoutyear,
-                getCertificate = GetFile(education.Certificate)
             }).FirstOrDefault();
 
             return _education;
-        }
-
-        public static byte[] GetFile(string filepath)
-        {
-            if (System.IO.File.Exists(filepath))
-            {
-                System.IO.FileStream fs = System.IO.File.OpenRead(filepath);
-                byte[] file = new byte[fs.Length];
-                int br = fs.Read(file, 0, file.Length);
-                if (br != fs.Length)
-                {
-                    throw new IOException("Invalid path");
-                }
-                return file;
-            }
-            return null;
         }
     }
 }

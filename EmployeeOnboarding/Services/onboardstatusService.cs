@@ -74,6 +74,18 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
+        public async Task<rejectcommentVM> RejectedComment(int Empid)
+        {
+            var _onboard = _context.ApprovalStatus.Where(n => n.EmpGen_Id == Empid).
+               Select(onboard => new rejectcommentVM()
+               {
+                   Comment = onboard.Comments,
+
+               }).FirstOrDefault();
+
+           return _onboard;
+        }
+
     }
     
 }

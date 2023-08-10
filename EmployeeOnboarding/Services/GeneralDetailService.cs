@@ -73,8 +73,9 @@ namespace EmployeeOnboarding.Services
                 Gender = ((Gender)general.Gender).ToString(),
                 MaritalStatus = ((MartialStatus)general.Gender).ToString(),
                 DateOfMarriage = general.DateOfMarriage.ToString(),
-                BloodGrp =((BloodGroup)general.BloodGrp).ToString(),
-             }).FirstOrDefault();
+                BloodGrp = EnumExtensionMethods.GetEnumDescription((BloodGroup)general.BloodGrp)
+                //BloodGrp = ((BloodGroup)general.BloodGrp).ToString(),
+            }).FirstOrDefault();
 
 
 
