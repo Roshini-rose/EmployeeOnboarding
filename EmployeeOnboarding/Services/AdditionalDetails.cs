@@ -88,8 +88,8 @@ public void AddAdditional(int Id, AdditionalVM additional)
             var _additional = _context.EmployeeAdditionalInfo.Where(n => n.EmpGen_Id == Id).Select(additional => new GetAdditionalVM()
             {
                 Disability = additional.Disability,
-                Disablility_type = ((DisabilityType)additional.Disablility_type).ToString(),
-                Covid_VaccSts = ((VaccinationStatus)additional.Covid_VaccSts).ToString(),
+                Disablility_type = EnumExtensionMethods.GetEnumDescription((DisabilityType)additional.Disablility_type),
+                Covid_VaccSts = EnumExtensionMethods.GetEnumDescription((VaccinationStatus)additional.Covid_VaccSts),
                 Vacc_Certificate = GetFile(additional.Vacc_Certificate)
 
             }).FirstOrDefault();
