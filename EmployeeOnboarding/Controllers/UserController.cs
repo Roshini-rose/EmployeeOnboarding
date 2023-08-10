@@ -44,9 +44,9 @@ namespace EmployeeOnboarding.Controllers
 
 
         [HttpPost("add-experience/{empId}")]
-        public async Task<IActionResult> AddExperience(int empId, [FromForm] List<WorkExperienceVM> experiences)
+        public async Task<IActionResult> AddExperience(int empId, [FromForm] WorkExperienceVM experience)
         {
-            _experienceService.AddExperiences(empId, experiences);
+            _experienceService.AddExperiences(empId, experience);
             return Ok();
         }
 

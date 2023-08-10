@@ -7,6 +7,6 @@
         public string Degree { get; set; }
         public string specialization { get; set; }
         public int Passoutyear { get; set; }
-        public byte[] getCertificate { get; set; }
+        //public byte[] getCertificate { get; set; }
     }
 }
