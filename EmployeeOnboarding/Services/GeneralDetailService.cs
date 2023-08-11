@@ -25,7 +25,7 @@ namespace EmployeeOnboarding.Services
                 //Update existing record
 
                 existingGeneral.EmployeeName = general.EmployeeName;
-                DateOnly DOB= DateOnly.Parse(general.DOB);
+                DateOnly DOB = DateOnly.Parse(general.DOB);
                 existingGeneral.FatherName = general.FatherName;
                 existingGeneral.Gender = general.Gender;
                 existingGeneral.MaritalStatus = general.MaritalStatus;
@@ -62,19 +62,21 @@ namespace EmployeeOnboarding.Services
             _context.SaveChanges();
         }
 
+
+
         //get method
         public GetGeneralVM GetGeneral(int Id)
         {
             var _general = _context.EmployeeGeneralDetails.Where(n => n.Login_ID == Id).Select(general => new GetGeneralVM()
             {
                 EmployeeName = general.EmployeeName,
-                DOB = general.DOB.ToString(),
+                DOB=general.DOB,
                 FatherName = general.FatherName,
                 Gender = ((Gender)general.Gender).ToString(),
                 MaritalStatus = ((MartialStatus)general.Gender).ToString(),
-                DateOfMarriage = general.DateOfMarriage.ToString(),
+                DateOfMarriage=general.DateOfMarriage,
                 BloodGrp = EnumExtensionMethods.GetEnumDescription((BloodGroup)general.BloodGrp)
-                //BloodGrp = ((BloodGroup)general.BloodGrp).ToString(),
+               
             }).FirstOrDefault();
 
 
