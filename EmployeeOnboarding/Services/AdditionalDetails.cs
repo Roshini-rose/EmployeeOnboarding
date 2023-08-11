@@ -85,13 +85,12 @@ public void AddAdditional(int Id, AdditionalVM additional)
 
         public GetAdditionalVM GetAdditional(int Id)
         {
+            var add = _context.EmployeeAdditionalInfo.Select(x => x);
             var _additional = _context.EmployeeAdditionalInfo.Where(n => n.EmpGen_Id == Id).Select(additional => new GetAdditionalVM()
             {
                 Disability = additional.Disability,
                 Disablility_type = EnumExtensionMethods.GetEnumDescription((DisabilityType)additional.Disablility_type),
                 Covid_VaccSts = EnumExtensionMethods.GetEnumDescription((VaccinationStatus)additional.Covid_VaccSts),
-
-
             }).FirstOrDefault();
             return _additional;
         }
