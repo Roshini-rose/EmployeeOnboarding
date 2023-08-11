@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeOnboarding.Models
@@ -9,6 +10,7 @@ namespace EmployeeOnboarding.Models
        // public string Empid { get; set; }
         public string EmpName { get; set; }
         public string FatherName { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true,DataFormatString = "{0:dd/MM/yyyy}")]
         public DateOnly DOB { get; set; }
         public string mailId { get; set; }
         public string MaritialStatus { get; set; }
