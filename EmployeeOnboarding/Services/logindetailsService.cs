@@ -25,7 +25,7 @@ namespace EmployeeOnboarding.Services
             this.emailSender = emailSender;
         }
 
-        public async void LoginInvite(logininviteVM logindet)
+        public int LoginInvite(logininviteVM logindet)
         {
             var _logindet = new Login()
             {
@@ -41,12 +41,16 @@ namespace EmployeeOnboarding.Services
 
             _context.Login.Add(_logindet);
             _context.SaveChanges();
-        
-            //var callbackUrl = "http://localhost:7136/swagger/index.html";
-            ////var callbackUrl = "http://localhost:7136/api/logindetails/confirm-login";
 
-            //await emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
-            //           $"Please confirm your account by  <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here.");
+            var callbackUrl = "http://localhost:7136/swagger/index.html";
+            //var callbackUrl = "http://localhost:7136/api/logindetails/confirm-login";
+            ///
+            int Verifyotp = otpgeneration();
+            //await
+            emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
+                       $"Please confirm your account by entering the OTP by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here</a>. Your OTP is "+Verifyotp);
+            return Verifyotp;
+
         }
 
         public void LoginConfirm(string Emailid,loginconfirmVM logindet)
@@ -86,6 +90,15 @@ namespace EmployeeOnboarding.Services
             }
             else
                 return (null);
+        }
+
+        public int otpgeneration()
+        {
+            int min = 1000;
+            int max = 9999;
+            Random rn = new Random();
+            int otp = rn.Next(min,max);
+            return otp;
         }
     }
 }

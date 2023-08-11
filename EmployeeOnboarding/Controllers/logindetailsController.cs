@@ -24,8 +24,8 @@ namespace EmployeeOnboarding.Controllers
         [HttpPost("Login-Invite")]
         public IActionResult LoginDetails([FromBody] logininviteVM logindetails)
         {
-            _logindetailsService.LoginInvite(logindetails);
-            return Ok("Invite Sent");
+            int otpver=_logindetailsService.LoginInvite(logindetails);
+            return Ok(otpver);
         }
 
         //[HttpPost("Login-In")]

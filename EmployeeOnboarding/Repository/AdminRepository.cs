@@ -29,7 +29,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status=="Invited"
+                                  where l.Status == "A" && l.Invited_Status=="Invited" || l.Invited_Status=="Confirmed"
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -120,8 +120,8 @@ namespace EmployeeOnboarding.Repository
                                        Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
-                                   Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
-                                   CovidSts =((VaccinationStatus) ead.Covid_VaccSts).ToString(),
+                                   Disablility_type = EnumExtensionMethods.GetEnumDescription((DisabilityType)ead.Disablility_type),
+                                   CovidSts =EnumExtensionMethods.GetEnumDescription((VaccinationStatus)ead.Covid_VaccSts),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)
@@ -249,8 +249,8 @@ namespace EmployeeOnboarding.Repository
                                        Pincode = address[1].Pincode
                                    },
                                    Disability = ead.Disability,
-                                   Disablility_type = ((DisabilityType) ead.Disablility_type).ToString(),
-                                   CovidSts =((VaccinationStatus) ead.Covid_VaccSts).ToString(),
+                                   Disablility_type = EnumExtensionMethods.GetEnumDescription((DisabilityType)ead.Disablility_type),
+                                   CovidSts = EnumExtensionMethods.GetEnumDescription((VaccinationStatus)ead.Covid_VaccSts),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)
@@ -302,7 +302,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>>? SearchInvitedEmpDetails(string name)
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status == "Invited" && l.Name.ToLower().Contains(name.ToLower())
+                                  where l.Status == "A" && l.Invited_Status == "Invited" || l.Invited_Status=="Confirmed" && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
