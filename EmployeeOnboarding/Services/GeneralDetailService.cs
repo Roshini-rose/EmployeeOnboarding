@@ -16,54 +16,60 @@ namespace EmployeeOnboarding.Services
         {
             _context = context;
         }
-        public void AddGeneral(int Id, List<GeneralVM> generals)
+        public void AddGeneral(int Id, GeneralVM general)
         {
-            foreach (var general in generals)
+            var existingGeneral = _context.EmployeeGeneralDetails.FirstOrDefault(e => e.Login_ID == Id );
+
+            if (existingGeneral != null)
             {
-                var existingGeneral = _context.EmployeeGeneralDetails.FirstOrDefault(e => e.Login_ID == Id);
+                //Update existing record
 
-                if (existingGeneral != null)
-                {
-                    //Update existing record
-
-                    existingGeneral.EmployeeName = general.EmployeeName;
-                    DateOnly DOB = DateOnly.Parse(general.DOB);
-                    existingGeneral.FatherName = general.FatherName;
-                    existingGeneral.Gender = general.Gender;
-                    existingGeneral.MaritalStatus = general.MaritalStatus;
-                    DateOnly DateOfMarriage = DateOnly.Parse(general.DateOfMarriage);
-                    existingGeneral.BloodGrp = general.BloodGrp;
-                    existingGeneral.Date_Modified = DateTime.UtcNow;
-                    existingGeneral.Modified_by = Id.ToString();
-                    existingGeneral.Status = "A";
-                }
-                else
-                {
-                    //Add new record
-
-                    var _general = new EmployeeGeneralDetails()
-                    {
-                        Login_ID = Id,
-                        EmployeeName = general.EmployeeName,
-                        DOB = DateOnly.Parse(general.DOB),
-                        FatherName = general.FatherName,
-                        Gender = general.Gender,
-                        MaritalStatus = general.MaritalStatus,
-                        DateOfMarriage = DateOnly.Parse(general.DateOfMarriage),
-                        BloodGrp = general.BloodGrp,
-                        Date_Created = DateTime.UtcNow,
-                        Date_Modified = DateTime.UtcNow,
-                        Created_by = Id.ToString(),
-                        Modified_by = Id.ToString(),
-                        Status = "A"
-                    };
-
-                    _context.EmployeeGeneralDetails.Add(_general);
-                }
-
-                _context.SaveChanges();
+                existingGeneral.EmployeeName = general.EmployeeName;
+                DateOnly DOB = DateOnly.Parse(general.DOB);
+                existingGeneral.FatherName = general.FatherName;
+                existingGeneral.Gender = general.Gender;
+                existingGeneral.MaritalStatus = general.MaritalStatus;
+                DateOnly DateOfMarriage = DateOnly.Parse(general.DateOfMarriage);
+                existingGeneral.BloodGrp = general.BloodGrp;
+                existingGeneral.Date_Modified = DateTime.UtcNow;
+                existingGeneral.Modified_by = Id.ToString();
+                existingGeneral.Status = "A";
             }
+            else
+            {
+                //Add new record
+
+                var _general= new EmployeeGeneralDetails()
+                {
+                    Login_ID = Id,
+                    EmployeeName = general.EmployeeName,
+                    DOB = DateOnly.Parse(general.DOB),
+                    FatherName = general.FatherName,
+                    Gender = general.Gender,
+                    MaritalStatus= general.MaritalStatus,
+                    DateOfMarriage = DateOnly.Parse(general.DateOfMarriage),
+                    BloodGrp = general.BloodGrp,
+                    Date_Created = DateTime.UtcNow,
+                    Date_Modified = DateTime.UtcNow,
+                    Created_by = Id.ToString(),
+                    Modified_by = Id.ToString(),
+                    Status = "A"
+                };
+
+                _context.EmployeeGeneralDetails.Add(_general);
+            }
+
+            _context.SaveChanges();
+
+            var sumbit = _context.Login.FirstOrDefault(e => e.Id == Id);
+
+            sumbit.Invited_Status = "Submitted";
+
+            _context.Login.Update(sumbit);
+            _context.SaveChanges();
         }
+
+
 
         //get method
         public GetGeneralVM GetGeneral(int Id)
@@ -71,16 +77,14 @@ namespace EmployeeOnboarding.Services
             var _general = _context.EmployeeGeneralDetails.Where(n => n.Login_ID == Id).Select(general => new GetGeneralVM()
             {
                 EmployeeName = general.EmployeeName,
-                DOB = general.DOB.ToString(),
+                DOB= general.DOB.ToString(), //DateOnly.ParseExact (general.DOB.ToString(),@"MM/dd/yyyy"),
                 FatherName = general.FatherName,
                 Gender = ((Gender)general.Gender).ToString(),
                 MaritalStatus = ((MartialStatus)general.Gender).ToString(),
-                DateOfMarriage = general.DateOfMarriage.ToString(),
+                DateOfMarriage=general.DateOfMarriage.ToString(),
                 BloodGrp = EnumExtensionMethods.GetEnumDescription((BloodGroup)general.BloodGrp)
-                //BloodGrp = ((BloodGroup)general.BloodGrp).ToString(),
+               
             }).FirstOrDefault();
-
-
 
             return _general;
         }

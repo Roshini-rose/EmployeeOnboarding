@@ -1,10 +1,13 @@
-﻿namespace EmployeeOnboarding.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EmployeeOnboarding.ViewModels
 {
     public class GetGeneralVM
     {
 
        
         public string EmployeeName { get; set; }
+   
         public string DOB { get; set; }
         public string FatherName { get; set; }
         public string Gender { get; set; }

@@ -27,25 +27,30 @@ namespace EmployeeOnboarding.Controllers
         //General details
         //post method
         [HttpPost("add-general-details/{Id}")]
-        public IActionResult AddGeneral(int Id, [FromBody] List<GeneralVM> generals)
+        public IActionResult  AddGeneral(int Id, [FromBody] GeneralVM general)
         {
-           _generalservices.AddGeneral(Id, generals);
+           _generalservices.AddGeneral(Id, general);
             return Ok();
         }
 
 
+      
+
         //get method
 
-       [HttpGet("get-general-details/{Id}")]
+        [HttpGet("get-general-details/{Id}")]
         public IActionResult GetGeneral(int Id)
         {
          var generaldetails = _generalservices.GetGeneral(Id);
            return Ok(generaldetails);
         }
 
+
+
+      
         //Contact details
-       //Post method
-       [HttpPost("add-contact-details/{Id}")]
+        //Post method
+        [HttpPost("add-contact-details/{Id}")]
        public IActionResult AddContact(int Id, [FromBody] ContactVM contact)    
        {
            _contactdetails.AddContact(Id, contact);
@@ -100,3 +105,4 @@ namespace EmployeeOnboarding.Controllers
    }
     
 }
+
