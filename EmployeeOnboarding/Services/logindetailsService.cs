@@ -48,7 +48,7 @@ namespace EmployeeOnboarding.Services
             int Verifyotp = otpgeneration();
             //await
             emailSender.SendEmailAsync(logindet.Emailid, "Confirm your email",
-                       $"Please confirm your account by entering the OTP by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here</a>. Your OTP is "+Verifyotp);
+                       $"Please confirm your account by entering the OTP by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here</a>. Your OTP is " + Verifyotp);
             return Verifyotp;
 
         }

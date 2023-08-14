@@ -27,9 +27,9 @@ namespace EmployeeOnboarding.Controllers
         //General details
         //post method
         [HttpPost("add-general-details/{Id}")]
-        public IActionResult AddGeneral(int Id, [FromBody] GeneralVM general)
+        public IActionResult AddGeneral(int Id, [FromBody] List<GeneralVM> generals)
         {
-           _generalservices.AddGeneral(Id, general);
+           _generalservices.AddGeneral(Id, generals);
             return Ok();
         }
 
