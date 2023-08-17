@@ -45,6 +45,8 @@ builder.Services.AddTransient<WorkExperienceService>();
 builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 
+
+//Configuring Fluent Migrator
 builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
     .AddFluentMigratorCore()
     .ConfigureRunner(c => c.AddPostgres().WithGlobalConnectionString("DefaultConnection")
