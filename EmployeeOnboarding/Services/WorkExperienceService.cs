@@ -1,4 +1,5 @@
 ﻿using EmployeeOnboarding.Data;
+using EmployeeOnboarding.Data.Enum;
 using EmployeeOnboarding.Models;
 using EmployeeOnboarding.ViewModels;
 
@@ -94,20 +95,21 @@ namespace EmployeeOnboarding.Services
                     _context.EmployeeExperienceDetails.Add(newExperience);
                 }
 
-            //pending status
-            var _onboard = new ApprovalStatus()
-            {
-                EmpGen_Id = empId,
-                Current_Status = (int)Status.Pending,
-                Comments = "",
-                Date_Created = DateTime.UtcNow,
-                Date_Modified = DateTime.UtcNow,
-                Created_by = empId.ToString(),
-                Modified_by = "Admin",
-                Status = "A",
-            };
-            _context.ApprovalStatus.Add(_onboard);
-            _context.SaveChanges();
+                //pending status
+                var _onboard = new ApprovalStatus()
+                {
+                    EmpGen_Id = empId,
+                    Current_Status = (int)Status.Pending,
+                    Comments = "",
+                    Date_Created = DateTime.UtcNow,
+                    Date_Modified = DateTime.UtcNow,
+                    Created_by = empId.ToString(),
+                    Modified_by = "Admin",
+                    Status = "A",
+                };
+                _context.ApprovalStatus.Add(_onboard);
+                _context.SaveChanges();
+            }
         }
 
 
