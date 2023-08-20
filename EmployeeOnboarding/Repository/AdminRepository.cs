@@ -29,7 +29,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status=="Invited"
+                                  where l.Status == "A" && l.Invited_Status=="Invited" || l.Invited_Status=="Confirmed"
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
@@ -88,17 +88,19 @@ namespace EmployeeOnboarding.Repository
                                where ec.Status == "A"
                                join ead in _context.EmployeeAdditionalInfo on e.Id equals ead.EmpGen_Id
                                where ead.Status == "A"
-                               join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id where al.Current_Status==2
+                               join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
+                               where al.Current_Status == 2
                                select new PersonalInfoVM()
                                {
                                    Id = e.Id,
                                    EmpName = e.EmployeeName,
                                    FatherName = e.FatherName,
                                    DOB = e.DOB,
+                                   mailId = ec.Personal_Emailid,
                                    MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
                                    DOM = e.DateOfMarriage,
                                    Gender = ((Data.Enum.Gender)e.Gender).ToString(),
-                                   bloodgrp=EnumExtensionMethods.GetEnumDescription((BloodGroup)e.BloodGrp),
+                                   bloodgrp = EnumExtensionMethods.GetEnumDescription((BloodGroup)e.BloodGrp),
                                    Contactno = ec.Contact_no,
                                    ECP = ec.Emgy_Contactperson,
                                    ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
@@ -121,7 +123,7 @@ namespace EmployeeOnboarding.Repository
                                    },
                                    Disability = ead.Disability,
                                    Disablility_type = EnumExtensionMethods.GetEnumDescription((DisabilityType)ead.Disablility_type),
-                                   CovidSts =EnumExtensionMethods.GetEnumDescription((VaccinationStatus)ead.Covid_VaccSts),
+                                   CovidSts = EnumExtensionMethods.GetEnumDescription((VaccinationStatus)ead.Covid_VaccSts),
                                    CovidCerti = GetFile(ead.Vacc_Certificate),
                                    educationDetailsVMs = Education(id),
                                    experienceVMs = Experrience(id)
@@ -222,6 +224,7 @@ namespace EmployeeOnboarding.Repository
                                    EmpId = e.Empid,
                                    EmpName = e.EmployeeName,
                                    Offical_EmailId = e.Official_EmailId,
+                                   mailid=ec.Personal_Emailid,
                                    FatherName = e.FatherName,
                                    DOB = e.DOB,
                                    MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
@@ -302,7 +305,7 @@ namespace EmployeeOnboarding.Repository
         public async Task<List<Dashboard1VM>>? SearchInvitedEmpDetails(string name)
         {
             var InvitedDetails = (from l in _context.Login
-                                  where l.Status == "A" && l.Invited_Status == "Invited" && l.Name.ToLower().Contains(name.ToLower())
+                                  where l.Status == "A" && l.Invited_Status == "Invited" || l.Invited_Status=="Confirmed" && l.Name.ToLower().Contains(name.ToLower())
                                   select new Dashboard1VM()
                                   {
                                       Login_Id = l.Id,
