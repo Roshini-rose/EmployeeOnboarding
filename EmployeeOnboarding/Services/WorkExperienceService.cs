@@ -88,6 +88,7 @@ namespace EmployeeOnboarding.Services
                 }
             _context.SaveChanges();
 
+            //pending status
             var _onboard = new ApprovalStatus()
             {
                 EmpGen_Id = empId,
