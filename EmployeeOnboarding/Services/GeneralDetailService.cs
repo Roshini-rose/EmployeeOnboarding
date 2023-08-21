@@ -77,11 +77,11 @@ namespace EmployeeOnboarding.Services
             var _general = _context.EmployeeGeneralDetails.Where(n => n.Login_ID == Id).Select(general => new GetGeneralVM()
             {
                 EmployeeName = general.EmployeeName,
-                DOB= general.DOB.ToString(), //DateOnly.ParseExact (general.DOB.ToString(),@"MM/dd/yyyy"),
+                DOB= general.DOB, //DateOnly.ParseExact (general.DOB.ToString(),@"MM/dd/yyyy"),
                 FatherName = general.FatherName,
                 Gender = ((Gender)general.Gender).ToString(),
                 MaritalStatus = ((MartialStatus)general.Gender).ToString(),
-                DateOfMarriage=general.DateOfMarriage.ToString(),
+                DateOfMarriage=general.DateOfMarriage,
                 BloodGrp = EnumExtensionMethods.GetEnumDescription((BloodGroup)general.BloodGrp)
                
             }).FirstOrDefault();

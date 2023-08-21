@@ -67,19 +67,33 @@ namespace EmployeeOnboarding.Controllers
         }
 
         //Post method
-        [HttpPost("add-address-details/{Id}")]
-        public IActionResult AddAddress(int Id, AddressVM address)
+        [HttpPost("add-permanent-address-details/{Id}")]
+        public IActionResult AddPermanentAddress(int Id, AddressVM address)
         {
-            _addressdetails.AddAddress(Id, address);
+            _addressdetails.AddPermanentAddress(Id, address);
+            return Ok();
+        }
+
+        [HttpPost("add-temporary-address-details/{Id}")]
+        public IActionResult AddTemporaryAddress(int Id, AddressVM address)
+        {
+            _addressdetails.AddTemporaryAddress(Id, address);
             return Ok();
         }
 
         //get method
 
-        [HttpGet("get-address-details/{id}")]
-        public IActionResult GetAddress(int id)
+        [HttpGet("get-permanent-address-details/{id}")]
+        public IActionResult GetPermanentAddress(int id)
         {
-            var Addressdetails = _addressdetails.GetAddress(id);
+            var Addressdetails = _addressdetails.GetPermanentAddress(id);
+            return Ok(Addressdetails);
+        }
+
+        [HttpGet("get-temporary-address-details/{id}")]
+        public IActionResult GetTemporaryAddress(int id)
+        {
+            var Addressdetails = _addressdetails.GetTemporaryAddress(id);
             return Ok(Addressdetails);
         }
 
