@@ -14,10 +14,13 @@ namespace EmployeeOnboarding.Data
         public DbSet<EmployeeContactDetails> EmployeeContactDetails { get; set; }
         public DbSet<EmployeeAddressDetails> EmployeeAddressDetails { get; set; }
         public DbSet<EmployeeAdditionalInfo> EmployeeAdditionalInfo { get; set; }
+
+        public DbSet<Country> Country { get; set; }
+
         public DbSet<EmployeeEducationDetails> EmployeeEducationDetails { get; set; }
         public DbSet<EmployeeExperienceDetails> EmployeeExperienceDetails { get; set; }
         public DbSet<ApprovalStatus> ApprovalStatus { get; set; }
-        public DbSet<Country> Country { get; set; }
+       // public DbSet<Country> Country { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<City> City { get; set; }
         //public DbSet<Roles> Roles { get; set; }

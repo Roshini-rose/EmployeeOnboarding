@@ -4,6 +4,7 @@
     {
         Married=1,
         UnMarried=2,
-        Others=3
+        Divorced = 3,
+       // Others = 4
     }
 }

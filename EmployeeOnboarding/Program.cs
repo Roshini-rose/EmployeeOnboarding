@@ -36,9 +36,12 @@ builder.Services.AddTransient<IEmailSender>(s => new EmailSender("localhost", 25
 
 builder.Services.AddTransient<onboardstatusService>();
 builder.Services.AddTransient<logindetailsService>();
+//builder.Services.AddTransient<GeneralDetail>();
 builder.Services.AddTransient<GeneralDetailService>();
 builder.Services.AddTransient<ContactDetails>();
 builder.Services.AddTransient<AddressDetails>();
+builder.Services.AddTransient<StateService>();
+builder.Services.AddTransient<CityService>();
 builder.Services.AddTransient<AdditionalDetails>();
 builder.Services.AddTransient<EducationService>();
 builder.Services.AddTransient<WorkExperienceService>();
