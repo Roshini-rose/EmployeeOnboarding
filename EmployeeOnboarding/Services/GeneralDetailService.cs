@@ -3,8 +3,8 @@ using EmployeeOnboarding.Data;
 using EmployeeOnboarding.Data.Enum;
 using EmployeeOnboarding.Models;
 using EmployeeOnboarding.ViewModels;
-using OnboardingWebsite.Models;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace EmployeeOnboarding.Services
 {
@@ -12,6 +12,8 @@ namespace EmployeeOnboarding.Services
     {
 
         private ApplicationDbContext _context;
+        
+
         public GeneralDetailService(ApplicationDbContext context)
         {
             _context = context;
@@ -26,10 +28,13 @@ namespace EmployeeOnboarding.Services
 
                 existingGeneral.EmployeeName = general.EmployeeName;
                 DateOnly DOB = DateOnly.Parse(general.DOB);
+                existingGeneral.DOB= DOB;
                 existingGeneral.FatherName = general.FatherName;
                 existingGeneral.Gender = general.Gender;
                 existingGeneral.MaritalStatus = general.MaritalStatus;
-                DateOnly DateOfMarriage = DateOnly.Parse(general.DateOfMarriage);
+                DateOnly DateOfMarriage=DateOnly.Parse(general.DateOfMarriage);
+                existingGeneral.DateOfMarriage = DateOfMarriage;
+
                 existingGeneral.BloodGrp = general.BloodGrp;
                 existingGeneral.Date_Modified = DateTime.UtcNow;
                 existingGeneral.Modified_by = Id.ToString();
@@ -43,11 +48,11 @@ namespace EmployeeOnboarding.Services
                 {
                     Login_ID = Id,
                     EmployeeName = general.EmployeeName,
-                    DOB = DateOnly.Parse(general.DOB),
+                    DOB= DateOnly.Parse(general.DOB),
                     FatherName = general.FatherName,
                     Gender = general.Gender,
                     MaritalStatus= general.MaritalStatus,
-                    DateOfMarriage = DateOnly.Parse(general.DateOfMarriage),
+                    DateOfMarriage=DateOnly.Parse(general.DateOfMarriage),
                     BloodGrp = general.BloodGrp,
                     Date_Created = DateTime.UtcNow,
                     Date_Modified = DateTime.UtcNow,
@@ -57,9 +62,10 @@ namespace EmployeeOnboarding.Services
                 };
 
                 _context.EmployeeGeneralDetails.Add(_general);
+                _context.SaveChanges();
             }
 
-            _context.SaveChanges();
+           
 
             var sumbit = _context.Login.FirstOrDefault(e => e.Id == Id);
 
@@ -77,7 +83,7 @@ namespace EmployeeOnboarding.Services
             var _general = _context.EmployeeGeneralDetails.Where(n => n.Login_ID == Id).Select(general => new GetGeneralVM()
             {
                 EmployeeName = general.EmployeeName,
-                DOB= general.DOB, //DateOnly.ParseExact (general.DOB.ToString(),@"MM/dd/yyyy"),
+                DOB=general.DOB,
                 FatherName = general.FatherName,
                 Gender = ((Gender)general.Gender).ToString(),
                 MaritalStatus = ((MartialStatus)general.Gender).ToString(),

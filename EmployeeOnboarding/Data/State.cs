@@ -9,6 +9,6 @@ namespace EmployeeOnboarding.Data
         public int Country_Id { get; set; }
         public string State_Name { get; set; }
         public DateTime Date_Created { get; set; }
-        public DateTime Date_Updated { get; set;}
+        public DateTime Date_Modified{ get; set;}
     }
 }

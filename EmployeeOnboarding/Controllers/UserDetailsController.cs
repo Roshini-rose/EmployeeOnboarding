@@ -1,4 +1,5 @@
-﻿using EmployeeOnboarding.Services;
+﻿using EmployeeOnboarding.Data;
+using EmployeeOnboarding.Services;
 using EmployeeOnboarding.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +15,21 @@ namespace EmployeeOnboarding.Controllers
         public ContactDetails _contactdetails;
         public AddressDetails _addressdetails;
         public AdditionalDetails _additionaldetails;
-        public UserDetailsController(GeneralDetailService generalservices,ContactDetails contactDetails,AddressDetails addressdetails,AdditionalDetails additionalDetails)
+        public StateService _stateservice;
+        public CityService _cityservice;
+        public UserDetailsController(GeneralDetailService generalservices,
+            ContactDetails contactDetails,
+            AddressDetails addressdetails,
+            AdditionalDetails additionalDetails,
+            StateService stateService,
+            CityService cityService)
         {
             _generalservices = generalservices;
             _contactdetails= contactDetails;
             _addressdetails= addressdetails;
             _additionaldetails= additionalDetails;  
+            _stateservice= stateService;
+            _cityservice= cityService;
 
         }
        
@@ -47,7 +57,10 @@ namespace EmployeeOnboarding.Controllers
 
 
 
-      
+
+     
+
+
         //Contact details
         //Post method
         [HttpPost("add-contact-details/{Id}")]
@@ -74,6 +87,8 @@ namespace EmployeeOnboarding.Controllers
             return Ok();
         }
 
+
+
         [HttpPost("add-temporary-address-details/{Id}")]
         public IActionResult AddTemporaryAddress(int Id, AddressVM address)
         {
@@ -97,6 +112,26 @@ namespace EmployeeOnboarding.Controllers
             return Ok(Addressdetails);
         }
 
+
+      
+
+        [HttpGet("get-State/{id}")]
+        public IActionResult GetState(int id)
+        {
+            var State = _stateservice.GetState(id);
+            return Ok(State);
+        }
+
+
+
+     
+
+        [HttpGet("get-City/{id}")]
+        public IActionResult GetCity(int id)
+        {
+            var city = _cityservice.GetCity(id);
+            return Ok(city);
+        }
 
         //Additional details
         //Post method
