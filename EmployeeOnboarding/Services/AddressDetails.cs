@@ -14,7 +14,7 @@ namespace EmployeeOnboarding.Services
         }
 
         public void AddPermanentAddress(int empId, AddressVM address)
-
+        
         {
             var existingAddress = _context.EmployeeAddressDetails.FirstOrDefault(e => e.EmpGen_Id == empId && e.Address_Type=="Permanent");
 
@@ -35,7 +35,7 @@ namespace EmployeeOnboarding.Services
             {
                 //Add new record
 
-                var _contact = new EmployeeAddressDetails()
+                var _contact = new EmployeeColleagueDetails()
                 {
                     EmpGen_Id = empId,
                     Address_Type = "Permanent",
@@ -80,7 +80,7 @@ namespace EmployeeOnboarding.Services
             {
                 //Add new record
 
-                var _contact = new EmployeeAddressDetails()
+                var _contact = new EmployeeColleagueDetails()
                 {
                     EmpGen_Id = empId,
                     Address_Type = "Temporary",

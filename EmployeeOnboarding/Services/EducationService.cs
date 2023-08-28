@@ -26,7 +26,6 @@ namespace EmployeeOnboarding.Data.Services
             }
 
             var filePath = Path.Combine(empFolderPath, fileName);
-
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 certificateFile.CopyTo(fileStream);

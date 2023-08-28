@@ -11,11 +11,12 @@ namespace EmployeeOnboarding.Migrations
             Delete.ForeignKey().FromTable("EmployeeExperienceDetails").ForeignColumn("EmpGen_Id").ToTable("EmployeeGeneralDetails").PrimaryColumn("Id");
             Delete.Table("EmployeeExperienceDetails");
         }
-
+        
         public override void Up()
         {
             Create.Table("EmployeeExperienceDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails", "Id")
+               .WithColumn("Company_no").AsInt32().Nullable()
                .WithColumn("Company_name").AsString(100).Nullable()
                .WithColumn("Designation").AsString(100).Nullable()
                .WithColumn("Reason").AsString(100).Nullable()

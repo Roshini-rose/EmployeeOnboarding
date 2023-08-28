@@ -3,20 +3,14 @@ using System.Reflection.Metadata;
 
 namespace EmployeeOnboarding.Data
 {
-    public class EmployeeAddressDetails
+    public class EmployeeColleagueDetails
     {
         public int Id { get; set; }
         [ForeignKey("EmpGen_Id")]
         public int EmpGen_Id { get; set; }
-        public string Address_Type { get; set; }
-        public string Address { get; set; }
-        [ForeignKey("Country_Id")]
-        public int Country_Id { get; set; }
-        [ForeignKey("State_Id")]
-        public int State_Id { get; set; }
-        [ForeignKey("City_Id")]
-        public int City_Id { get; set; }
-        public string Pincode { get; set; }
+        public bool friend_working { get; set; }
+        public string? Colleague_Name { get; set; }
+        public string? Location { get; set; }
         public DateTime Date_Created { get; set; }
         public DateTime? Date_Modified { get; set; }
         public string Created_by { get; set; }

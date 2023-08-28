@@ -42,14 +42,12 @@ namespace EmployeeOnboarding.Controllers
         }
 
 
-
         [HttpPost("add-experience/{empId}")]
-        public async Task<IActionResult> AddExperience(int empId, [FromForm] WorkExperienceVM experience)
+        public async Task<IActionResult> AddExperience(int empId, [FromBody] List<WorkExperienceVM> experiences)
         {
-            _experienceService.AddExperiences(empId, experience);
+            _experienceService.AddExperiences(empId, experiences);
             return Ok();
         }
-
 
         [HttpGet("get-UG-education/{id}")]
         public IActionResult GetEducationUG(int id)
@@ -68,11 +66,12 @@ namespace EmployeeOnboarding.Controllers
         }
 
 
-        [HttpGet("get-experience/{id}")]
-        public IActionResult GetExperience(int id)
+        [HttpGet("get-experience/{empId}")]
+        public IActionResult GetCompanyExperiences(int empId)
         {
-            var experience = _experienceService.GetExperience(id);
-            return Ok(experience);
+            var companyExperiences = _experienceService.GetCompanyByEmpId(empId);
+            return Ok(companyExperiences);
         }
+
     }
 }

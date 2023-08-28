@@ -7,6 +7,6 @@
         public string? Reason { get; set; }
         public string? StartDate { get; set; }
         public string? EndDate { get; set; }
-        public IFormFile? Exp_Certificate { get; set; }
+        public string? Exp_Certificate { get; set; }
     }
 }

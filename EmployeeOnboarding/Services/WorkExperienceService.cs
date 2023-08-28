@@ -2,6 +2,7 @@
 using EmployeeOnboarding.Data.Enum;
 using EmployeeOnboarding.Models;
 using EmployeeOnboarding.ViewModels;
+using OnboardingWebsite.Models;
 
 namespace EmployeeOnboarding.Services
 {
@@ -15,13 +16,15 @@ namespace EmployeeOnboarding.Services
             _context = context;
         }
 
-
-        private string SaveCertificateFile(IFormFile certificateFile, string empId, string fileName)
+        private async Task<string> SaveCertificateFileAsync(string certificateBase64, string empId, string fileName)
         {
-            if (certificateFile == null)
+            if (string.IsNullOrEmpty(certificateBase64))
             {
-                return null; // Return null if no certificate file is provided
+                return null; // Return null if no certificate bytes are provided
             }
+
+            var certificateBytes = Convert.FromBase64String(certificateBase64);
+
             var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", empId);
             if (!Directory.Exists(empFolderPath))
             {
@@ -32,99 +35,100 @@ namespace EmployeeOnboarding.Services
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                certificateFile.CopyTo(fileStream);
+                await fileStream.WriteAsync(certificateBytes, 0, certificateBytes.Length);
             }
 
             return filePath; // Return the file path
         }
 
 
-        public void AddExperiences(int empId, WorkExperienceVM experience)
+
+        int index1 = 1; // Initialize the Company_no sequence
+
+        public async Task AddExperiences(int empId, List<WorkExperienceVM> experiences)
         {
-            var existingExperience = _context.EmployeeExperienceDetails.FirstOrDefault(e => e.EmpGen_Id == empId);
-
-            if (existingExperience != null)
+            foreach (var experience in experiences)
             {
-                // Update existing record
+                var existingExperience = _context.EmployeeExperienceDetails.FirstOrDefault(e => e.EmpGen_Id == empId && e.Company_no == index1);
 
-                existingExperience.Company_name = experience.Company_name;
-                existingExperience.Designation = experience.Designation;
-                existingExperience.Reason = experience.Reason;
-
-                // Parse and assign DateOnly values
-                DateOnly startDate = DateOnly.Parse(experience.StartDate);
-                DateOnly endDate = DateOnly.Parse(experience.EndDate);
-                existingExperience.StartDate = startDate;
-                existingExperience.EndDate = endDate;
-                existingExperience.Exp_Certificate = SaveCertificateFile(experience.Exp_Certificate, empId.ToString(), "Experience.pdf");
-                existingExperience.Date_Modified = DateTime.UtcNow;
-                existingExperience.Modified_by = empId.ToString();
-                existingExperience.Status = "A";
-            }
-            else
-            {
-                // Add new record
-
-                var certificateFileName = "Experience.pdf";
-                var _experience = new EmployeeExperienceDetails()
+                if (existingExperience != null)
                 {
-                    EmpGen_Id = empId,
-                    Company_name = experience.Company_name,
-                    Designation = experience.Designation,
-                    Reason = experience.Reason,
+                    var certificateFileName = $"experience{index1}.pdf"; // Generate the certificate filename
+                    // Update existing record
+                    existingExperience.Company_name = experience.Company_name;
+                    existingExperience.Designation = experience.Designation;
+                    existingExperience.Reason = experience.Reason;
 
                     // Parse and assign DateOnly values
-                    StartDate = DateOnly.Parse(experience.StartDate),
-                    EndDate = DateOnly.Parse(experience.EndDate),
-                    Exp_Certificate = SaveCertificateFile(experience.Exp_Certificate, empId.ToString(), certificateFileName),
-                    Date_Created = DateTime.UtcNow,
-                    Date_Modified = DateTime.UtcNow,
-                    Created_by = empId.ToString(),
-                    Modified_by = empId.ToString(),
-                    Status = "A"
-                };
-
-                _context.EmployeeExperienceDetails.Add(_experience);
-            }
-
-
-            _context.SaveChanges();
-        
-
-
-
-        //pending status
-        var _onboard = new ApprovalStatus() 
+                    DateOnly startDate = DateOnly.Parse(experience.StartDate);
+                    DateOnly endDate = DateOnly.Parse(experience.EndDate);
+                    existingExperience.StartDate = startDate;
+                    existingExperience.EndDate = endDate;
+                    existingExperience.Exp_Certificate = await SaveCertificateFileAsync(experience.Exp_Certificate, empId.ToString(), certificateFileName);
+                    existingExperience.Date_Modified = DateTime.UtcNow;
+                    existingExperience.Modified_by = empId.ToString();
+                    existingExperience.Status = "A";
+                }
+                else
                 {
-                    EmpGen_Id = empId,
-                    Current_Status = (int)Status.Pending,
-                    Comments = "",
-                    Date_Created = DateTime.UtcNow,
-                    Date_Modified = DateTime.UtcNow,
-                    Created_by = empId.ToString(),
-                    Modified_by = "Admin",
-                    Status = "A",
-                };
-                _context.ApprovalStatus.Add(_onboard);
-                _context.SaveChanges();
+                    // Add new record
+                    var certificateFileName = $"experience{index1}.pdf"; // Generate the certificate filename
+                    var _experience = new EmployeeExperienceDetails()
+                    {
+                        EmpGen_Id = empId,
+                        Company_no = index1,
+                        Company_name = experience.Company_name,
+                        Designation = experience.Designation,
+                        Reason = experience.Reason,
+
+                        // Parse and assign DateOnly values
+                        StartDate = DateOnly.Parse(experience.StartDate),
+                        EndDate = DateOnly.Parse(experience.EndDate),
+                        Exp_Certificate = await SaveCertificateFileAsync(experience.Exp_Certificate, empId.ToString(), certificateFileName),
+                        Date_Created = DateTime.UtcNow,
+                        Date_Modified = DateTime.UtcNow,
+                        Created_by = empId.ToString(),
+                        Modified_by = empId.ToString(),
+                        Status = "A"
+                    };
+
+                    _context.EmployeeExperienceDetails.Add(_experience);
+                    
+                }
+
+                index1++;
+
+            }
+                //pending status
+                        var _onboard = new ApprovalStatus()
+                        {
+                            EmpGen_Id = empId,
+                            Current_Status = (int)Status.Pending,
+                            Comments = "",
+                            Date_Created = DateTime.UtcNow,
+                            Date_Modified = DateTime.UtcNow,
+                            Created_by = empId.ToString(),
+                            Modified_by = "Admin",
+                            Status = "A",
+                        };
+                        _context.ApprovalStatus.Add(_onboard);
+                        _context.SaveChanges();                    
         }
 
 
-
-
-        public getExperienceVM GetExperience(int experienceId)
+    public List<getExperienceVM> GetCompanyByEmpId(int empId)
         {
-            var _experience = _context.EmployeeExperienceDetails.Where(n => n.EmpGen_Id == experienceId).Select(experience => new getExperienceVM()
-            {
-                Company_name = experience.Company_name,
-                Designation = experience.Designation,
-                Reason = experience.Reason,
-                StartDate = experience.StartDate,
-                EndDate = experience.EndDate,
-            })
-                .FirstOrDefault();
+            var companyExperiences = _context.EmployeeExperienceDetails.Where(e => e.EmpGen_Id == empId && e.Company_no != null).Select(e => new getExperienceVM
+                {
+                    Company_name = e.Company_name,
+                    Designation = e.Designation,
+                    Reason = e.Reason,
+                    StartDate = e.StartDate,
+                    EndDate = e.EndDate
+                })
+                .ToList();
 
-            return _experience;
+            return companyExperiences;
         }
 
     }
