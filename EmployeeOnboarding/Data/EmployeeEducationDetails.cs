@@ -13,8 +13,8 @@ namespace EmployeeOnboarding.Data
         public string Degree_achieved { get; set; }
         public string specialization { get; set; }
         public int Passoutyear { get; set; }
-        public string Grade { get; set; }
-        public string Certificate { get; set; }
+        public string Percentage { get; set; }
+        public string Edu_certificate { get; set; }
         public DateTime Date_Created { get; set; }
         public DateTime? Date_Modified { get; set; }
         public string Created_by { get; set; }

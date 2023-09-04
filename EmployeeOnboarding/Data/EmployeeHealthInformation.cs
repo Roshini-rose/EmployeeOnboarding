@@ -7,8 +7,8 @@ namespace EmployeeOnboarding.Data
         public int Id { get; set; }
         [ForeignKey("EmpGen_Id")]
         public int EmpGen_Id { get; set; }  
-        public string Specific_health_condition { get; set; }
-        public string Allergies { get; set; }
+        public string? Specific_health_condition { get; set; }
+        public string? Allergies { get; set; }
         public bool Surgery { get; set; }
         public string? Surgery_explaination { get; set; }
         public bool Night_shifts { get; set; }

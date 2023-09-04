@@ -20,14 +20,22 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails","Id")
                .WithColumn("Personal_Emailid").AsString().NotNullable()
                .WithColumn("Contact_no").AsDouble().NotNullable()
-               .WithColumn("Emgy_Contactperson").AsString().Nullable()
-               .WithColumn("Emgy_Contactrelation").AsInt32().Nullable()
-               .WithColumn("Emgy_Contactno").AsDouble().Nullable()
+               .WithColumn("Address_Type").AsString().NotNullable()
+               .WithColumn("Address1").AsString().NotNullable()
+               .WithColumn("Address2").AsString().NotNullable()
+               .WithColumn("Country_Id").AsInt32().NotNullable()
+               .WithColumn("State_Id").AsInt32().NotNullable()
+               .WithColumn("City_Id").AsInt32().NotNullable()
+               .WithColumn("Pincode").AsString().NotNullable()
+               .WithColumn("Present_same_Permanent").AsBoolean().Nullable()
                .WithColumn("Date_Created").AsDateTime().NotNullable()
-               .WithColumn("Date_Modified").AsDateTime().NotNullable()
+               .WithColumn("Date_Modified").AsDateTime().Nullable()
                .WithColumn("Created_by").AsString(100).NotNullable()
-               .WithColumn("Modified_by").AsString(100).NotNullable()
+               .WithColumn("Modified_by").AsString(100).Nullable()
                .WithColumn("Status").AsString(30).NotNullable();
+
+
+
 
         }
     }

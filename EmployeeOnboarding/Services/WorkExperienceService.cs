@@ -25,7 +25,7 @@ namespace EmployeeOnboarding.Services
 
             var certificateBytes = Convert.FromBase64String(certificateBase64);
 
-            var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", empId);
+            var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Documents", empId);
             if (!Directory.Exists(empFolderPath))
             {
                 Directory.CreateDirectory(empFolderPath);
@@ -57,13 +57,13 @@ namespace EmployeeOnboarding.Services
                     // Update existing record
                     existingExperience.Company_name = experience.Company_name;
                     existingExperience.Designation = experience.Designation;
-                    existingExperience.Reason = experience.Reason;
-
-                    // Parse and assign DateOnly values
                     DateOnly startDate = DateOnly.Parse(experience.StartDate);
                     DateOnly endDate = DateOnly.Parse(experience.EndDate);
                     existingExperience.StartDate = startDate;
                     existingExperience.EndDate = endDate;
+                    existingExperience.Reporting_to = experience.Reporting_to;
+                    existingExperience.Reason = experience.Reason;
+                    existingExperience.Location = experience.Location;
                     existingExperience.Exp_Certificate = await SaveCertificateFileAsync(experience.Exp_Certificate, empId.ToString(), certificateFileName);
                     existingExperience.Date_Modified = DateTime.UtcNow;
                     existingExperience.Modified_by = empId.ToString();
@@ -79,11 +79,12 @@ namespace EmployeeOnboarding.Services
                         Company_no = index1,
                         Company_name = experience.Company_name,
                         Designation = experience.Designation,
-                        Reason = experience.Reason,
-
                         // Parse and assign DateOnly values
                         StartDate = DateOnly.Parse(experience.StartDate),
                         EndDate = DateOnly.Parse(experience.EndDate),
+                        Reporting_to = experience.Reporting_to,
+                        Reason = experience.Reason,
+                        Location = experience.Location,
                         Exp_Certificate = await SaveCertificateFileAsync(experience.Exp_Certificate, empId.ToString(), certificateFileName),
                         Date_Created = DateTime.UtcNow,
                         Date_Modified = DateTime.UtcNow,
@@ -92,8 +93,8 @@ namespace EmployeeOnboarding.Services
                         Status = "A"
                     };
 
-                    _context.EmployeeExperienceDetails.Add(_experience);
-                    
+                    _context.EmployeeExperienceDetails.Add(_experience); 
+                    _context.SaveChanges(); 
                 }
 
                 index1++;
@@ -112,7 +113,7 @@ namespace EmployeeOnboarding.Services
                             Status = "A",
                         };
                         _context.ApprovalStatus.Add(_onboard);
-                        _context.SaveChanges();                    
+                        await _context.SaveChangesAsync();
         }
 
 

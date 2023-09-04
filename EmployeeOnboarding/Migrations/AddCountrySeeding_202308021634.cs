@@ -16,3 +16,4 @@ namespace EmployeeOnboarding.Migrations
         }
     }
 }
+

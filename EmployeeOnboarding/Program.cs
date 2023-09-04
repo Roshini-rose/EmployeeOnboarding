@@ -3,14 +3,14 @@ using EmployeeOnboarding.Data;
 using EmployeeOnboarding.Services;
 using EmployeeOnboarding.Repository;
 using Microsoft.EntityFrameworkCore;
-using EmployeeOnboarding.Data.Services;
+//using EmployeeOnboarding.Data.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using FluentMigrator.Runner;
 using System.Reflection;
 using EmployeeOnboarding.Migrations;
 using EmployeeOnboarding.Contracts;
-using EmployeeOnboarding.Data.Services;
+//using EmployeeOnboarding.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 //Cors Policy
@@ -38,14 +38,14 @@ builder.Services.AddTransient<onboardstatusService>();
 builder.Services.AddTransient<logindetailsService>();
 //builder.Services.AddTransient<GeneralDetail>();
 builder.Services.AddTransient<GeneralDetailService>();
-builder.Services.AddTransient<ContactDetails>();
-builder.Services.AddTransient<AddressDetails>();
+//builder.Services.AddTransient<ContactDetails>();
+//builder.Services.AddTransient<AddressDetails>();
 builder.Services.AddTransient<StateService>();
 builder.Services.AddTransient<CityService>();
-builder.Services.AddTransient<AdditionalDetails>();
-builder.Services.AddTransient<EducationService>();
+//builder.Services.AddTransient<AdditionalDetails>();
+//builder.Services.AddTransient<EducationService>();
 builder.Services.AddTransient<WorkExperienceService>();
-builder.Services.AddTransient<IAdminRepository, AdminRepository>();
+//builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 
 

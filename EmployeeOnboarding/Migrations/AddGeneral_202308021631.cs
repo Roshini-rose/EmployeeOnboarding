@@ -17,21 +17,22 @@ namespace EmployeeOnboarding.Migrations
             Create.Table("EmployeeGeneralDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
                .WithColumn("Login_ID").AsInt32().NotNullable().ForeignKey("Login", "Id")
                .WithColumn("Empid").AsString().Nullable()
-               .WithColumn("EmployeeName").AsString().NotNullable()
+               .WithColumn("Empname").AsString().NotNullable()
                .WithColumn("Official_EmailId").AsString().Nullable()
                .WithColumn("DOB").AsDate().NotNullable()
-               .WithColumn("FatherName").AsString().NotNullable()
+               .WithColumn("Nationality").AsString().NotNullable()
                .WithColumn("Gender").AsInt64().NotNullable()
                .WithColumn("MaritalStatus").AsInt32().Nullable()
                .WithColumn("DateOfMarriage").AsDate().Nullable()
                .WithColumn("BloodGrp").AsInt16().NotNullable()
+               .WithColumn("Profile_pic").AsString().NotNullable()
                .WithColumn("Date_Created").AsDateTime().NotNullable()
-               .WithColumn("Date_Modified").AsDateTime().NotNullable()
+               .WithColumn("Date_Modified").AsDateTime().Nullable()
                .WithColumn("Created_by").AsString().NotNullable()
-               .WithColumn("Modified_by").AsString().NotNullable()
+               .WithColumn("Modified_by").AsString().Nullable()
                .WithColumn("Status").AsString().NotNullable();
-
+           
         }
+
     }
-    
 }

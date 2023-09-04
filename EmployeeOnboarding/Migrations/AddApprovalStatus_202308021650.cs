@@ -2,8 +2,8 @@
 
 namespace EmployeeOnboarding.Migrations
 {
-    [Migration(202308021643)]
-    public class AddApprovalStatus_202308021643:Migration
+    [Migration(202308021650)]
+    public class AddApprovalStatus_202308021650:Migration
     {
         public override void Down()
         {
