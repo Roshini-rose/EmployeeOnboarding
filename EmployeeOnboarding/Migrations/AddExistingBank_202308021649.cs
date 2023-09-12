@@ -17,6 +17,7 @@ namespace EmployeeOnboarding.Migrations
             Create.Table("EmployeeExistingBankAccount").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
                .WithColumn("EmpGen_Id").AsInt32().Nullable().ForeignKey("EmployeeGeneralDetails", "Id")
                .WithColumn("Account_name").AsString(100).Nullable()
+               .WithColumn("Bank_name").AsString(100).Nullable()
                .WithColumn("Bank_Branch").AsString(100).Nullable()
                .WithColumn("Account_number").AsInt64().Nullable()
                .WithColumn("IFSC_code").AsString(100).Nullable()

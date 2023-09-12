@@ -17,15 +17,17 @@ namespace EmployeeOnboarding.Migrations
         {
             Create.Table("EmployeeFamilyDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails","Id")
-               .WithColumn("Personal_Emailid").AsString().NotNullable()
+               .WithColumn("Relationship").AsString().NotNullable()
+               .WithColumn("child_no").AsInt32().NotNullable()
+               .WithColumn("Name").AsString().NotNullable()
+               .WithColumn("DOB").AsDate().NotNullable()
+               .WithColumn("Occupation").AsString().NotNullable()
                .WithColumn("Contact_no ").AsInt64().NotNullable()
                .WithColumn("Date_Created").AsDateTime().Nullable()
                .WithColumn("Date_Modified").AsDateTime().Nullable()
                .WithColumn("Created_by").AsString(100).NotNullable()
                .WithColumn("Modified_by").AsString(100).Nullable()
                .WithColumn("Status").AsString(30).NotNullable();
-
-
      }
 
     }

@@ -2,6 +2,8 @@
 using EmployeeOnboarding.Services;
 using EmployeeOnboarding.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using OnboardingWebsite.Models;
+//using OnboardingWebsite.Models;
 
 namespace EmployeeOnboarding.Controllers
 {
@@ -10,27 +12,17 @@ namespace EmployeeOnboarding.Controllers
     [ApiController]
     public class UserDetailsController : ControllerBase
     {
+        private readonly GeneralDetailService _generalservices;
+        private readonly HobbyMembershipService _hobbyService;
+        private readonly RequiredService _requiredService;
+        private readonly EmergencyContactService _emergencyServices;
 
-        public GeneralDetailService _generalservices;
-        //public ContactDetails _contactdetails;
-        //public AddressDetails _addressdetails;
-        //public AdditionalDetails _additionaldetails;
-        public StateService _stateservice;
-        public CityService _cityservice;
-        public UserDetailsController(GeneralDetailService generalservices,
-            //ContactDetails contactDetails,
-            //AddressDetails addressdetails,
-            //AdditionalDetails additionalDetails,
-            StateService stateService,
-            CityService cityService)
+        public UserDetailsController(GeneralDetailService generalservices,HobbyMembershipService hobbyService, RequiredService requiredService, EmergencyContactService emergencyContactService)
         {
             _generalservices = generalservices;
-            //_contactdetails = contactDetails;
-            //_addressdetails = addressdetails;
-            //_additionaldetails = additionalDetails;
-            _stateservice = stateService;
-            _cityservice = cityService;
-
+            _requiredService = requiredService;
+            _emergencyServices = emergencyContactService;
+            _hobbyService = hobbyService;
         }
 
 
@@ -44,6 +36,29 @@ namespace EmployeeOnboarding.Controllers
             return Ok();
         }
 
+        [HttpPost("add-hobby-details/{Id}")]
+        public IActionResult AddHobby(int Id, [FromForm] HobbyVM hobby)
+        {
+            _hobbyService.AddHobby(Id, hobby);
+            return Ok();
+        }
+
+
+        [HttpPost("add-emergency/{empId}")]
+        public async Task<IActionResult> AddEmergencyContact(int empId, [FromBody] List<EmergencyContactVM> emergencies)
+        {
+            var data =_emergencyServices.AddEmergencyContact(empId, emergencies);
+            return Ok(data + "Sucess");
+        }
+
+
+        [HttpPost("add-required-details/{Id}")]
+        public IActionResult AddRequired(int Id, [FromForm] RequiredVM required)
+        {
+            _requiredService.AddRequired(Id, required);
+            return Ok();
+        }
+
 
         //get method
 
@@ -54,97 +69,19 @@ namespace EmployeeOnboarding.Controllers
             return Ok(generaldetails);
         }
 
+        [HttpGet("get-hobby-details/{Id}")]
+        public IActionResult GetHobby(int Id)
+        {
+            var hobby = _hobbyService.GetHobby(Id);
+            return Ok(hobby);
+        }
 
-
-        ////Contact details
-        ////Post method
-        //[HttpPost("add-contact-details/{Id}")]
-        //public IActionResult AddContact(int Id, [FromBody] ContactVM contact)
-        //{
-        //    _contactdetails.AddContact(Id, contact);
-        //    return Ok();
-        //}
-
-
-        ////get method
-        //[HttpGet("get-contact-details/{id}")]
-        //public IActionResult GetContact(int id)
-        //{
-        //    var Contactdetails = _contactdetails.GetContact(id);
-        //    return Ok(Contactdetails);
-        //}
-
-        ////Post method
-        //[HttpPost("add-permanent-address-details/{Id}")]
-        //public IActionResult AddPermanentAddress(int Id, AddressVM address)
-        //{
-        //    _addressdetails.AddPermanentAddress(Id, address);
-        //    return Ok();
-        //}
-
-
-
-        //[HttpPost("add-temporary-address-details/{Id}")]
-        //public IActionResult AddTemporaryAddress(int Id, AddressVM address)
-        //{
-        //    _addressdetails.AddTemporaryAddress(Id, address);
-        //    return Ok();
-        //}
-
-        ////get method
-
-        //[HttpGet("get-permanent-address-details/{id}")]
-        //public IActionResult GetPermanentAddress(int id)
-        //{
-        //    var Addressdetails = _addressdetails.GetPermanentAddress(id);
-        //    return Ok(Addressdetails);
-        //}
-
-        //[HttpGet("get-temporary-address-details/{id}")]
-        //public IActionResult GetTemporaryAddress(int id)
-        //{
-        //    var Addressdetails = _addressdetails.GetTemporaryAddress(id);
-        //    return Ok(Addressdetails);
-        //}
-
-
-
-
-        //[HttpGet("get-State/{id}")]
-        //public IActionResult GetState(int id)
-        //{
-        //    var State = _stateservice.GetState(id);
-        //    return Ok(State);
-        //}
-
-
-
-
-
-        //[HttpGet("get-City/{id}")]
-        //public IActionResult GetCity(int id)
-        //{
-        //    var city = _cityservice.GetCity(id);
-        //    return Ok(city);
-        //}
-
-        ////Additional details
-        ////Post method
-        //[HttpPost("add-additional-details/{Id}")]
-        //public IActionResult AddAdditional(int Id, [FromForm] AdditionalVM additional)
-        //{
-        //    _additionaldetails.AddAdditional(Id, additional);
-        //    return Ok();
-        //}
-
-        ////get method
-
-        //[HttpGet("get-additional-details/{id}")]
-        //public IActionResult GetAdditional(int id)
-        //{
-        //    var Additionaldetails = _additionaldetails.GetAdditional(id);
-        //    return Ok(Additionaldetails);
-        //}
+        [HttpGet("get-emergency/{empId}")]
+        public IActionResult GetEmergencyContact(int empId)
+        {
+            var education = _emergencyServices.GetEmergencyContact(empId);
+            return Ok(education);
+        }
 
     }
 

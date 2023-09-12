@@ -36,16 +36,16 @@ builder.Services.AddTransient<IEmailSender>(s => new EmailSender("localhost", 25
 
 builder.Services.AddTransient<onboardstatusService>();
 builder.Services.AddTransient<logindetailsService>();
-//builder.Services.AddTransient<GeneralDetail>();
 builder.Services.AddTransient<GeneralDetailService>();
-//builder.Services.AddTransient<ContactDetails>();
-//builder.Services.AddTransient<AddressDetails>();
-builder.Services.AddTransient<StateService>();
-builder.Services.AddTransient<CityService>();
-//builder.Services.AddTransient<AdditionalDetails>();
-//builder.Services.AddTransient<EducationService>();
+builder.Services.AddTransient<HobbyMembershipService>();
+builder.Services.AddTransient<EmergencyContactService>();
+builder.Services.AddTransient<RequiredService>();
+builder.Services.AddTransient<EducationService>();
+builder.Services.AddTransient<CertificateService>();
 builder.Services.AddTransient<WorkExperienceService>();
-//builder.Services.AddTransient<IAdminRepository, AdminRepository>();
+builder.Services.AddTransient<ReferenceService>();
+builder.Services.AddTransient<HealthService>();
+builder.Services.AddTransient<ExistingBankService>();
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
 
 

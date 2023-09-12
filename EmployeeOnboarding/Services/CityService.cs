@@ -13,7 +13,7 @@ namespace EmployeeOnboarding.Services
             _context = context;
         }
 
-      /*  public void AddCity(int Id, City city)
+        public void AddCity(int Id, City city)
 
         {
             var existingcity = _context.City.FirstOrDefault(e => e.Id == Id && e.State_Id == 23);
@@ -26,12 +26,7 @@ namespace EmployeeOnboarding.Services
                 existingcity.City_Name = city.City_Name;
                 existingcity.Date_Created = DateTime.UtcNow;
                 existingcity.Date_Modified = DateTime.UtcNow;
-                  
-
-
-
-
-    }
+            }
             else
             {
                 //Add new record
@@ -41,15 +36,12 @@ namespace EmployeeOnboarding.Services
                     State_Id = city.State_Id,
                     City_Name = city.City_Name,
                     Date_Created = DateTime.UtcNow,
-                    Date_Modified= DateTime.UtcNow,
+                    Date_Modified = DateTime.UtcNow,
                 };
-
                 _context.City.Add(_city);
                 _context.SaveChanges();
             }
-
-
-        }*/
+        }
         public City GetCity(int Id)
         {
             var _city = _context.City.Where(n => n.Id == Id && n.State_Id <= 36).Select(city=> new City()

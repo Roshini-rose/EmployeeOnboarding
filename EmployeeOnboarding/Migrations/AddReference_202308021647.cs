@@ -28,8 +28,6 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Modified_by").AsString(100).Nullable()
                .WithColumn("Status").AsString(30).Nullable();
 
-
-
     }
     }
 }

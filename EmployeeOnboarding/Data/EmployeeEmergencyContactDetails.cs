@@ -6,7 +6,8 @@ namespace EmployeeOnboarding.Data
     {
         public int Id { get; set; }
         [ForeignKey("EmpGen_Id")]
-        public int EmpGen_Id { get; set; }  
+        public int EmpGen_Id { get; set; }
+        public int? emergency_no {get; set; }
         public string Relationship { get; set; }
         public string Relation_name { get; set; }
         public long Contact_number { get; set; }

@@ -2,6 +2,7 @@
 using EmployeeOnboarding.Data.Enum;
 using EmployeeOnboarding.Models;
 using EmployeeOnboarding.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using OnboardingWebsite.Models;
 
 namespace EmployeeOnboarding.Services
@@ -10,13 +11,13 @@ namespace EmployeeOnboarding.Services
     public class WorkExperienceService
     {
 
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         public WorkExperienceService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        private async Task<string> SaveCertificateFileAsync(string certificateBase64, string empId, string fileName)
+        private string SaveCertificateFileAsync(string certificateBase64, string empId, string fileName)
         {
             if (string.IsNullOrEmpty(certificateBase64))
             {
@@ -35,7 +36,7 @@ namespace EmployeeOnboarding.Services
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                await fileStream.WriteAsync(certificateBytes, 0, certificateBytes.Length);
+                fileStream.WriteAsync(certificateBytes, 0, certificateBytes.Length);
             }
 
             return filePath; // Return the file path
@@ -45,8 +46,9 @@ namespace EmployeeOnboarding.Services
 
         int index1 = 1; // Initialize the Company_no sequence
 
-        public async Task AddExperiences(int empId, List<WorkExperienceVM> experiences)
+        public async Task<List<EmployeeExperienceDetails>> AddExperiences(int empId, List<WorkExperienceVM> experiences)
         {
+            List<EmployeeExperienceDetails> experienceVMs = new List<EmployeeExperienceDetails>();
             foreach (var experience in experiences)
             {
                 var existingExperience = _context.EmployeeExperienceDetails.FirstOrDefault(e => e.EmpGen_Id == empId && e.Company_no == index1);
@@ -64,7 +66,7 @@ namespace EmployeeOnboarding.Services
                     existingExperience.Reporting_to = experience.Reporting_to;
                     existingExperience.Reason = experience.Reason;
                     existingExperience.Location = experience.Location;
-                    existingExperience.Exp_Certificate = await SaveCertificateFileAsync(experience.Exp_Certificate, empId.ToString(), certificateFileName);
+                    existingExperience.Exp_Certificate = SaveCertificateFileAsync(experience.Exp_Certificate, empId.ToString(), certificateFileName);
                     existingExperience.Date_Modified = DateTime.UtcNow;
                     existingExperience.Modified_by = empId.ToString();
                     existingExperience.Status = "A";
@@ -73,7 +75,7 @@ namespace EmployeeOnboarding.Services
                 {
                     // Add new record
                     var certificateFileName = $"experience{index1}.pdf"; // Generate the certificate filename
-                    var _experience = new EmployeeExperienceDetails()
+                    var _experience= new EmployeeExperienceDetails()
                     {
                         EmpGen_Id = empId,
                         Company_no = index1,
@@ -85,23 +87,24 @@ namespace EmployeeOnboarding.Services
                         Reporting_to = experience.Reporting_to,
                         Reason = experience.Reason,
                         Location = experience.Location,
-                        Exp_Certificate = await SaveCertificateFileAsync(experience.Exp_Certificate, empId.ToString(), certificateFileName),
+                        Exp_Certificate =  SaveCertificateFileAsync(experience.Exp_Certificate, empId.ToString(), certificateFileName),
                         Date_Created = DateTime.UtcNow,
                         Date_Modified = DateTime.UtcNow,
                         Created_by = empId.ToString(),
                         Modified_by = empId.ToString(),
                         Status = "A"
                     };
-
-                    _context.EmployeeExperienceDetails.Add(_experience); 
-                    _context.SaveChanges(); 
+                    experienceVMs.Add(_experience);  
+                    
                 }
-
+              
                 index1++;
 
             }
-                //pending status
-                        var _onboard = new ApprovalStatus()
+             _context.EmployeeExperienceDetails.AddRange(experienceVMs);
+             _context.SaveChanges();
+            //pending status
+            var _onboard = new ApprovalStatus()
                         {
                             EmpGen_Id = empId,
                             Current_Status = (int)Status.Pending,
@@ -113,7 +116,12 @@ namespace EmployeeOnboarding.Services
                             Status = "A",
                         };
                         _context.ApprovalStatus.Add(_onboard);
-                        await _context.SaveChangesAsync();
+                        _context.SaveChanges();
+
+            var id = experienceVMs.Select(x => x.EmpGen_Id).FirstOrDefault();
+
+            return experienceVMs;
+
         }
 
 

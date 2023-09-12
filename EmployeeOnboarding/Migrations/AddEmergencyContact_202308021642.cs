@@ -16,6 +16,7 @@ namespace EmployeeOnboarding.Migrations
         {
             Create.Table("EmployeeEmergencyContactDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails", "Id")
+               .WithColumn("emergency_no").AsInt32().Nullable()
                .WithColumn("Relationship").AsString(100).NotNullable()
                .WithColumn("Relation_name").AsString(100).NotNullable()
                .WithColumn("Contact_number").AsInt64().NotNullable()

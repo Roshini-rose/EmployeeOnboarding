@@ -7,6 +7,7 @@ namespace EmployeeOnboarding.Data
         public int Id { get; set; }
         [ForeignKey("EmpGen_Id")]
         public int? EmpGen_Id { get; set; }
+        public int? Certificate_no { get; set; }
         public string? Certificate_name { get; set; }
         public string? Issued_by { get; set; }
         public DateOnly? Valid_till { get; set; }

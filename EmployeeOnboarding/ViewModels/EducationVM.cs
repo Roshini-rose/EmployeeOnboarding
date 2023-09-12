@@ -3,11 +3,13 @@ namespace OnboardingWebsite.Models
 {
     public class EducationVM
     {
-        public string programme { get; set; }
-        public string CollegeName { get; set; }
-        public string Degree { get; set; }
+        public string Qualification { get; set; }
+        public string University { get; set; }
+        public string Institution_name { get; set; }
+        public string Degree_achieved { get; set; }
         public string specialization { get; set; }
         public int Passoutyear { get; set; }
-        public IFormFile Certificate { get; set; }
+        public string Percentage { get; set; }
+        public string Edu_certificate { get; set; }
     }
 }

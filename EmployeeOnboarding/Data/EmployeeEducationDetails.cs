@@ -7,6 +7,7 @@ namespace EmployeeOnboarding.Data
         public int Id { get; set; }
         [ForeignKey("EmpGen_Id")]
         public int EmpGen_Id { get; set; }
+        public int? Education_no { get; set; }
         public string Qualification { get; set; }  
         public string University { get; set; }
         public string Institution_name { get; set; }

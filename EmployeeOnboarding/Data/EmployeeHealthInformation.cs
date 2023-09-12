@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using EmployeeOnboarding.ViewModels;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeOnboarding.Data
 {
@@ -9,7 +10,7 @@ namespace EmployeeOnboarding.Data
         public int EmpGen_Id { get; set; }  
         public string? Specific_health_condition { get; set; }
         public string? Allergies { get; set; }
-        public bool Surgery { get; set; }
+        public bool surgery { get; set; }
         public string? Surgery_explaination { get; set; }
         public bool Night_shifts { get; set; }
         public bool Disability { get; set; }
@@ -22,5 +23,6 @@ namespace EmployeeOnboarding.Data
         public string Created_by { get; set; }
         public string? Modified_by { get; set; }
         public string Status { get; set; }
+
     }
 }

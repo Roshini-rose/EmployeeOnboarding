@@ -16,6 +16,7 @@ namespace EmployeeOnboarding.Migrations
         {
             Create.Table("EmployeeCertifications").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
                .WithColumn("EmpGen_Id").AsInt32().Nullable().ForeignKey("EmployeeGeneralDetails","Id")
+               .WithColumn("Certificate_no").AsInt32().Nullable()
                .WithColumn("Certificate_name").AsString(100).Nullable()
                .WithColumn("Issued_by").AsString(100).Nullable()
                .WithColumn("Valid_till").AsDate().Nullable()

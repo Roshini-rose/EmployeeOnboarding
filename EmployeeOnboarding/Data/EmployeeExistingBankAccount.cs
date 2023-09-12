@@ -9,6 +9,7 @@ namespace EmployeeOnboarding.Data
         [ForeignKey("EmpGen_Id")]
         public int? EmpGen_Id { get; set; }  
         public string? Account_name { get; set; }
+        public string? Bank_name { get; set; }
         public string? Bank_Branch { get; set; }
         public long? Account_number { get; set; }
         public string? IFSC_code { get; set; }

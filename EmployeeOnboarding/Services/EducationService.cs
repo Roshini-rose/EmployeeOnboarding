@@ -1,156 +1,134 @@
-﻿//using EmployeeOnboarding.Data;
-//using EmployeeOnboarding.Models;
-//using EmployeeOnboarding.ViewModels;
-//using OnboardingWebsite.Models;
+﻿using EmployeeOnboarding.Data;
+using EmployeeOnboarding.Data.Enum;
+using EmployeeOnboarding.Models;
+using EmployeeOnboarding.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using OnboardingWebsite.Models;
 
-//namespace EmployeeOnboarding.Data.Services
-//{
-//    public class EducationService
-//    {
-//        private ApplicationDbContext _context;
-//        public EducationService(ApplicationDbContext context)
-//        {
-//            _context = context;
-//        }
+namespace EmployeeOnboarding.Services
+{
 
-//        private string SaveCertificateFile(IFormFile certificateFile, string empId, string fileName)
-//        {
-//            if (certificateFile == null)
-//            {
-//                return null; // Return null if no certificate file is provided
-//            }
-//            var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Certificates", empId);
-//            if (!Directory.Exists(empFolderPath))
-//            {
-//                Directory.CreateDirectory(empFolderPath);
-//            }
+    public class EducationService
+    {
 
-//            var filePath = Path.Combine(empFolderPath, fileName);
-//            using (var fileStream = new FileStream(filePath, FileMode.Create))
-//            {
-//                certificateFile.CopyTo(fileStream);
-//            }
+        private readonly ApplicationDbContext _context;
+        public EducationService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-//            return filePath; // Return the file path
-//        }
+        private string SaveCertificateFileAsync(string certificateBase64, string empId, string fileName)
+        {
+            if (string.IsNullOrEmpty(certificateBase64))
+            {
+                return null; // Return null if no certificate bytes are provided
+            }
 
+            var certificateBytes = Convert.FromBase64String(certificateBase64);
 
-//        public void AddEducationUG(int empId, EducationVM education)
-//        {
-//            var existingEducation = _context.EmployeeEducationDetails.FirstOrDefault(e => e.EmpGen_Id == empId && e.programme == "UG");
+            var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Documents", empId);
+            if (!Directory.Exists(empFolderPath))
+            {
+                Directory.CreateDirectory(empFolderPath);
+            }
 
-//            if (existingEducation != null)
-//            {
-//                //Update existing record
+            var filePath = Path.Combine(empFolderPath, fileName);
 
-//                existingEducation.CollegeName = education.CollegeName;
-//                existingEducation.Degree = education.Degree;
-//                existingEducation.specialization = education.specialization;
-//                existingEducation.Passoutyear = education.Passoutyear;
-//                existingEducation.Certificate = SaveCertificateFile(education.Certificate, empId.ToString(), "UG_certificate.pdf");
-//                existingEducation.Date_Modified = DateTime.UtcNow;
-//                existingEducation.Modified_by = empId.ToString();
-//                existingEducation.Status = "A";
-//            }
-//            else
-//            {
-//                //Add new record
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                fileStream.WriteAsync(certificateBytes, 0, certificateBytes.Length);
+            }
 
-//                var certificateFileName = "UG_certificate.pdf";
-//                var _education = new EmployeeEducationDetails()
-//                {
-//                    EmpGen_Id = empId,
-//                    programme = "UG",
-//                    CollegeName = education.CollegeName,
-//                    Degree = education.Degree,
-//                    specialization = education.specialization,
-//                    Passoutyear = education.Passoutyear,
-//                    Certificate = SaveCertificateFile(education.Certificate, empId.ToString(), certificateFileName),
-//                    Date_Created = DateTime.UtcNow,
-//                    Date_Modified = DateTime.UtcNow,
-//                    Created_by = empId.ToString(),
-//                    Modified_by = empId.ToString(),
-//                    Status = "A"
-//                };
-
-//                _context.EmployeeEducationDetails.Add(_education);
-//            }
-
-//            _context.SaveChanges();
-//        }
-
-//        public void AddEducationPG(int empId, EducationVM education)
-//        {
-//            var existingEducation = _context.EmployeeEducationDetails.FirstOrDefault(e => e.EmpGen_Id == empId && e.programme == "PG");
-
-//            if (existingEducation != null)
-//            {
-//                //Update existing record
-
-//                existingEducation.CollegeName = education.CollegeName;
-//                existingEducation.Degree = education.Degree;
-//                existingEducation.specialization = education.specialization;
-//                existingEducation.Passoutyear = education.Passoutyear;
-//                existingEducation.Certificate = SaveCertificateFile(education.Certificate, empId.ToString(), "PG_certificate.pdf");
-//                existingEducation.Date_Modified = DateTime.UtcNow;
-//                existingEducation.Modified_by = empId.ToString();
-//                existingEducation.Status = "A";
-//            }
-//            else
-//            {
-//                //Add new record
-
-//                var certificateFileName = "PG_certificate.pdf";
-//                var _education = new EmployeeEducationDetails()
-//                {
-//                    EmpGen_Id = empId,
-//                    programme = "PG",
-//                    CollegeName = education.CollegeName,
-//                    Degree = education.Degree,
-//                    specialization = education.specialization,
-//                    Passoutyear = education.Passoutyear,
-//                    Certificate = SaveCertificateFile(education.Certificate, empId.ToString(), certificateFileName),
-//                    Date_Created = DateTime.UtcNow,
-//                    Date_Modified = DateTime.UtcNow,
-//                    Created_by = empId.ToString(),
-//                    Modified_by = empId.ToString(),
-//                    Status = "A"
-//                };
-
-//                _context.EmployeeEducationDetails.Add(_education);
-//            }
-
-//            _context.SaveChanges();
-//        }
+            return filePath; // Return the file path
+        }
 
 
+        int index1 = 1; // Initialize the Company_no sequence
 
-//        public getEducationVM GetEducationUG(int educationId)
-//        {
-//            var _education = _context.EmployeeEducationDetails.Where(n => n.EmpGen_Id == educationId && n.programme == "UG").Select(education => new getEducationVM()
-//            {
-//                programme = "UG",
-//                CollegeName = education.CollegeName,
-//                Degree = education.Degree,
-//                specialization = education.specialization,
-//                Passoutyear = education.Passoutyear,
-//            }).FirstOrDefault();
+        public async Task<List<EmployeeEducationDetails>> AddEducation(int empId, List<EducationVM> educations)
+        {
+            try
+            {
+                List<EmployeeEducationDetails> educationVMs = new List<EmployeeEducationDetails>();
+                foreach (var education in educations)
+                {
+                    var existingEducation = _context.EmployeeEducationDetails.FirstOrDefault(e => e.EmpGen_Id == empId && e.Education_no == index1);
 
-//            return _education;
-//        }
+                    if (existingEducation != null)
+                    {
+                        var certificateFileName = $"education{index1}.pdf"; // Generate the certificate filename
+                                                                            // Update existing record
+                        existingEducation.Qualification = education.Qualification;
+                        existingEducation.University = education.University;
+                        existingEducation.Institution_name = education.Institution_name;
+                        existingEducation.Degree_achieved = education.Degree_achieved;
+                        existingEducation.specialization = education.specialization;
+                        existingEducation.Passoutyear = education.Passoutyear;
+                        existingEducation.Percentage = education.Percentage;
+                        existingEducation.Edu_certificate = SaveCertificateFileAsync(education.Edu_certificate, empId.ToString(), certificateFileName);
+                        existingEducation.Date_Modified = DateTime.UtcNow;
+                        existingEducation.Modified_by = empId.ToString();
+                        existingEducation.Status = "A";
+                    }
+                    else
+                    {
+                        // Add new record
+                        var certificateFileName = $"education{index1}.pdf"; // Generate the certificate filename
+                        var _education = new EmployeeEducationDetails()
+                        {
+                            EmpGen_Id = empId,
+                            Education_no = index1,
+                            Qualification = education.Qualification,
+                            University = education.University,
+                            Institution_name = education.Institution_name,
+                            Degree_achieved = education.Degree_achieved,
+                            specialization = education.specialization,
+                            Passoutyear = education.Passoutyear,
+                            Percentage = education.Percentage,
+                            Edu_certificate = SaveCertificateFileAsync(education.Edu_certificate, empId.ToString(), certificateFileName),
+                            Date_Created = DateTime.UtcNow,
+                            Date_Modified = DateTime.UtcNow,
+                            Created_by = empId.ToString(),
+                            Modified_by = empId.ToString(),
+                            Status = "A"
+                        };
+                        educationVMs.Add(_education);
 
-//        public getEducationVM GetEducationPG(int educationId)
-//        {
-//            var _education = _context.EmployeeEducationDetails.Where(n => n.EmpGen_Id == educationId && n.programme == "PG").Select(education => new getEducationVM()
-//            {
-//                programme = "PG",
-//                CollegeName = education.CollegeName,
-//                Degree = education.Degree,
-//                specialization = education.specialization,
-//                Passoutyear = education.Passoutyear,
-//            }).FirstOrDefault();
 
-//            return _education;
-//        }
-//    }
-//}
+                    }
+
+                    index1++;
+
+                }
+                _context.EmployeeEducationDetails.AddRange(educationVMs);
+                _context.SaveChanges();
+                //var id = educationVMs.Select(x => x.EmpGen_Id).FirstOrDefault();
+
+                return educationVMs;
+
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
+
+        public List<EducationVM> GetEducation(int empId)
+        {
+            var education = _context.EmployeeEducationDetails.Where(e => e.EmpGen_Id == empId && e.Education_no != null).Select(e => new EducationVM
+            {
+                Qualification = e.Qualification,
+                University = e.University,
+                Institution_name = e.Institution_name,
+                Degree_achieved = e.Degree_achieved,
+                specialization = e.specialization,
+                Passoutyear = e.Passoutyear,
+            })
+                .ToList();
+
+            return education;
+        }
+
+    }
+}
