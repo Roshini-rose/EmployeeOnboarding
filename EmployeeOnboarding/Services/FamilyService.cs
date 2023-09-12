@@ -17,106 +17,75 @@ namespace EmployeeOnboarding.Services
             _context = context;
         }
 
-        private string SaveCertificateFileAsync(string certificateBase64, string empId, string fileName)
-        {
-            if (string.IsNullOrEmpty(certificateBase64))
-            {
-                return null; // Return null if no certificate bytes are provided
-            }
-
-            var certificateBytes = Convert.FromBase64String(certificateBase64);
-
-            var empFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Documents", empId);
-            if (!Directory.Exists(empFolderPath))
-            {
-                Directory.CreateDirectory(empFolderPath);
-            }
-
-            var filePath = Path.Combine(empFolderPath, fileName);
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                fileStream.WriteAsync(certificateBytes, 0, certificateBytes.Length);
-            }
-
-            return filePath; // Return the file path
-        }
-
-
         int index1 = 1; // Initialize the Company_no sequence
 
-        public async Task<List<EmployeeCertifications>> AddCertificate(int empId, List<CertificateVM> certificates)
+        public async Task<List<EmployeeFamilyDetails>> AddFamily(int empId, List<FamilyVM> families)
         {
-            List<EmployeeCertifications> certificateVMs = new List<EmployeeCertifications>();
-            foreach (var certificate in certificates)
+            try
             {
-                var existingCertificate = _context.EmployeeCertifications.FirstOrDefault(e => e.EmpGen_Id == empId && e.Certificate_no == index1);
-
-                if (existingCertificate != null)
+                List<EmployeeFamilyDetails> familyVMs = new List<EmployeeFamilyDetails>();
+                foreach (var family in families)
                 {
-                    var certificateFileName = $"certificate{index1}.pdf"; // Generate the certificate filename
-                    // Update existing record
-                    existingCertificate.Certificate_name = certificate.Certificate_name;
-                    existingCertificate.Issued_by = certificate.Issued_by;
-                    DateOnly Valid_till = DateOnly.Parse(certificate.Valid_till);
-                    existingCertificate.Valid_till = Valid_till;
-                    existingCertificate.Duration = certificate.Duration;
-                    existingCertificate.Percentage = certificate.Percentage;
-                    existingCertificate.proof = SaveCertificateFileAsync(certificate.proof, empId.ToString(), certificateFileName);
-                    existingCertificate.Date_Modified = DateTime.UtcNow;
-                    existingCertificate.Modified_by = empId.ToString();
-                    existingCertificate.Status = "A";
+                    var existingFamily = _context.EmployeeFamilyDetails.FirstOrDefault(e => e.EmpGen_Id == empId && e.Family_no == index1);
 
-                }
-                else
-                {
-                    // Add new record
-                    var certificateFileName = $"certificate{index1}.pdf"; // Generate the certificate filename
-                    var _certificate = new EmployeeCertifications()
+                    if (existingFamily != null)
                     {
-                        EmpGen_Id = empId,
-                        Certificate_no = index1,
-                        Certificate_name = certificate.Certificate_name,
-                        Issued_by = certificate.Issued_by,
-                        Valid_till = DateOnly.Parse(certificate.Valid_till),
-                        Duration = certificate.Duration,
-                        Percentage = certificate.Percentage,
-                        proof = SaveCertificateFileAsync(certificate.proof, empId.ToString(), certificateFileName),
-                        Date_Created = DateTime.UtcNow,
-                        Date_Modified = DateTime.UtcNow,
-                        Created_by = empId.ToString(),
-                        Modified_by = empId.ToString(),
-                        Status = "A"
-                    };
-                    certificateVMs.Add(_certificate);
+                        // Update existing record
+                        existingFamily.Relationship = family.Relationship;
+                        existingFamily.Name = family.Name;
+                        DateOnly DOB = DateOnly.Parse(family.DOB);
+                        existingFamily.DOB = DOB;
+                        existingFamily.Occupation = family.Occupation;
+                        existingFamily.contact = family.contact;
+                        existingFamily.Date_Modified = DateTime.UtcNow;
+                        existingFamily.Modified_by = empId.ToString();
+                        existingFamily.Status = "A";
 
+                    }
+                    else
+                    {
+                        var _family = new EmployeeFamilyDetails()
+                        {
+                            EmpGen_Id = empId,
+                            Family_no = index1,
+                            Relationship = family.Relationship,
+                            Name = family.Name,
+                            DOB = DateOnly.Parse(family.DOB),
+                            Occupation = family.Occupation,
+                            contact = family.contact,
+                            Date_Created = DateTime.UtcNow,
+                            Date_Modified = DateTime.UtcNow,
+                            Created_by = empId.ToString(),
+                            Modified_by = empId.ToString(),
+                            Status = "A"
+                        };
+                        familyVMs.Add(_family);
+                    }
+                    index1++;
                 }
-
-                index1++;
-
+                _context.EmployeeFamilyDetails.AddRange(familyVMs);
+                _context.SaveChanges();
+                return familyVMs;
             }
-            _context.EmployeeCertifications.AddRange(certificateVMs);
-            _context.SaveChanges();
-            var id = certificateVMs.Select(x => x.EmpGen_Id).FirstOrDefault();
-
-            return certificateVMs;
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-
-        public List<getCertificateVM> GetCertificate(int empId)
+        public List<GetFamilyVM> GetFamily(int empId)
         {
-            var certificate = _context.EmployeeCertifications.Where(e => e.EmpGen_Id == empId && e.Certificate_no != null).Select(e => new getCertificateVM
+            var family = _context.EmployeeFamilyDetails.Where(e => e.EmpGen_Id == empId && e.Family_no != null).Select(e => new GetFamilyVM
             {
-                Certificate_name = e.Certificate_name,
-                Issued_by = e.Issued_by,
-                Valid_till = e.Valid_till,
-                Duration = e.Duration,
-                Percentage = e.Percentage,
-                proof = e.proof,
+                Relationship = e.Relationship,
+                Name = e.Name,
+                DOB = e.DOB,
+                Occupation = e.Occupation,
+                contact = e.contact
             })
                 .ToList();
 
-            return certificate;
+            return family;
         }
 
     }

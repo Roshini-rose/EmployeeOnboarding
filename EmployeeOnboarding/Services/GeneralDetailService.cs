@@ -46,6 +46,8 @@ namespace EmployeeOnboarding.Services
             if (existingGeneral != null)
             {
                 existingGeneral.Empname = general.Empname;
+                existingGeneral.Personal_Emailid = general.Personal_Emailid;
+                existingGeneral.Contact_no = general.Contact_no;
 
                 DateOnly DOB = DateOnly.Parse(general.DOB);
                 existingGeneral.DOB = DOB;
@@ -72,6 +74,8 @@ namespace EmployeeOnboarding.Services
                 {
                     Login_ID = Id,
                     Empname = general.Empname,
+                    Personal_Emailid = general.Personal_Emailid,
+                    Contact_no = general.Contact_no,
                     DOB = DateOnly.Parse(general.DOB),
                     Nationality = general.Nationality,
                     Gender = general.Gender,
@@ -103,6 +107,8 @@ namespace EmployeeOnboarding.Services
             var _general = _context.EmployeeGeneralDetails.Where(n => n.Login_ID == Id).Select(general => new GetGeneralVM()
             {
                 Empname = general.Empname,
+                Personal_Emailid = general.Personal_Emailid,
+                Contact_no = general.Contact_no,
                 DOB = general.DOB,
                 Nationality = general.Nationality,
                 Gender = ((Gender)general.Gender).ToString(),

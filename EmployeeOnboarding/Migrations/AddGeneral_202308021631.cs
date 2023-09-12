@@ -19,6 +19,8 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("Empid").AsString().Nullable()
                .WithColumn("Empname").AsString().NotNullable()
                .WithColumn("Official_EmailId").AsString().Nullable()
+               .WithColumn("Personal_Emailid").AsString().NotNullable()
+               .WithColumn("Contact_no").AsInt64().NotNullable()
                .WithColumn("DOB").AsDate().NotNullable()
                .WithColumn("Nationality").AsString().NotNullable()
                .WithColumn("Gender").AsInt64().NotNullable()

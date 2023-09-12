@@ -8,8 +8,8 @@ namespace EmployeeOnboarding.Data
         public int Id { get; set; }
         [ForeignKey("EmpGen_Id")]
         public int EmpGen_Id { get; set; }
-        public bool friend_working { get; set; }
-        public string? Empid { get; set; }
+        public int colleague_no { get; set; }
+        public string? Employee_id { get; set; }
         public string? Colleague_Name { get; set; }
         public string? Location { get; set; }
         public DateTime Date_Created { get; set; }

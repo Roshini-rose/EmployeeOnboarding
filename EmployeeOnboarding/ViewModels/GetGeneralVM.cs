@@ -6,6 +6,8 @@ namespace EmployeeOnboarding.ViewModels
     {
 
         public string Empname { get; set; }
+        public string Personal_Emailid { get; set; }
+        public long Contact_no { get; set; }
         public DateOnly DOB { get; set; }
         public string Nationality { get; set; }
         public string Gender { get; set; }

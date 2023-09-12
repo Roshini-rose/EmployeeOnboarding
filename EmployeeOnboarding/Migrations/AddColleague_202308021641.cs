@@ -16,8 +16,8 @@ namespace EmployeeOnboarding.Migrations
         {
             Create.Table("EmployeeColleagueDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails", "Id")
-               .WithColumn("friend_working ").AsBoolean().NotNullable()
-               .WithColumn("Empid ").AsString().Nullable()
+               .WithColumn("colleague_no").AsInt32().NotNullable()
+               .WithColumn("Employee_id").AsString().Nullable()
                .WithColumn("Colleague_Name").AsString().Nullable()
                .WithColumn("Location").AsString().Nullable()
                .WithColumn("Date_Created").AsDateTime().NotNullable()

@@ -3,6 +3,8 @@
     public class GeneralVM
     {
         public string Empname { get; set; }
+        public string Personal_Emailid { get; set; }
+        public long Contact_no { get; set; }
         public string DOB { get; set; }
         public string Nationality { get; set; }
         public int Gender { get; set; }

@@ -18,8 +18,6 @@ namespace EmployeeOnboarding.Migrations
         {
             Create.Table("EmployeeContactDetails").WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
                .WithColumn("EmpGen_Id").AsInt32().NotNullable().ForeignKey("EmployeeGeneralDetails","Id")
-               .WithColumn("Personal_Emailid").AsString().NotNullable()
-               .WithColumn("Contact_no").AsDouble().NotNullable()
                .WithColumn("Address_Type").AsString().NotNullable()
                .WithColumn("Address1").AsString().NotNullable()
                .WithColumn("Address2").AsString().NotNullable()
@@ -27,7 +25,6 @@ namespace EmployeeOnboarding.Migrations
                .WithColumn("State_Id").AsInt32().NotNullable()
                .WithColumn("City_Id").AsInt32().NotNullable()
                .WithColumn("Pincode").AsString().NotNullable()
-               .WithColumn("Present_same_Permanent").AsBoolean().Nullable()
                .WithColumn("Date_Created").AsDateTime().NotNullable()
                .WithColumn("Date_Modified").AsDateTime().Nullable()
                .WithColumn("Created_by").AsString(100).NotNullable()

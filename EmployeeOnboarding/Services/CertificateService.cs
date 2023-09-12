@@ -114,7 +114,7 @@ namespace EmployeeOnboarding.Services
                 Percentage = e.Percentage,
                 proof = e.proof,
             })
-                .ToList();
+            .ToList();
 
             return certificate;
         }
