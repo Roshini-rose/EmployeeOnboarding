@@ -16,10 +16,10 @@
 //using EmployeeOnboarding.Data.Enum;
 
 //namespace EmployeeOnboarding.Repository
-//{ 
-//    public class AdminRepository  : IAdminRepository     
+//{
+//    public class AdminRepository : IAdminRepository
 //    {
-        
+
 //        public readonly ApplicationDbContext _context;
 //        public AdminRepository(ApplicationDbContext context)
 //        {
@@ -29,7 +29,7 @@
 //        public async Task<List<Dashboard1VM>> GetInvitedEmployeeDetails()
 //        {
 //            var InvitedDetails = (from l in _context.Login
-//                                  where l.Status == "A" && l.Invited_Status=="Invited" || l.Invited_Status=="Confirmed"
+//                                  where l.Status == "A" && l.Invited_Status == "Invited" || l.Invited_Status == "Confirmed"
 //                                  select new Dashboard1VM()
 //                                  {
 //                                      Login_Id = l.Id,
@@ -43,25 +43,27 @@
 //        public async Task<List<Dashboard1VM>> GetRejectedEmployeeDetails()
 //        {
 //            var RejectedDetails = (from e in _context.EmployeeGeneralDetails
-//                                  where e.Status == "A"
-//                                  join l in _context.Login on e.Login_ID equals l.Id where l.Status=="A"
-//                                  join a in _context.ApprovalStatus on e.Id equals a.EmpGen_Id
-//                                  where a.Status == "A" && a.Current_Status == 3
-//                                  select new Dashboard1VM()
-//                                  {
-//                                      Login_Id=e.Login_ID,
-//                                      EmpGen_Id = a.EmpGen_Id,
-//                                      Name = e.Empname,
-//                                      DateModified = a.Date_Modified,
-//                                      Email_id = l.EmailId,
-//                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
-//                                  }).ToList();
+//                                   where e.Status == "A"
+//                                   join l in _context.Login on e.Login_ID equals l.Id
+//                                   where l.Status == "A"
+//                                   join a in _context.ApprovalStatus on e.Id equals a.EmpGen_Id
+//                                   where a.Status == "A" && a.Current_Status == 3
+//                                   select new Dashboard1VM()
+//                                   {
+//                                       Login_Id = e.Login_ID,
+//                                       EmpGen_Id = a.EmpGen_Id,
+//                                       Name = e.Empname,
+//                                       DateModified = a.Date_Modified,
+//                                       Email_id = l.EmailId,
+//                                       Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
+//                                   }).ToList();
 //            return RejectedDetails;
 //        }
 
 //        public async Task<List<Dashboard1VM>> GetPendingEmployeeDetails()
 //        {
-//            var PendingDetails = (from l in _context.Login where l.Status == "A"
+//            var PendingDetails = (from l in _context.Login
+//                                  where l.Status == "A"
 //                                  join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
 //                                  join a in _context.ApprovalStatus on e.Id equals a.EmpGen_Id
 //                                  where a.Status == "A" && a.Current_Status == 2
@@ -72,10 +74,10 @@
 //                                      Name = l.Name,
 //                                      DateModified = a.Date_Modified,
 //                                      Email_id = l.EmailId,
-//                                      Current_Status =((Data.Enum.Status)a.Current_Status).ToString()
+//                                      Current_Status = ((Data.Enum.Status)a.Current_Status).ToString()
 //                                  }).ToList();
 //            return PendingDetails;
-           
+
 //        }
 
 //        //EnumExtensionMethods.GetEnumDescription((BloodGroup)general.BloodGrp)
@@ -186,24 +188,25 @@
 
 //        public async Task<List<DashboardVM>> GetEmployeeDetails()
 //        {
-//            var employeedetails = (from l in _context.Login where l.Status=="A"
+//            var employeedetails = (from l in _context.Login
+//                                   where l.Status == "A"
 //                                   join e in _context.EmployeeGeneralDetails on l.Id equals e.Login_ID
-//                                   where e.Status == "A" 
+//                                   where e.Status == "A"
 //                                   join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
 //                                   where al.Current_Status == 1 && al.Status == "A"
 //                                   join ec in _context.EmployeeContactDetails on e.Id equals ec.EmpGen_Id
 //                                   where ec.Status == "A"
 //                                   select new DashboardVM()
 //                                   {
-//                                       EmpGen_Id=e.Id,
+//                                       EmpGen_Id = e.Id,
 //                                       Empid = e.Empid,
 //                                       Empname = e.EmployeeName,
 //                                       Contact = ec.Contact_no,
 //                                       Email = e.Official_EmailId,
-//                                       education= (_context.EmployeeEducationDetails.Where(x => x.EmpGen_Id == e.Id).Select(x => x.Degree).OrderBy(x => x).LastOrDefault())
+//                                       education = (_context.EmployeeEducationDetails.Where(x => x.EmpGen_Id == e.Id).Select(x => x.Degree).OrderBy(x => x).LastOrDefault())
 //                                   }).ToList();
 //            return employeedetails;
-           
+
 //        }
 
 
@@ -217,20 +220,20 @@
 //                               join ead in _context.EmployeeAdditionalInfo on e.Id equals ead.EmpGen_Id
 //                               where ead.Status == "A"
 //                               join al in _context.ApprovalStatus on e.Id equals al.EmpGen_Id
-//                               where al.Current_Status == 1 && al.Status=="A"
+//                               where al.Current_Status == 1 && al.Status == "A"
 //                               select new ApprovedUserDetails()
 //                               {
 //                                   Id = e.Id,
 //                                   EmpId = e.Empid,
 //                                   EmpName = e.EmployeeName,
 //                                   Offical_EmailId = e.Official_EmailId,
-//                                   mailid=ec.Personal_Emailid,
+//                                   mailid = ec.Personal_Emailid,
 //                                   FatherName = e.FatherName,
 //                                   DOB = e.DOB,
 //                                   MaritialStatus = ((Data.Enum.MartialStatus)e.MaritalStatus).ToString(),
 //                                   DOM = e.DateOfMarriage,
 //                                   Gender = ((Data.Enum.Gender)e.Gender).ToString(),
-//                                   bloodgrp= EnumExtensionMethods.GetEnumDescription((BloodGroup)e.BloodGrp),
+//                                   bloodgrp = EnumExtensionMethods.GetEnumDescription((BloodGroup)e.BloodGrp),
 //                                   Contactno = ec.Contact_no,
 //                                   ECP = ec.Emgy_Contactperson,
 //                                   ECR = ((Data.Enum.EmergencyContactRelation)ec.Emgy_Contactrelation).ToString(),
@@ -243,7 +246,7 @@
 //                                       City = _context.City.Where(x => x.Id == address[0].City_Id).Select(x => x.City_Name).FirstOrDefault(),
 //                                       Pincode = address[0].Pincode
 //                                   },
-//                                   TemporaryAddress=new AddressVM1()
+//                                   TemporaryAddress = new AddressVM1()
 //                                   {
 //                                       Address = address[1].Address,
 //                                       Country = _context.Country.Where(x => x.Id == address[1].Country_Id).Select(x => x.Country_Name).FirstOrDefault(),
@@ -305,7 +308,7 @@
 //        public async Task<List<Dashboard1VM>>? SearchInvitedEmpDetails(string name)
 //        {
 //            var InvitedDetails = (from l in _context.Login
-//                                  where l.Status == "A" && l.Invited_Status == "Invited" || l.Invited_Status=="Confirmed" && l.Name.ToLower().Contains(name.ToLower())
+//                                  where l.Status == "A" && l.Invited_Status == "Invited" || l.Invited_Status == "Confirmed" && l.Name.ToLower().Contains(name.ToLower())
 //                                  select new Dashboard1VM()
 //                                  {
 //                                      Login_Id = l.Id,
