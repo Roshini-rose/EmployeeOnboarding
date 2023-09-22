@@ -30,7 +30,7 @@ namespace OnboardingWebsite.Controllers
         ////public async Task deleteEmployee(string[] employeeid)
         ////{
         ////    await _adminRepository.DeleteEmployee(employeeid);
-        ////}
+        ////}   
 
         [HttpGet("api/GetEmployeeDetails")]
         public async Task<List<PersonalInfoVM>> GetPersonalInfo(int employee)

@@ -93,8 +93,6 @@ namespace EmployeeOnboarding.Services
                             Status = "A"
                         };
                         educationVMs.Add(_education);
-
-
                     }
 
                     index1++;
